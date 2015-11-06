@@ -1,0 +1,9 @@
+/* Xcursion CSS overrides
+*/
+html, body {
+  font-family: Lato, san-serif; !important;
+}
+
+.page-content {
+   min-height: 400px;
+}
