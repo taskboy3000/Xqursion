@@ -7,6 +7,8 @@ use Mojolicious::Plugins;
 sub startup {
   my $self = shift;
 
+  $self->plugin("Config");
+
   my $plugins = Mojolicious::Plugins->new;
   push @{$plugins->namespaces}, 'Xqursion::Plugin';
   $plugins->register_plugin('Xqursion::Plugin::Routes', $self); 
