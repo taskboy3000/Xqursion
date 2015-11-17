@@ -1,1 +1,11 @@
-requires 'Mojolicious::Command::deploy'
+requires 'Mojolicious::Command::deploy';
+requires 'UUID::Tiny';
+requires 'DBIx::Class';
+requires 'DBIx::Class::Migration';
+requires 'DBIx::Class::DeploymentHandler';
+requires 'DBIx::Class::Validation';
+requires 'DBIx::Class::TimeStamp';
+requires 'FormValidator::Simple';
+requires 'Time::Duration';
+requires 'Modern::Perl';
+requires 'Digest::SHA';

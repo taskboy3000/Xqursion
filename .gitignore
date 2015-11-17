@@ -1,2 +1,5 @@
 *~
 local/
+share/schema.db
+share/schema/*
+log/*

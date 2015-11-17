@@ -3,5 +3,72 @@
 
 <h1>Xcursion</h1>
 
-<p class="lead">Want to take a ride? <i class="glyphicon glyphicon-plane" style="font-size:150%"></i></p>
+<p class="lead">Want to take a ride? <i class="glyphicon glyphicon-plane" style="font-size:150%;transform:rotate(90deg)"></i></p>
 
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Existing Users</h3>
+          <p>Please login in with your credentials.</p>
+        </div>
+        <div class="panel-body">
+          <%= form_for login => begin %>
+            <div>
+              <%= label_for 'username' => 'Username:' %><br>
+              <%= text_field 'username'%>
+            </div>
+            <div>
+              <%= label_for 'passsword' => 'Password:' %><br>
+              <%= password_field 'password', label => "Password:"  %>
+            </div>
+            <br>
+            <%= submit_button 'Login' %>
+          <% end %>
+        
+        </div>
+        <div class="panel-footer">
+          <%= link_to "#" => begin %>
+          Forgot your password?
+          <% end %>
+        </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">New Users</h3>
+          <p>Sign-up for a free account.</p>
+        </div>
+        <div class="panel-body">
+          
+          <%= form_for usercreate => begin %>
+            <div>
+              <%= label_for 'username' => 'Username:' %><br>
+              <%= text_field 'username'%>
+            </div>
+            <div>
+              <%= label_for 'email' => 'Email:' %><br>
+              <%= text_field 'email'%>
+            </div>
+            <div>
+              <%= label_for 'passsword' => 'Password:' %><br>
+              <%= password_field 'password'  %>
+            </div>
+            <div>
+              <%= label_for 'confirm_passsword' => 'Confirm password:' %><br>
+              <%= password_field 'confirm_password' %>
+            </div>
+            <br>
+            <%= submit_button 'Login' %>
+          <% end %>
+
+        </div>
+        <div class="panel-footer">
+          <%= link_to "#" => begin %>
+          Privacy
+          <%= end %>
+        </div>
+    </div>
+  </div>
+</div>

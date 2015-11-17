@@ -11,6 +11,10 @@ sub make_routes {
 
     # Normal route to controller
     $r->get('/')->to('root#welcome');
+
+    # Users
+    $r->post("/user/create")->to("users#create");
+
 }
 
 sub register {

@@ -4,14 +4,24 @@ use Mojo::Base 'Mojolicious::Controller';
 
 sub create {
     my ($self) = shift;
+    $self->app->log->error("Blort");
+    # Password exists?
+    unless ($self->param("password")) {
+        warn("No password");
+        return $self->redirect_to("/");
+    }
 
     # Do the passwords match?
     if ($self->param("password") ne $self->param("confirm_password")) {
+        warn("Password doesn't match");
         return $self->redirect_to("/");
     }
     
+    my $db = $self->db;
+    die unless $db;
+
     # Does this user exist?
-    my @found = $self->db->resultset("User")->search({ username => $self->param('username'),
+    my @found = $db->resultset("User")->search({ username => $self->param('username'),
                                                        email => $self->param('email')
                                                      });
     if (@found) {
@@ -25,8 +35,7 @@ sub create {
     $user->create_id();
     $user->password_hash($user->hash_password($self->param("password")));
 
-    # XXX - do something smarter
-    $user->save();
+    $user->insert();
 
     return $self->redirect_to("/");
 }
