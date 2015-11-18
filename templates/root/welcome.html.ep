@@ -13,7 +13,7 @@
           <p>Please login in with your credentials.</p>
         </div>
         <div class="panel-body">
-          <%= form_for login => begin %>
+          <%= form_for "sessionscreate" => begin %>
             <div>
               <%= label_for 'username' => 'Username:' %><br>
               <%= text_field 'username'%>

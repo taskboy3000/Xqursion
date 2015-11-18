@@ -1,0 +1,6 @@
+% layout default
+% title Dashboard
+
+<div class="hero-unit">
+  <h1>Hello, Dashboard</h1>
+</div>

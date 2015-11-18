@@ -3,3 +3,5 @@ local/
 share/schema.db
 share/schema/*
 log/*
+env.sh
+script/*.pid
