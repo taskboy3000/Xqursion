@@ -1,5 +1,5 @@
 requires 'Mojolicious::Command::deploy';
-requires 'Mojolicious::Plugin::Authentication';
+requires 'Mojolicious::Plugin::AdvancedMod';
 requires 'UUID::Tiny';
 requires 'DBIx::Class';
 requires 'DBIx::Class::Migration';

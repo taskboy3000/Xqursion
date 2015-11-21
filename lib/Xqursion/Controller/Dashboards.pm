@@ -1,4 +1,4 @@
-package Xqursion::Controller::Dashboard;
+package Xqursion::Controller::Dashboards;
 use Modern::Perl '2012';
 use Mojo::Base 'Mojolicious::Controller';
 

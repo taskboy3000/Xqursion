@@ -986,6 +986,12 @@ DISTRIBUTIONS
       Class::Accessor::Chained::Fast 0
       Test::Exception 0
       Test::More 0
+  Data-Section-Simple-0.07
+    pathname: M/MI/MIYAGAWA/Data-Section-Simple-0.07.tar.gz
+    provides:
+      Data::Section::Simple 0.07
+    requirements:
+      ExtUtils::MakeMaker 6.30
   Data-Validator-1.07
     pathname: G/GF/GFUJI/Data-Validator-1.07.tar.gz
     provides:
@@ -2591,6 +2597,22 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 6.30
       Mojolicious 2.48
+  Mojolicious-Plugin-AdvancedMod-0.38
+    pathname: G/GR/GRISHKOV/Mojolicious-Plugin-AdvancedMod-0.38.tar.gz
+    provides:
+      Mojolicious::Command::am undef
+      Mojolicious::Plugin::AdvancedMod 0.38
+      Mojolicious::Plugin::AdvancedMod::ActionFilter undef
+      Mojolicious::Plugin::AdvancedMod::Authoriz undef
+      Mojolicious::Plugin::AdvancedMod::Configurator undef
+      Mojolicious::Plugin::AdvancedMod::Fake undef
+      Mojolicious::Plugin::AdvancedMod::HashedParams undef
+      Mojolicious::Plugin::AdvancedMod::TagHelpers undef
+    requirements:
+      DBI 0
+      Module::Build 0
+      Test::More 0
+      Text::Haml 0
   Mojolicious-Plugin-Authentication-1.29
     pathname: M/MA/MADCAT/Mojolicious-Plugin-Authentication-1.29.tar.gz
     provides:
@@ -4040,6 +4062,23 @@ DISTRIBUTIONS
       Text::German::Vorsilbe undef
     requirements:
       ExtUtils::MakeMaker 0
+  Text-Haml-0.990116
+    pathname: V/VT/VTI/Text-Haml-0.990116.tar.gz
+    provides:
+      Text::Haml 0.990116
+    requirements:
+      CPAN::Meta 0
+      CPAN::Meta::Prereqs 0
+      Carp 0
+      Data::Section::Simple 0
+      Encode 0
+      ExtUtils::CBuilder 0
+      File::Basename 0
+      File::Spec 0
+      IO::File 0
+      Module::Build 0.38
+      Scalar::Util 0
+      URI::Escape 0
   Text-Unidecode-1.27
     pathname: S/SB/SBURKE/Text-Unidecode-1.27.tar.gz
     provides:
@@ -4157,6 +4196,70 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
+  URI-1.69
+    pathname: E/ET/ETHER/URI-1.69.tar.gz
+    provides:
+      URI 1.69
+      URI::Escape 3.31
+      URI::Heuristic 4.20
+      URI::IRI 1.69
+      URI::QueryParam 1.69
+      URI::Split 1.69
+      URI::URL 5.04
+      URI::WithBase 2.20
+      URI::_foreign 1.69
+      URI::_generic 1.69
+      URI::_idna 1.69
+      URI::_ldap 1.69
+      URI::_login 1.69
+      URI::_punycode 1.69
+      URI::_query 1.69
+      URI::_segment 1.69
+      URI::_server 1.69
+      URI::_userpass 1.69
+      URI::data 1.69
+      URI::file 4.21
+      URI::file::Base 1.69
+      URI::file::FAT 1.69
+      URI::file::Mac 1.69
+      URI::file::OS2 1.69
+      URI::file::QNX 1.69
+      URI::file::Unix 1.69
+      URI::file::Win32 1.69
+      URI::ftp 1.69
+      URI::gopher 1.69
+      URI::http 1.69
+      URI::https 1.69
+      URI::ldap 1.69
+      URI::ldapi 1.69
+      URI::ldaps 1.69
+      URI::mailto 1.69
+      URI::mms 1.69
+      URI::news 1.69
+      URI::nntp 1.69
+      URI::pop 1.69
+      URI::rlogin 1.69
+      URI::rsync 1.69
+      URI::rtsp 1.69
+      URI::rtspu 1.69
+      URI::sftp 1.69
+      URI::sip 1.69
+      URI::sips 1.69
+      URI::snews 1.69
+      URI::ssh 1.69
+      URI::telnet 1.69
+      URI::tn3270 1.69
+      URI::urn 1.69
+      URI::urn::isbn undef
+      URI::urn::oid 1.69
+    requirements:
+      Exporter 5.57
+      ExtUtils::MakeMaker 0
+      MIME::Base64 2
+      Scalar::Util 0
+      parent 0
+      perl 5.008001
+      utf8 0
   UUID-Tiny-1.04
     pathname: C/CA/CAUGUSTIN/UUID-Tiny-1.04.tar.gz
     provides:

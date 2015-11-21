@@ -19,8 +19,9 @@ sub make_routes {
     $r->post("/sessions/create")->to("sessions#create");
 
     # Protected routes
-    my $auth_bridge = $r->under("/dashboard")->to("sessions#is_valid");
-    $auth_bridge->route("/")->name("user_home")->to("dashboards#index");
+    $r->get("/app/dashboard")->to("dashboards#index");
+    # my $auth_bridge = $r->under("/app")->to("sessions#is_valid");
+    # $auth_bridge->route("/dashboard")->name("user_home")->to("dashboards#index");
 
 }
 
