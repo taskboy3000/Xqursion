@@ -2,14 +2,6 @@ package Xqursion::Controller::Application;
 use Modern::Perl '2012';
 use Mojo::Base 'Mojolicious::Controller';
 
-sub validate_user {
-    my ($self) = shift;
-    unless ($self->current_user) {
-        $self->redirect_to("/");
-    }
-    return 1;
-}
-
 sub current_user {
     my ($self) = shift;
 

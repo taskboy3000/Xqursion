@@ -1,7 +1,7 @@
 package Xqursion::Controller::Users;
 use Modern::Perl '2012';
 # use Mojo::Base 'Mojolicious::Controller';
-use Mojo::Base 'Xqurision::Controller::Application';
+use Mojo::Base 'Xqursion::Controller::Application';
 
 sub create {
     my ($self) = shift;
