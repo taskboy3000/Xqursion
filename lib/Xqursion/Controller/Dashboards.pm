@@ -9,4 +9,8 @@ sub index {
     $self->render();
 }
 
+sub other {
+    my ($self) = shift;
+    return $self->render(inline => "OK, computer");
+}
 1;
