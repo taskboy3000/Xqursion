@@ -23,7 +23,7 @@ sub startup {
     $self->plugin("Config");
     # push @{$plugins->namespaces}, 'Xqursion::Plugin';
     $self->plugin('Xqursion::Plugin::Routes',);
-    $self->plugin('Mojolicious::Plugin::Filter');
+    $self->plugin('Mojolicious::Plugin::BeforeFilter');
     $self->add_filter_class('Xqursion::Filters');
     $self->make_routes();
 }
