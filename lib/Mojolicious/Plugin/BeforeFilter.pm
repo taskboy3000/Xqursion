@@ -107,6 +107,9 @@ Please note that the plugin will always try to run all the matching filters.
 
 =head1 USING FILTERS IN CONTROLLERS
 
+To request that custom filters be applied to action methods, simply create a package 
+global hash reference called $BEFORE_FILTERS.
+
 =head1 SEE ALSO
 
 =over 4
@@ -117,7 +120,6 @@ Please note that the plugin will always try to run all the matching filters.
 L<Mojolicious::Plugin::AdvancedMod>, which did not quite work in the ways I needed it to.
 
 =back
-
 
 
 =head1 COPYRIGHT AND DISCLAIMER
@@ -191,7 +193,7 @@ sub _filter {
 			# Need to load these filter classes before I can introspect them
 			eval "require $filter_class";
 			if ($@) {
-			    $L->error(__PACKAGE__ . ": Could not load '$filter_class'");
+			    $L->error(__PACKAGE__ . ": Could not load '$filter_class' - $@");
 			}
 
 			if ($filter_class->can($filter_action)) {

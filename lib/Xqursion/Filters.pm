@@ -1,5 +1,5 @@
 package Xqursion::Filters;
-use Modern::Perl '2014';
+use Modern::Perl '2012';
 
 sub require_authentication {
     my ($class, $c, $method) = @_;
