@@ -1,9 +1,8 @@
 # This is the DDL part of the model
 package Schema::Result::User;
 use strict;
-use base ('DBIx::Class::Core');
-use Time::Duration;
-use DateTime;
+use base ('Schema::ResultBase');
+use Digest::SHA ('sha256_hex');
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
 __PACKAGE__->table("users");
@@ -12,26 +11,17 @@ __PACKAGE__->add_columns(
    "username" => { data_type => "varchar", is_nullable => 0, size=> 64},
    "email" => { data_type => "varchar", is_nullable => 0, size=> 128},
    "password_hash" => { data_type => "varchar", is_nullable => 0, size=> 128},
+   "role" => { data_type => "char", is_nullable => 0, size=> 16, default => "USER" },
    "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
    "updated_at" => { data_type => "datetime", us_nullable => 0, set_on_create => 1, set_on_update => 1, },
 );
 
-__PACKAGE__->set_primary_key("id");
-__PACKAGE__->inflate_column("created_at", {
-  inflate => sub { DateTime->from_epoch(epoch => shift) }, 
-  deflate => sub { shift->epoch }
-});
-__PACKAGE__->inflate_column("updated_at", {
-  inflate => sub { DateTime->from_epoch(epoch => shift) }, 
-  deflate => sub { shift->epoch }
-});
+our %ROLES = (USER => 1, ADMIN => 10);
 
-use UUID::Tiny (':std');
-use Digest::SHA ('sha256_hex');
-
-sub create_id {
-    my ($self) = @_;
-    $self->id(uuid_to_string(create_uuid(UUID_V4)));
+sub new {
+    my ($self, $attrs) = @_;
+    $attrs->{role} = "USER" unless exists $ROLES{$attrs->{role}};
+    return $self->next::method($attrs);
 }
 
 sub hash_password {

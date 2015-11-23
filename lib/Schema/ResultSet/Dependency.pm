@@ -1,4 +1,4 @@
-package Schema::ResultSet::User;
+package Schema::ResultSet::Dependency;
 use Modern::Perl;
 use base 'Schema::ResultSetBase';
 
