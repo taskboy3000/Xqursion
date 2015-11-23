@@ -1,0 +1,22 @@
+<%= form_for journey_create => begin %>
+  <%= label_for "name", begin %>
+        Name
+  <% end %>
+  <%= input_tag "name", class => "form-control", required => "required", placeholder => "Name of project" %>
+  <br>
+
+  <%= label_for "start_date" => begin %>
+        Start Date:
+  <% end %>
+  <%= input_tag "start_date", class => "form-control", "data-provide" => "datepicker", placeholder => "YYYY-MM-DD" %>
+  <br>
+
+  <%= label_for "end_date" => begin %>
+        End Date:
+  <% end %>
+  
+  <%= input_tag "end_date", class => "form-control", "data-provide" => "datepicker", placeholder => "YYYY-MM-DD" %>
+  <br>
+
+  <%= submit_button 'Create', class=> "btn btn-primary"%>
+<% end %>

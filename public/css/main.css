@@ -7,3 +7,9 @@ html, body {
 .page-content {
    min-height: 400px;
 }
+
+.sort-icon {
+    font-size: 80%;
+    padding-left: 5px;
+}
+

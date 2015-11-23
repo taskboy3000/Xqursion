@@ -1,0 +1,22 @@
+% layout 'default';
+% title "Your Journeys";
+
+<ol class="breadcrumb">
+  <li><%= link_to "your_dashboard" => begin%>Home<% end %></li>
+  <li class="active">Journeys</li>
+</ol>
+
+<h1>Your Journeys</h1>
+
+<table class="table table-striped" role="sortable">
+  <thead>
+    <th role="sorter">Name</th>
+    <th role="sorter">Created</th>
+    <th role="sorter">Updated</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<p><%= link_to "journey_new", class => "btn btn-primary", begin %>New Journey<% end %></p>
