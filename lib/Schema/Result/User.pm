@@ -13,7 +13,7 @@ __PACKAGE__->add_columns(
    "password_hash" => { data_type => "varchar", is_nullable => 0, size=> 128},
    "role" => { data_type => "char", is_nullable => 0, size=> 16, default => "USER" },
    "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
-   "updated_at" => { data_type => "datetime", us_nullable => 0, set_on_create => 1, set_on_update => 1, },
+   "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
 );
 
 our %ROLES = (USER => 1, ADMIN => 10);

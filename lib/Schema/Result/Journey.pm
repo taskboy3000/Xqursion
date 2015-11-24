@@ -12,7 +12,7 @@ __PACKAGE__->add_columns(
    "start_at" => { data_type => "date", is_nullable => 0 },
    "end_at" => { data_type => "date", is_nullable => 0 },
    "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
-   "updated_at" => { data_type => "datetime", us_nullable => 0, set_on_create => 1, set_on_update => 1, },
+   "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
 );
 
 

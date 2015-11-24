@@ -8,3 +8,6 @@ By Joe Johnston <jjohn@taskboy.com>
  * PERL5LIB +local/lib
  * XQURSION_PW_SECRET
  
+# LICENSE
+
+Artistic

@@ -7,7 +7,7 @@ use UUID::Tiny (':std');
 # These routines happen in all tables.
 # All tables have an ID field that is a UUID
 # All tables should have a created_at and updated_at
-if (__PACKAGE__ ne 'Schema::Result::Base') {
+if (__PACKAGE__ ne 'Schema::ResultBase') {
     __PACKAGE__->set_primary_key("id");
     __PACKAGE__->inflate_column("created_at", {
                                                inflate => sub { DateTime->from_epoch(epoch => shift) }, 
