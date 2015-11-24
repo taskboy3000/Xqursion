@@ -16,6 +16,16 @@
     <th>Actions</th>
   </thead>
   <tbody>
+    <% for my $j (@$journeys) { %>
+    <tr>
+      <td><%= $j->name %></td>
+      <td><%= $j->created_at %></td>
+      <td><%= $j->updated_at %></td>
+      <td>
+        <%= link_to url_for("journey_edit", id => $j->id), class=>"btn btn-primary btn-sm", begin %>Edit<% end %>
+      </td>
+    </tr>
+    <% } %> 
   </tbody>
 </table>
 

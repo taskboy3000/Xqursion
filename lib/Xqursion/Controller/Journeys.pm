@@ -1,23 +1,27 @@
 package Xqursion::Controller::Journeys;
 use Modern::Perl '2012';
-use Mojo::Base 'Mojolicious::Controller';
+use Mojo::Base 'Xqursion::Controller::Application';
 
 our $BEFORE_FILTERS = { "require_authentication" => [ 'index', 'show', 'New', 'create', 'edit', 'delete' ] };
 
 sub index {
     my $self = shift;
     my $L = $self->app->log;
-    my $current_user = $self->current_user;
-    my $journeys = $current_user->journeys->all;
+    my $journeys = [];
 
-    $self->render(c => $self, journeys => $journeys);
+    my $current_user = $self->current_user;
+    if ($current_user) {
+        $journeys = [ $current_user->journeys() ];
+    }
+
+    $self->render(journeys => $journeys);
 }
 
 # Form to create new 
 sub New {
     my $self = shift;
-
-    $self->render();
+    my $journey = $self->app->db->resultset("Journey")->new;
+    $self->render(journey => $journey);
 }
 
 # Form handler for new
@@ -27,11 +31,10 @@ sub create {
     my $current_user = $self->current_user;
 
     if ($current_user && $self->param("name")) {
-	my $journey = $self->app->db->resultset("Journey")->new;
-	$journey->name = $self->param("name");
-	$journey->user_id = $current_user->id;
-	$journey->start_date = $self->param("start_date") if $self->param("start_date");
-	$journey->end_date = $self->param("end_date") if $self->param("end_date");
+	my $journey = $self->app->db->resultset("Journey")->new({name => $self->param("name"), user_id => $current_user->id});
+
+	$journey->start_at($self->param("start_at")) if $self->param("start_at");
+	$journey->end_at($self->param("end_at")) if $self->param("end_at");
 	$journey->create_id;
 	if ($journey->insert) {
 	    $L->debug("Created journey: " . $journey->id);
@@ -47,12 +50,22 @@ sub create {
 # Form to edit existing
 sub edit {
     my $self = shift;
-    $self->render();
+    my $journey = $self->app->db->resultset("Journey")->find($self->param("id"));
+    $self->render(journey => $journey);
 }
 
 # Form handler for edit
 sub update {
     my $self = shift;
+
+    my $journey = $self->app->db->resultset("Journey")->find($self->param("id"));
+    for my $f ("name", "start_at", "end_at") {
+        $journey->$f($self->param($f));
+    }
+
+    unless ($journey->update) {
+        # redirect to form for validation errors
+    }
     $self->index;
 }
 

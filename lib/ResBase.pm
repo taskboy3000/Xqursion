@@ -10,15 +10,6 @@ use UUID::Tiny (':std');
 
 sub init {
     my ($class) = @_;
-    $class->inflate_column("created_at", {
-	inflate => sub { DateTime->from_epoch(epoch => shift) }, 
-	deflate => sub { shift->epoch }
-			   });
-    
-    $class->inflate_column("updated_at", {
-	inflate => sub { DateTime->from_epoch(epoch => shift) }, 
-	deflate => sub { shift->epoch }
-			   });
 }
 
 sub create_id {

@@ -1,0 +1,33 @@
+{
+   "sets" : [
+      {
+         "quantity" : "all",
+         "class" : "Step"
+      },
+      {
+         "quantity" : "all",
+         "class" : "DependencyGroup"
+      },
+      {
+         "quantity" : "all",
+         "class" : "Journey"
+      },
+      {
+         "quantity" : "all",
+         "class" : "User"
+      },
+      {
+         "quantity" : "all",
+         "class" : "Dependency"
+      }
+   ],
+   "might_have" : {
+      "fetch" : 0
+   },
+   "belongs_to" : {
+      "fetch" : 0
+   },
+   "has_many" : {
+      "fetch" : 0
+   }
+}

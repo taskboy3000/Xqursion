@@ -19,7 +19,16 @@ __PACKAGE__->add_columns(
 );
 
 __PACKAGE__->set_primary_key("id");
-__PACKAGE__->has_many("journeys" => 'Schema::Result::Journey');
+__PACKAGE__->has_many("journeys" => 'Schema::Result::Journey', 'user_id');
+__PACKAGE__->inflate_column("created_at", {
+                                         inflate => sub { DateTime->from_epoch(epoch => shift) }, 
+                                         deflate => sub { shift->epoch }
+                                        });
+
+__PACKAGE__->inflate_column("updated_at", {
+                                         inflate => sub { DateTime->from_epoch(epoch => shift) }, 
+                                         deflate => sub { shift->epoch }
+                                        });
 
 __PACKAGE__->subclass;
 __PACKAGE__->init();

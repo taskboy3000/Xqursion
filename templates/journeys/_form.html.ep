@@ -1,21 +1,26 @@
-<%= form_for journey_create => begin %>
+<% $form_action = "journey_create";
+   if ($journey->id) {
+        $form_action = "journey_update"
+   }
+%>
+<%= form_for $form_action => begin %>
   <%= label_for "name", begin %>
         Name
   <% end %>
   <%= input_tag "name", class => "form-control", required => "required", placeholder => "Name of project" %>
   <br>
 
-  <%= label_for "start_date" => begin %>
+  <%= label_for "start_at" => begin %>
         Start Date:
   <% end %>
-  <%= input_tag "start_date", class => "form-control", "data-provide" => "datepicker", placeholder => "YYYY-MM-DD" %>
+  <%= input_tag "start_at", class => "form-control", "data-provide" => "datepicker", placeholder => "YYYY-MM-DD" %>
   <br>
 
-  <%= label_for "end_date" => begin %>
+  <%= label_for "end_at" => begin %>
         End Date:
   <% end %>
   
-  <%= input_tag "end_date", class => "form-control", "data-provide" => "datepicker", placeholder => "YYYY-MM-DD" %>
+  <%= input_tag "end_at", class => "form-control", "data-provide" => "datepicker", placeholder => "YYYY-MM-DD" %>
   <br>
 
   <%= submit_button 'Create', class=> "btn btn-primary"%>

@@ -16,6 +16,17 @@ __PACKAGE__->add_columns(
    "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
 );
 __PACKAGE__->set_primary_key("id");
+__PACKAGE__->inflate_column("created_at", {
+                                         inflate => sub { DateTime->from_epoch(epoch => shift) }, 
+                                         deflate => sub { shift->epoch }
+                                        });
+
+__PACKAGE__->inflate_column("updated_at", {
+                                         inflate => sub { DateTime->from_epoch(epoch => shift) }, 
+                                         deflate => sub { shift->epoch }
+                                        });
+
+
 __PACKAGE__->subclass;
 __PACKAGE__->init();
 1;

@@ -3,7 +3,7 @@ package Schema;
 use strict;
 use parent ('DBIx::Class::Schema');
 
-our $VERSION = "7";
+our $VERSION = "9";
 
 __PACKAGE__->load_namespaces();
 # __PACKAGE__->load_components('Validation');

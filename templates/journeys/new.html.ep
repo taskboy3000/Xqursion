@@ -3,4 +3,4 @@
 
 <h1>Create a new Journey</h1>
 
-<%= $c->render_to_string("journeys/_form") %>
+<%= $self->render_to_string("journeys/_form", {journey => $journey}) %>
