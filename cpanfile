@@ -6,6 +6,7 @@ requires 'DBIx::Class::Migration';
 requires 'DBIx::Class::DeploymentHandler';
 requires 'DBIx::Class::Validation';
 requires 'DBIx::Class::TimeStamp';
+requires 'DBIx::Class::Helpers';
 requires 'FormValidator::Simple';
 requires 'Time::Duration';
 requires 'Modern::Perl';

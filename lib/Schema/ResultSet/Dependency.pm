@@ -1,5 +1,5 @@
 package Schema::ResultSet::Dependency;
 use Modern::Perl;
-use base 'Schema::ResultSetBase';
+use parent 'ResSetBase';
 
 1;

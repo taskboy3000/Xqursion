@@ -1,8 +1,8 @@
 package Schema::Result::Dependency;
 use Modern::Perl '2012';
-use base ('Schema::ResultBase');
+use parent ('ResBase');
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
+__PACKAGE__->load_components("Helper::Row::SubClass", "InflateColumn::DateTime", "TimeStamp", "Core");
 __PACKAGE__->table("dependencies");
 __PACKAGE__->add_columns(
    "id" => { data_type => "char", is_nullable => 0, size=>64},
@@ -11,4 +11,8 @@ __PACKAGE__->add_columns(
    "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
    "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
 );
+__PACKAGE__->set_primary_key("id");
 
+__PACKAGE__->subclass;
+__PACKAGE__->init();
+1;

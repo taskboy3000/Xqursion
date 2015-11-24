@@ -7,6 +7,7 @@ sub current_user {
 
     # Check for cookie
     if (my $uid = $self->session("user_id")) {
+	$self->app->log->debug("Looking up user '$uid'");
         my $user = $self->app->db->resultset("User")->single({id => $uid});
         if ($user) {
             return $user;

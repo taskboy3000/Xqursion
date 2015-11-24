@@ -1,10 +1,12 @@
 # This is the DDL part of the model
 package Schema::Result::User;
 use strict;
-use base ('Schema::ResultBase');
+use parent ('ResBase');
 use Digest::SHA ('sha256_hex');
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
+our %ROLES = (USER => 1, ADMIN => 10);
+
+__PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime", "TimeStamp", "Core");
 __PACKAGE__->table("users");
 __PACKAGE__->add_columns(
    "id" => { data_type => "char", is_nullable => 0, size=>64},
@@ -16,7 +18,11 @@ __PACKAGE__->add_columns(
    "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
 );
 
-our %ROLES = (USER => 1, ADMIN => 10);
+__PACKAGE__->set_primary_key("id");
+__PACKAGE__->has_many("journeys" => 'Schema::Result::Journey');
+
+__PACKAGE__->subclass;
+__PACKAGE__->init();
 
 sub new {
     my ($self, $attrs) = @_;
