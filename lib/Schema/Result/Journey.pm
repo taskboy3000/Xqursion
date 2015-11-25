@@ -16,6 +16,7 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->belongs_to("user" => "Schema::Result::User", "user_id");
+__PACKAGE__->has_many("steps" => "Schema::Result::Step", "journey_id");
 __PACKAGE__->inflate_column("created_at", {
                                          inflate => sub { DateTime->from_epoch(epoch => shift) }, 
                                          deflate => sub { shift->epoch }

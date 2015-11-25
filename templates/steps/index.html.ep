@@ -1,0 +1,14 @@
+% layout 'default';
+% title "Steps";
+
+<ol class="breadcrumb">
+  <li><%= link_to "your_dashboard" => begin %>Home<% end %></li>
+  <li><%= link_to "journeys_index" => begin %>Your Journeys<% end %></li>
+  <li class="active">Steps</li>
+</ol>
+
+<h1>Steps for <%= $journey->name %></h1>
+
+
+
+
