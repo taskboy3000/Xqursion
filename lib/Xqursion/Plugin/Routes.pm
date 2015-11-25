@@ -23,7 +23,7 @@ sub make_routes {
 
     # Journeys
     $r->get("/app/journeys")->name("journeys_index")->to("journeys#index");
-    $r->get("/app/journey/new")->name("journey_new")->to("journeys#new");
+    $r->get("/app/journey/new")->name("journey_new")->to("journeys#New");
     $r->get("/app/journey/:id/edit")->name("journey_edit")->to("journeys#edit");
     $r->post("/app/journey")->name("journey_create")->to("journeys#create");
     $r->post("/app/journey/:id")->name("journeys_update")->to("journeys#update");

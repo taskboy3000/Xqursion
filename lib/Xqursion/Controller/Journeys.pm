@@ -20,7 +20,7 @@ sub index {
 # Form to create new 
 sub New {
     my $self = shift;
-    my $journey = $self->app->db->resultset("Journey")->new;
+    my $journey = $self->app->db->resultset("Journey")->new({});
     $self->render(journey => $journey);
 }
 
@@ -51,7 +51,7 @@ sub create {
 sub edit {
     my $self = shift;
     my $journey = $self->app->db->resultset("Journey")->find($self->param("id"));
-    $self->render(journey => $journey);
+    $self->render(journey => $journey, c => $self);
 }
 
 # Form handler for edit
