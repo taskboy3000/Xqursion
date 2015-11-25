@@ -29,6 +29,14 @@ sub make_routes {
     $r->post("/app/journey/:id")->name("journeys_update")->to("journeys#update");
     $r->delete("/app/journey/:id")->name("journeys_delete")->to("journeys#delete");
 
+    # Steps
+    $r->get("/app/journey/:journey_id/steps")->name("journey_steps_index")->to("steps#index");
+    $r->get("/app/journey/:journey_id/step/new")->name("journey_step_new")->to("steps#New");
+    $r->get("/app/journey/:journey_id/step/:id/edit")->name("journey_step_edit")->to("steps#edit");
+    $r->post("/app/journey/:journey_id/step")->name("journey_step_create")->to("steps#create");
+    $r->post("/app/journey/:journey_id/step/:id")->name("journey_step_update")->to("steps#update");
+    $r->delete("/app/journey/:journey_id/step/:id")->name("journey_step_delete")->to("stepsdelete");
+
 }
 
 sub register {
