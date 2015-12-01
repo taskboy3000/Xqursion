@@ -74,17 +74,21 @@ sub edit {
 # Form handler for edit
 sub update {
     my $self = shift;
+    my $L = $self->app->log;
+    my $D = $self->app->db;
 
-    my $step = $self->app->db->resultset("Step")->find($self->param("id"));
+    my $step = $D->resultset("Step")->find($self->param("id"));
     for my $f ("title", "url", "ordering", "dependency_group_id", "error_url") {
+        $L->debug("Setting field '$f'");
         $step->$f($self->param($f));
     }
 
     unless ($step->update) {
         # redirect to form for validation errors
+        $L->debug("Update failed");
     }
 
-    return $self->index;
+    return $self->redirect_to($self->url_for("journey_steps_index", journey_id => $self->param("journey_id")));
 }
 
 sub delete {

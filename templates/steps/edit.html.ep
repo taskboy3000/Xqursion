@@ -4,6 +4,7 @@
 <ol class="breadcrumb">
   <li><%= link_to "your_dashboard" => begin %>Home<% end %></li>
   <li><%= link_to "journeys_index" => begin %>Your Journeys<% end %></li>
+  <li><%= link_to url_for("journey_steps_index", journey_id => $step->journey_id) => begin %>Steps<% end %></li>
   <li class="active">Edit Step</li>
 </ol>
 
