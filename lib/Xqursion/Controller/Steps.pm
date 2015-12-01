@@ -12,6 +12,7 @@ sub index {
     my $current_user = $self->current_user;
     my $journey = $D->resultset("Journey")->single({id => $self->param("journey_id")});
 
+    # Should check that $journey->user_id eq $current_user->id
     my $steps = [];
 
     if ($journey) {
@@ -28,9 +29,7 @@ sub New {
     my $current_user = $self->current_user;
 
     my $step = $D->resultset("Step")->new({});
-
-    $step->user_id($current_user->id);
-    $self->journey_id($self->param("journey_id"));
+    $step->journey_id($self->param("journey_id"));
     $self->render(step => $step);
 }
 
@@ -44,7 +43,6 @@ sub create {
     if ($current_user && $self->param("title")) {
         my $step = $D->resultset("Step")->new({});
 	$step->create_id;
-        $step->user_id($current_user->id);
         $step->journey_id($self->param("journey_id"));
         $step->title($self->param("title"));
         $step->url($self->param("url"));
@@ -77,15 +75,16 @@ sub edit {
 sub update {
     my $self = shift;
 
-    my $journey = $self->app->db->resultset("Journey")->find($self->param("id"));
-    for my $f ("name", "start_at", "end_at") {
-        $journey->$f($self->param($f));
+    my $step = $self->app->db->resultset("Step")->find($self->param("id"));
+    for my $f ("title", "url", "ordering", "dependency_group_id", "error_url") {
+        $step->$f($self->param($f));
     }
 
-    unless ($journey->update) {
+    unless ($step->update) {
         # redirect to form for validation errors
     }
-    $self->index;
+
+    return $self->index;
 }
 
 sub delete {

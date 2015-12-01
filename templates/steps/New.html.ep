@@ -1,0 +1,6 @@
+% layout 'default';
+% title 'New Step';
+
+<h1>Create a Step</h1>
+
+<%= include "steps/_form", step => $step %>

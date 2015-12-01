@@ -1,0 +1,12 @@
+% layout 'default';
+% title 'Edit';
+
+<ol class="breadcrumb">
+  <li><%= link_to "your_dashboard" => begin %>Home<% end %></li>
+  <li><%= link_to "journeys_index" => begin %>Your Journeys<% end %></li>
+  <li class="active">Edit Step</li>
+</ol>
+
+<h1>Edit Existing Step</h1>
+
+<%= include "steps/_form", step => $step; %>

@@ -1,0 +1,47 @@
+<% my $form_action = "journey_step_create";
+   my $submit_label = "Create";
+   if ($step->id) {
+        $form_action = "journey_step_update";
+        $submit_label = "Update";
+   }
+%>
+<%= form_for $form_action => begin %>
+  <% if ($step->id) { %>
+    <%= hidden_field "id" => $step->id %>
+  <% } %>
+
+  <%= hidden_field "journey_id" => $step->journey_id %>
+
+  <%= label_for "title", begin %>
+        Title
+  <% end %>
+  <%= input_tag "title" => $step->title, class => "form-control", required => "required", placeholder => "Title" %>
+  <br>
+
+  <%= label_for "url", begin %>
+        URL
+  <% end %>
+  <%= input_tag "url" => $step->url, class => "form-control", required => "required", placeholder => "http://example.com/" %>
+  <br>
+
+  <%= label_for "ordering", begin %>
+        Ordering
+  <% end %>
+  <%= input_tag "ordering" => $step->ordering, class => "form-control", required => "required", placeholder => "1" %>
+  <br>
+
+  <%= label_for "dependency_group_id", begin %>
+        Dependency
+  <% end %>
+  <%= input_tag "dependency_group_id" => $step->dependency_group_id, class => "form-control" %>
+  <br>
+
+  <%= label_for "error_url", begin %>
+        Error URL
+  <% end %>
+  <%= input_tag "error_url" => $step->error_url, class => "form-control", placeholder => "http://example.com/error" %>
+  <br>
+ 
+  <%= submit_button $submit_label, class=> "btn btn-primary" %>
+
+<% end %>
