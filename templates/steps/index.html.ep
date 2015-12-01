@@ -28,7 +28,15 @@
      <td><%= $step->error_url %></td>
      <td>
        <%= link_to url_for("journey_step_edit", journey_id => $step->journey_id, id => $step->id), 
-                   class => "btn btn-primary" => begin %>Edit<% end %>
+                   class => "btn btn-primary",
+                   "data-toggle" => "tooltip", "title" => "Testing",
+                   begin %>Edit<% end %>
+       <%= link_to "#",
+                   class => "btn btn-danger",
+                   "data-toggle" => "confirmation",
+                   "data-on-confirm" => "delete_step",
+                   "data-url" => url_for("journey_step_delete", journey_id => $step->journey_id, id => $step->id), 
+                   begin %>Delete<% end %>
      </td>
    </tr>
    <% } %>

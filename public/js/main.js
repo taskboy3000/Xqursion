@@ -1,4 +1,27 @@
 // Xcursion common routines and initialization
+
+// FIXME - move to controller/action.js
+function delete_step () {
+  var url = $(this).attr("data-url");
+  $.ajax({
+        url: url,
+        method: "DELETE",
+        dataType: "html",
+        success: function(d) { 
+           window.location.reload();
+        },        
+        });
+}
+
+function initialize_confirmations () {
+    $("[data-toggle=confirmation]").confirmation({
+        btnOkIcon: "glyphicon glyphicon-ok-circle",
+        btnCancelIcon: "glyphicon glyphicon-remove-circle",
+        singleton: false,
+        popout: false,
+    });
+}
+
 // This function initializes a table to enable simple, alpha-sorting
 // based on column position
 function initialize_sortable_table(this_table)
@@ -76,13 +99,15 @@ function sort_table (this_table, sort_column_index, sort_order)
 
     // empty the target table tbody and replace with sorted rows
     $(this_table).find("tbody").empty().append(rows);
-    initialize_confirmations();
 }
 
 $(document).ready(function() {
+/*
   $("[data-provide=datepicker]").datepicker({
         format: "yyyy-mm-dd",
   });
+*/
 
   $("table[role=sortable]").each(function(){ initialize_sortable_table(this); });
+  initialize_confirmations();
 });

@@ -93,6 +93,18 @@ sub update {
 
 sub delete {
     my $self = shift;
+    my $L = $self->app->log;
+    my $D = $self->app->db;
+    my $current_user = $self->current_user;
+
+    my $step = $D->resultset("Step")->find($self->param("id"));
+    if ($step) {
+        if ($step->journey->user_id ne $current_user->id) {
+            $L->warn("Permission error: user '@{$current_user->email}' tried to remove step '@{$step->id}'");
+        } else {
+            $step->delete;
+        }
+    }
     $self->redirect_to("/"); # redirect to list
 }
 
