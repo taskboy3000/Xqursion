@@ -1,8 +1,9 @@
 // Xcursion common routines and initialization
 
 // FIXME - move to controller/action.js
-function delete_step () {
-  var url = $(this).attr("data-url");
+function delete_step (button) {
+  var url = $(button).attr("data-url");
+
   $.ajax({
         url: url,
         method: "DELETE",
@@ -13,14 +14,25 @@ function delete_step () {
         });
 }
 
-function initialize_confirmations () {
-    $("[data-toggle=confirmation]").confirmation({
-        btnOkIcon: "glyphicon glyphicon-ok-circle",
-        btnCancelIcon: "glyphicon glyphicon-remove-circle",
-        singleton: false,
-        popout: false,
-    });
+// FIXME - move to dialogs.js
+function initialize_dialogs() {
+  $("[data-toggle=confirmation]").click(function(e) {
+        var self = this;
+        e.preventDefault();
+        var action_method = $(this).attr("data-on-confirm");
+
+        $("#dialog").empty().load("/app/dialogs/confirm", function() {
+           $("#dialog .modal").modal({show: true});
+           $("[data-dismiss=modal]").click(function() {
+              $("#dialog .modal").modal('hide');
+           });
+           $("[data-action=modal]").click(function() {
+                window[action_method](self);              
+           });
+        });
+  });
 }
+
 
 // This function initializes a table to enable simple, alpha-sorting
 // based on column position
@@ -109,5 +121,6 @@ $(document).ready(function() {
 */
 
   $("table[role=sortable]").each(function(){ initialize_sortable_table(this); });
-  initialize_confirmations();
+  $("[data-toggle=tooltip]").tooltip();
+  initialize_dialogs();
 });

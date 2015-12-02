@@ -105,7 +105,7 @@ sub delete {
             $step->delete;
         }
     }
-    $self->redirect_to("/"); # redirect to list
+    $self->render(json => { success => 1 });
 }
 
 1;

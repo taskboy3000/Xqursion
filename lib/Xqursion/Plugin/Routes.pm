@@ -21,6 +21,10 @@ sub make_routes {
     # Dashboard 
     $r->get("/app/dashboard")->name("your_dashboard")->to("dashboards#index");
 
+    # Dialogs
+    $r->get("/app/dialogs/confirm")->name("dialog_confirm")->to("dialogs#confirm");
+    $r->get("/app/dialogs/alert")->name("dialog_alert")->to("dialogs#alert");
+
     # Journeys
     $r->get("/app/journeys")->name("journeys_index")->to("journeys#index");
     $r->get("/app/journey/new")->name("journey_new")->to("journeys#New");
@@ -35,7 +39,7 @@ sub make_routes {
     $r->get("/app/journey/:journey_id/step/:id/edit")->name("journey_step_edit")->to("steps#edit");
     $r->post("/app/journey/:journey_id/step")->name("journey_step_create")->to("steps#create");
     $r->post("/app/journey/:journey_id/step/:id")->name("journey_step_update")->to("steps#update");
-    $r->delete("/app/journey/:journey_id/step/:id")->name("journey_step_delete")->to("stepsdelete");
+    $r->delete("/app/journey/:journey_id/step/:id")->name("journey_step_delete")->to("steps#delete");
 
 }
 

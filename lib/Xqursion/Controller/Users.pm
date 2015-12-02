@@ -1,6 +1,5 @@
 package Xqursion::Controller::Users;
 use Modern::Perl '2012';
-# use Mojo::Base 'Mojolicious::Controller';
 use Mojo::Base 'Xqursion::Controller::Application';
 
 sub create {

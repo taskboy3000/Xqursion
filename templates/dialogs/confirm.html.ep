@@ -1,0 +1,4 @@
+% layout 'modal';
+% title "Are you sure?";
+
+Are you sure you want to proceed with this action?
