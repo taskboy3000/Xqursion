@@ -47,8 +47,8 @@ sub create {
         $step->title($self->param("title"));
         $step->url($self->param("url"));
 
-        $self->param("ordering") = 1 unless $self->param("ordering");
-        $step->ordering($self->param("ordering"));
+        #$self->param("ordering") = 1 unless $self->param("ordering");
+        #$step->ordering($self->param("ordering"));
 
         $step->dependency_group_id($self->param("dependency_group_id"));
         $step->error_url($self->param("error_url"));
@@ -78,7 +78,7 @@ sub update {
     my $D = $self->app->db;
 
     my $step = $D->resultset("Step")->find($self->param("id"));
-    for my $f ("title", "url", "ordering", "dependency_group_id", "error_url") {
+    for my $f ("title", "url", "dependency_group_id", "error_url") {
         $L->debug("Setting field '$f'");
         $step->$f($self->param($f));
     }
