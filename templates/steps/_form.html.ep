@@ -24,17 +24,12 @@
   <%= input_tag "url" => $step->url, class => "form-control", required => "required", placeholder => "http://example.com/" %>
   <br>
 
-  <%= label_for "dependency_group_id", begin %>
-        Dependency
-  <% end %>
-  <%= input_tag "dependency_group_id" => $step->dependency_group_id, class => "form-control" %>
-  <br>
-
   <%= label_for "error_url", begin %>
         Error URL
   <% end %>
   <%= input_tag "error_url" => $step->error_url, class => "form-control", placeholder => "http://example.com/error" %>
   <br>
+
  
   <%= submit_button $submit_label, class=> "btn btn-primary" %>
 

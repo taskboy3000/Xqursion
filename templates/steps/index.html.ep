@@ -13,8 +13,8 @@
   <thead>
     <th>Title</th>
     <th>URL</th>
-    <th>Dependency</th>
     <th>Error URL</th>
+    <th>Dependency</th>
     <th>Actions</th>
   </thead>
   <tbody>
@@ -22,8 +22,8 @@
    <tr>
      <td><%= $step->title %></td>
      <td><%= $step->url %></td>
-     <td><%= $step->dependency_group_id %></td>
      <td><%= $step->error_url %></td>
+     <td><%= $step->dependency_group_id %></td>
      <td>
        <%= link_to url_for("journey_step_edit", journey_id => $step->journey_id, id => $step->id), 
                    class => "btn btn-primary",
