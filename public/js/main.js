@@ -135,6 +135,6 @@ $(document).ready(function() {
 */
 
   $("table[role=sortable]").each(function(){ initialize_sortable_table(this); });
-  $("[data-toggle=tooltip]").tooltip();
+  $("[data-toggle=tooltip]").tooltip({html:true});
   initialize_dialogs();
 });

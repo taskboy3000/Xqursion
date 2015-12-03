@@ -14,13 +14,25 @@
     <th role="sorter">Created</th>
     <th role="sorter">Updated</th>
     <th>Actions</th>
-    <th>&nbsp;</th>
   </thead>
 
   <tbody>
     <% for my $j (@$journeys) { %>
     <tr>
-      <td><%= $j->name %></td>
+      <td>
+        <% if ($j->steps < 1) { %>
+          <i class="text-info glyphicon glyphicon-flag" data-toggle="tooltip" 
+             title="This journey has no steps. Steps are what make journeys interesting. Add some now.">
+          </i>
+        <% } %>
+
+        <%= link_to url_for("journey_steps_index", journey_id => $j->id), 
+                      class=>"", 
+                      "data-toggle"=>"tooltip",
+                      title=>"Add, view or edit steps for this journey", 
+                      begin %><%= $j->name %><% end %>
+        
+      </td>
       <td><%= $j->created_at %></td>
       <td><%= $j->updated_at %></td>
       <td>
@@ -34,9 +46,6 @@
                    "data-url" => url_for("journey_delete", id => $j->id), 
                    begin %>Delete<% end %>
 
-      </td>
-      <td>
-        <%= link_to url_for("journey_steps_index", journey_id => $j->id), class=>"", begin %>Go to steps<% end %>
       </td>
     </tr>
     <% } %> 
