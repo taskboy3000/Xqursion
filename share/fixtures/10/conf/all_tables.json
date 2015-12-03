@@ -1,30 +1,30 @@
 {
    "sets" : [
       {
+         "class" : "Dependency",
+         "quantity" : "all"
+      },
+      {
+         "class" : "Journey",
+         "quantity" : "all"
+      },
+      {
          "quantity" : "all",
          "class" : "Step"
       },
       {
-         "quantity" : "all",
-         "class" : "DependencyGroup"
-      },
-      {
-         "quantity" : "all",
-         "class" : "Journey"
+         "class" : "DependencyGroup",
+         "quantity" : "all"
       },
       {
          "quantity" : "all",
          "class" : "User"
-      },
-      {
-         "quantity" : "all",
-         "class" : "Dependency"
       }
    ],
-   "might_have" : {
+   "belongs_to" : {
       "fetch" : 0
    },
-   "belongs_to" : {
+   "might_have" : {
       "fetch" : 0
    },
    "has_many" : {

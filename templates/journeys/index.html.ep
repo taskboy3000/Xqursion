@@ -22,8 +22,17 @@
       <td><%= $j->created_at %></td>
       <td><%= $j->updated_at %></td>
       <td>
-        <%= link_to url_for("journey_edit", id => $j->id), class=>"btn btn-primary btn-sm", begin %>Edit<% end %>
         <%= link_to url_for("journey_steps_index", journey_id => $j->id), class=>"btn btn-primary btn-sm", begin %>Steps<% end %>
+        <%= link_to url_for("journey_edit", id => $j->id), class=>"btn btn-default btn-sm", begin %>Edit<% end %>
+        <%= link_to url_for("journey_download", journey_id => $j->id), class=>"btn btn-default btn-sm", begin %>Download<% end %>
+
+        <%= link_to "#",
+                   "class" => "btn btn-danger",
+                   "data-toggle" => "confirmation",
+                   "data-on-confirm" => "delete_thing",
+                   "data-url" => url_for("journey_delete", id => $j->id), 
+                   begin %>Delete<% end %>
+
       </td>
     </tr>
     <% } %> 
@@ -31,3 +40,4 @@
 </table>
 
 <p><%= link_to "journey_new", class => "btn btn-primary", begin %>New Journey<% end %></p>
+

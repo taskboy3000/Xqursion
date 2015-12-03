@@ -1,4 +1,4 @@
 % layout 'modal';
-% title "Are you sure?";
+% title "Confirmation";
 
 Are you sure you want to proceed with this action?

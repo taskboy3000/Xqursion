@@ -105,7 +105,7 @@ sub delete {
             $step->delete;
         }
     }
-    $self->render(json => { success => 1 });
+    $self->respond_to( json => { json => { success => 1 } } );
 }
 
 1;

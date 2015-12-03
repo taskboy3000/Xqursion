@@ -1,13 +1,9 @@
--- 
--- Created by SQL::Translator::Producer::SQLite
--- Created on Wed Dec  2 21:00:31 2015
--- 
+-- Convert schema '/Users/jjohn/src/Xqursion/share/migrations/_source/deploy/7/001-auto.yml' to '/Users/jjohn/src/Xqursion/share/migrations/_source/deploy/10/001-auto.yml':;
 
 ;
-BEGIN TRANSACTION;
---
--- Table: dependencies
---
+BEGIN;
+
+;
 CREATE TABLE dependencies (
   id char(64) NOT NULL,
   dependency_group_id char(64) NOT NULL,
@@ -16,9 +12,8 @@ CREATE TABLE dependencies (
   updated_at datetime NOT NULL,
   PRIMARY KEY (id)
 );
---
--- Table: dependency_groups
---
+
+;
 CREATE TABLE dependency_groups (
   id char(64) NOT NULL,
   step_id char(64) NOT NULL,
@@ -27,22 +22,8 @@ CREATE TABLE dependency_groups (
   updated_at datetime NOT NULL,
   PRIMARY KEY (id)
 );
---
--- Table: users
---
-CREATE TABLE users (
-  id char(64) NOT NULL,
-  username varchar(64) NOT NULL,
-  email varchar(128) NOT NULL,
-  password_hash varchar(128) NOT NULL,
-  role char(16) NOT NULL,
-  created_at datetime NOT NULL,
-  updated_at datetime NOT NULL,
-  PRIMARY KEY (id)
-);
---
--- Table: journeys
---
+
+;
 CREATE TABLE journeys (
   id char(64) NOT NULL,
   name varchar(255) NOT NULL,
@@ -54,10 +35,11 @@ CREATE TABLE journeys (
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+;
 CREATE INDEX journeys_idx_user_id ON journeys (user_id);
---
--- Table: steps
---
+
+;
 CREATE TABLE steps (
   id char(64) NOT NULL,
   journey_id char(64) NOT NULL,
@@ -71,5 +53,23 @@ CREATE TABLE steps (
   PRIMARY KEY (id),
   FOREIGN KEY (journey_id) REFERENCES journeys(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+;
 CREATE INDEX steps_idx_journey_id ON steps (journey_id);
+
+;
+CREATE TABLE users (
+  id char(64) NOT NULL,
+  username varchar(64) NOT NULL,
+  email varchar(128) NOT NULL,
+  password_hash varchar(128) NOT NULL,
+  role char(16) NOT NULL,
+  created_at datetime NOT NULL,
+  updated_at datetime NOT NULL,
+  PRIMARY KEY (id)
+);
+
+;
+
 COMMIT;
+

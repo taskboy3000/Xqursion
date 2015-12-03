@@ -1,7 +1,7 @@
 // Xcursion common routines and initialization
 
 // FIXME - move to controller/action.js
-function delete_step (button) {
+function delete_thing (button) {
   var url = $(button).attr("data-url");
 
   $.ajax({
@@ -28,6 +28,20 @@ function initialize_dialogs() {
            });
            $("[data-action=modal]").click(function() {
                 window[action_method](self);              
+           });
+        });
+  });
+
+  $("[data-toggle=alert]").click(function(e) {
+        var self = this;
+	var content = $(this).attr("data-content");
+        e.preventDefault();
+
+        $("#dialog").empty().load("/app/dialogs/alert", function() {
+	   $("#dialog .modal-body").html(content);
+	   $("#dialog .modal").modal({show: true});
+           $("[data-dismiss=modal]").click(function() {
+              $("#dialog .modal").modal('hide');
            });
         });
   });

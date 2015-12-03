@@ -71,6 +71,28 @@ sub update {
 
 sub delete {
     my $self = shift;
-    $self->redirect_to("/"); # redirect to list
+    my $L = $self->app->log;
+    my $D = $self->app->db;
+    my $current_user = $self->current_user;
+
+    my $journey = $D->resultset("Journey")->find($self->param("id"));
+    if ($journey) {
+        if ($journey->user_id ne $current_user->id) {
+            $L->warn("Permission error: user '@{$current_user->email}' tried to remove journey '@{$journey->id}'");
+        } else {
+            $journey->delete;
+        }
+    }
+    
+    $self->respond_to( json => { json => { success => 1 } });
 }
+
+sub download {
+    my $self = shift;
+    my $L = $self->app->log;
+    my $D = $self->app->db;
+    my $current_user = $self->current_user;
+    
+}
+
 1;
