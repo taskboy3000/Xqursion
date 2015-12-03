@@ -1,0 +1,6 @@
+% layout 'default';
+% title 'New Access Control';
+
+<h1>Create Access Control</h1>
+
+<%= include "dependency_groups/_form", dependency_group => $dependency_group %>

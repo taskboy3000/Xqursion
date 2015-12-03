@@ -1,0 +1,35 @@
+<% my $form_action = "step_dependency_group_create";
+   my $submit_label = "Create";
+   if ($dependency_group->id) {
+        $form_action = "step_dependency_group_update";
+        $submit_label = "Update";
+   }
+%>
+<%= form_for $form_action => begin %>
+  <% if ($dependency_group->id) { %>
+    <%= hidden_field "id" => $dependency_group->id %>
+  <% } %>
+
+  <%= hidden_field "step_id" => $dependency_group->step_id %>
+
+  <%= label_for "title", begin %>
+        Title
+  <% end %>
+  <%= input_tag "title" => $dependency_group->title, class => "form-control", required => "required", placeholder => "Title" %>
+  <br>
+
+  <%= label_for "operation", begin %>
+        Operation
+  <% end %>
+  <%= select_field 
+        "operation" => [
+                         ["Require All" => "AND",      ($dependency_group->operation eq "AND" ? ("selected" => "selected") : ())],
+                         ["Require One" => "OR",       ($dependency_group->operation eq "OR"  ? ("selected" => "selected") : ())],
+                         ["Require Only One" => "XOR", ($dependency_group->operation eq "XOR" ? ("selected" => "selected") : ())]
+                       ],
+        class => "form-control" %>
+  <br>
+   
+  <%= submit_button $submit_label, class=> "btn btn-primary" %>
+
+<% end %>

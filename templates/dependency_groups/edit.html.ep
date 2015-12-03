@@ -1,0 +1,13 @@
+% layout 'default';
+% title 'Edit';
+
+<ol class="breadcrumb">
+  <li><%= link_to "your_dashboard" => begin %>Home<% end %></li>
+  <li><%= link_to "journeys_index" => begin %>Your Journeys<% end %></li>
+  <li><%= link_to url_for("journey_steps_index", journey_id => $dependency_group->step->journey_id) => begin %>Steps<% end %></li>
+  <li class="active">Edit Access Control</li>
+</ol>
+
+<h1>Edit Existing Access Control</h1>
+
+<%= include "dependency_groups/_form", dependency_group => $dependency_group %>

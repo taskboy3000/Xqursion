@@ -1,17 +1,8 @@
-package Xqursion::Controller::DependencyGroup;
+package Xqursion::Controller::DependencyGroups;
 use Modern::Perl '2012';
+use Mojo::Base 'Xqursion::Controller::Application';
 
-our $BEFORE_FILTERS = { "require_authentication" => [ 'index', 'show', 'New', 'create', 'edit', 'delete' ] };
-
-sub index {
-    my $self = shift;
-    my $L = $self->app->log;
-    my $D = $self->app->db;
-
-    my $current_user = $self->current_user;
-    # FIXME
-    $self->render();
-}
+our $BEFORE_FILTERS = { "require_authentication" => [ 'show', 'New', 'create', 'edit', 'delete' ] };
 
 # Form to create new 
 sub New {
@@ -31,8 +22,10 @@ sub create {
     my $D = $self->app->db;
     my $current_user = $self->current_user;
 
+    my $dp = $D->resultset("DependencyGroup")->new({});
+    my $step = $D->resultset("Step")->find($self->param("step_id"));
+
     if ($current_user && $self->param("title")) {
-        my $dp = $D->resultset("DependencyGroup")->new({});
 	$dp->create_id;
         $dp->step_id($self->param("step_id"));
         $dp->title($self->param("title"));
@@ -40,6 +33,8 @@ sub create {
 
 	if ($dp->insert) {
 	    $L->debug("Created dependency group: " . $dp->id);
+            $step->dependency_group_id($dp->id);
+            $step->update;
 	} else {
 	    $L->warn("Failed to create dependency group");
 	}
@@ -47,8 +42,7 @@ sub create {
 	# XXX ERROR
     }
     
-    # FIXME
-    return $self->redirect_to("????index", { step_id => $self->param("step_id") });
+    return $self->redirect_to("journey_steps_index", { journey_id => $step->journey->id });
 }
 
 # Form to edit existing
@@ -75,8 +69,7 @@ sub update {
         $L->debug("Update failed");
     }
 
-    # FIXME
-    return $self->redirect_to($self->url_for("???_index", journey_id => $self->param("id")));
+    return $self->redirect_to("journey_steps_index", { journey_id => $dp->step->journey->id });
 }
 
 sub delete {
@@ -90,6 +83,8 @@ sub delete {
         if ($dp->step->journey->user_id ne $current_user->id) {
             $L->warn("Permission error: user '@{$current_user->email}' tried to remove step '@{$dp->id}'");
         } else {
+            $dp->step->dependency_group_id(undef);
+            $dp->step->update;
             $dp->delete;
         }
     }

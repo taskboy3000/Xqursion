@@ -9,7 +9,7 @@ __PACKAGE__->add_columns(
    "journey_id" => { data_type => "char", is_nullable => 0, size => 64 },
    "title" => { data_type => "varchar", is_nullable => 0, size => 255 },
    "url" => { data_type => "varchar", is_nullable => 0, size => 4096 },
-   "dependency_group_id" => { data_type => "char", size => 64 },
+   "dependency_group_id" => { data_type => "char", size => 64, is_nullable => 1 },
    "error_url" => { data_type => "varchar", size => 4096 },
    "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
    "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },

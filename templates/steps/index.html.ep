@@ -14,7 +14,7 @@
     <th>Title</th>
     <th>URL</th>
     <th>Error URL</th>
-    <th>Dependency</th>
+    <th>Access Control</th>
     <th>Actions</th>
   </thead>
   <tbody>
@@ -23,11 +23,34 @@
      <td><%= $step->title %></td>
      <td><%= $step->url %></td>
      <td><%= $step->error_url %></td>
-     <td><%= $step->dependency_group_id %></td>
+     <td>
+       <% if ($step->dependency_group_id) { %>
+         <%= $step->dependency_group->title %>
+         <br>
+         <%= link_to url_for("step_dependency_group_edit", step_id => $step->id, id => $step->dependency_group_id), 
+                   class => "",
+                   begin %>Edit<% end %>
+         |
+         <%= link_to "#",
+                   "class" => "text-danger",
+                   "data-toggle" => "confirmation",
+                   "data-on-confirm" => "delete_thing",
+                   "data-url" => url_for("step_dependency_group_delete", id => $step->dependency_group_id), 
+                   begin %>Delete<% end %>
+
+       <% } else { %>
+         <%= link_to url_for("step_dependency_group_new", step_id => $step->id), 
+                   class => "",
+                   begin %>New Access Control<% end %>
+       <% } %> 
+        
+
+     </td>
      <td>
        <%= link_to url_for("journey_step_edit", journey_id => $step->journey_id, id => $step->id), 
                    class => "btn btn-primary",
                    begin %>Edit<% end %>
+
        <%= link_to "#",
                    "class" => "btn btn-danger",
                    "data-toggle" => "confirmation",

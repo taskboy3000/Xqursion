@@ -43,6 +43,11 @@ sub make_routes {
     $r->delete("/app/journey/:journey_id/step/:id")->name("journey_step_delete")->to("steps#delete");
 
     # DependencyGroups
+    $r->get("/app/step/:step_id/dependency_group/new")->name("step_dependency_group_new")->to("dependency_groups#New");
+    $r->get("/app/step/:step_id/dependency_group/:id/edit")->name("step_dependency_group_edit")->to("dependency_groups#edit");
+    $r->post("/app/step/:step_id/dependency_group")->name("step_dependency_group_create")->to("dependency_groups#create");
+    $r->post("/app/step/:step_id/dependency_group/:id")->name("step_dependency_group_update")->to("dependency_groups#update");
+    $r->delete("/app/dependency_group/:id")->name("step_dependency_group_delete")->to("dependency_groups#delete");
     
 }
 
