@@ -49,6 +49,9 @@ sub make_routes {
     $r->post("/app/step/:step_id/dependency_group/:id")->name("step_dependency_group_update")->to("dependency_groups#update");
     $r->delete("/app/dependency_group/:id")->name("step_dependency_group_delete")->to("dependency_groups#delete");
     
+    # Dependencies
+    $r->post("/app/dependency")->name("dependency_create")->to("dependencies#create");
+    $r->delete("/app/dependency/:id")->name("dependency_delete")->to("dependencies#delete");
 }
 
 sub register {

@@ -15,7 +15,6 @@
     <th>URL</th>
     <th>Error URL</th>
     <th>Access Control</th>
-    <th>Actions</th>
   </thead>
   <tbody>
    <% for my $step (@$steps) { %>
@@ -24,6 +23,14 @@
        <%= link_to url_for("journey_step_edit", journey_id => $step->journey_id, id => $step->id), 
                    class => "",
                    begin %><%= $step->title %><% end %>
+       <br>
+       <%= link_to "#",
+                   "class" => "text-danger",
+                   "data-toggle" => "confirmation",
+                   "data-on-confirm" => "delete_thing",
+                   "data-url" => url_for("journey_step_delete", journey_id => $step->journey_id, id => $step->id), 
+                   begin %>(Delete Step)<% end %>
+
      </td>
      <td><%= $step->url %></td>
      <td><%= $step->error_url %></td>
@@ -41,7 +48,7 @@
                    "data-toggle" => "confirmation",
                    "data-on-confirm" => "delete_thing",
                    "data-url" => url_for("step_dependency_group_delete", id => $step->dependency_group_id), 
-                   begin %>(Delete)<% end %>
+                   begin %>(Remove Control)<% end %>
 
        <% } else { %>
          <%= link_to url_for("step_dependency_group_new", step_id => $step->id), 
@@ -50,14 +57,6 @@
        <% } %> 
         
 
-     </td>
-     <td>
-       <%= link_to "#",
-                   "class" => "btn btn-danger",
-                   "data-toggle" => "confirmation",
-                   "data-on-confirm" => "delete_thing",
-                   "data-url" => url_for("journey_step_delete", journey_id => $step->journey_id, id => $step->id), 
-                   begin %>Delete<% end %>
      </td>
    </tr>
    <% } %>

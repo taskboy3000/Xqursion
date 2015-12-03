@@ -25,5 +25,6 @@ __PACKAGE__->inflate_column("updated_at", {
 
 __PACKAGE__->subclass;
 __PACKAGE__->belongs_to("dependency_group", "Schema::Result::DependencyGroup", "dependency_group_id");
+__PACKAGE__->belongs_to("step", "Schema::Result::Step", "step_id");
 __PACKAGE__->init();
 1;

@@ -11,3 +11,40 @@
 <h1>Edit Existing Access Control</h1>
 
 <%= include "dependency_groups/_form", dependency_group => $dependency_group %>
+
+<hr>
+
+<h3>Dependent Steps</h3>
+
+<ul class="list-unstyled"> 
+  <% for my $d ($dependency_group->dependencies) { %>       
+  <li><%= link_to "#",
+        class => "badge",
+        title => "Remove this dependency",
+        style => "background-color: #c66;",
+        "data-toggle" => "confirmation",
+        "data-on-confirm" => "delete_thing",
+        "data-url" => url_for("dependency_delete", id => $d->id)         
+        => begin %>&times;<% end %> 
+        <%= $d->step->title %>
+  </li>
+  <% } %>
+</ul>
+
+<p>Add more dependencies</p>
+
+<%= form_for "dependency_create" => begin %>
+  <%= hidden_field "dependency_group_id" => $dependency_group->id %>
+
+  <%= label_for "step_id" => begin %>
+  Step:
+  <% end %>
+
+  <%= select_field "step_id" => $step_collection, class => "form-control" %>
+
+  <%= submit_button "Add", class=> "btn btn-default" %>
+
+<% end %>
+
+
+<br>

@@ -49,7 +49,13 @@ sub create {
 sub edit {
     my $self = shift;
     my $db = $self->app->db->resultset("DependencyGroup")->find($self->param("id"));
-    $self->render(dependency_group => $db);
+
+    my @tmp;
+    for my $s ($db->step->journey->steps) {
+        push @tmp, [$s->title, $s->id] unless $s->id eq $db->step->id;
+    }
+    my $step_collection = Mojo::Collection->new(@tmp);
+    $self->render(dependency_group => $db, step_collection => $step_collection);
 }
 
 # Form handler for edit

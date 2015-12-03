@@ -11,3 +11,4 @@
 <h1>Edit Existing Step</h1>
 
 <%= include "steps/_form", step => $step; %>
+
