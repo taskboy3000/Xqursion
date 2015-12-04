@@ -17,6 +17,7 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->belongs_to("journey", "Schema::Result::Journey", "journey_id");
 __PACKAGE__->has_one("dependency_group", "Schema::Result::DependencyGroup", "step_id");
+__PACKAGE__->might_have("dependency", "Schema::Result::Dependency", "step_id");
 
 __PACKAGE__->inflate_column("created_at", {
                                          inflate => sub { DateTime->from_epoch(epoch => shift) }, 
@@ -31,4 +32,14 @@ __PACKAGE__->inflate_column("updated_at", {
 
 __PACKAGE__->subclass;
 __PACKAGE__->init();
+
+sub belongs_to_dependency_groups {
+    my $self = shift;
+    my $db = $self->result_source->schema;
+    
+    # Where is this a dependency?
+    my @deps = $db->resultset('Dependency')->find({step_id => $self->id});
+    return map { $_->dependency_group } @deps;
+}
+
 1;

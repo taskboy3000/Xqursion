@@ -14,37 +14,43 @@
 
 <hr>
 
-<h3>Dependent Steps</h3>
+<h3>Dependencies</h3>
 
-<ul class="list-unstyled"> 
-  <% for my $d ($dependency_group->dependencies) { %>       
-  <li><%= link_to "#",
-        class => "badge",
-        title => "Remove this dependency",
-        style => "background-color: #c66;",
-        "data-toggle" => "confirmation",
-        "data-on-confirm" => "delete_thing",
-        "data-url" => url_for("dependency_delete", id => $d->id)         
-        => begin %>&times;<% end %> 
-        <%= $d->step->title %>
-  </li>
-  <% } %>
-</ul>
+<div class="row">
+  <div class="col-md-6">
+    <h4>Current Dependencies</h4>
+    <ul class="list-unstyled"> 
+      <% for my $d ($dependency_group->dependencies) { %>       
+        <li><%= link_to "#",
+                  class => "badge",
+                  title => "Remove this dependency",
+                  style => "background-color: #c66;",
+                  "data-toggle" => "confirmation",
+                  "data-on-confirm" => "delete_thing",
+                  "data-url" => url_for("dependency_delete", id => $d->id)         
+                  => begin %>&times;<% end %> 
+                  <%= $d->step->title %>
+        </li>
+      <% } %>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <% if ($step_collection->size) { %>
+      <h4>Available Steps</h4>
+      <%= form_for "dependency_create" => begin %>
+        <%= hidden_field "dependency_group_id" => $dependency_group->id %>
 
-<p>Add more dependencies</p>
+          <%= label_for "step_id" => begin %>
+          Step:
+          <% end %>
 
-<%= form_for "dependency_create" => begin %>
-  <%= hidden_field "dependency_group_id" => $dependency_group->id %>
+          <%= select_field "step_id" => $step_collection, class => "form-control" %>
 
-  <%= label_for "step_id" => begin %>
-  Step:
-  <% end %>
+          <%= submit_button "<< Add", class=> "btn btn-default" %>
 
-  <%= select_field "step_id" => $step_collection, class => "form-control" %>
-
-  <%= submit_button "Add", class=> "btn btn-default" %>
-
-<% end %>
-
+        <% end %>
+      <% } %>
+  </div>
+</div>
 
 <br>

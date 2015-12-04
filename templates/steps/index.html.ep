@@ -42,6 +42,9 @@
                    begin %>
                    <%= $step->dependency_group->title %>
          <% end %>
+	 <% if (scalar($step->dependency_group->dependencies) < 1) { %>
+	   <i class="text-info glyphicon glyphicon-flag" data-toggle="tooltip" title="No dependencies! Without them, the access control has nothing to operate on"></i>
+	 <% } %>
          <br>
          <%= link_to "#",
                    "class" => "text-danger",

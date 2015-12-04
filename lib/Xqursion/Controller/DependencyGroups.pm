@@ -48,14 +48,26 @@ sub create {
 # Form to edit existing
 sub edit {
     my $self = shift;
-    my $db = $self->app->db->resultset("DependencyGroup")->find($self->param("id"));
+    my $dg = $self->app->db->resultset("DependencyGroup")->find($self->param("id"));
+
+    my %known_dependencies;
+    for my $d ($dg->dependencies) {
+	$known_dependencies{ $d->step_id } = 1;
+    }
 
     my @tmp;
-    for my $s ($db->step->journey->steps) {
-        push @tmp, [$s->title, $s->id] unless $s->id eq $db->step->id;
+    for my $s ($dg->step->journey->steps) {
+	next if $s->id eq $dg->step->id; # don't include the controlled target as a dependency!
+	# don't include dependencies that are already associated with this control
+	next if $known_dependencies{ $s->id };
+	# don't include steps that are someone else's
+	next if $s->dependency && $s->dependency->step_id eq $s->id;
+
+        push @tmp, [$s->title, $s->id] 
     }
+
     my $step_collection = Mojo::Collection->new(@tmp);
-    $self->render(dependency_group => $db, step_collection => $step_collection);
+    $self->render(dependency_group => $dg, step_collection => $step_collection);
 }
 
 # Form handler for edit
@@ -89,9 +101,9 @@ sub delete {
         if ($dp->step->journey->user_id ne $current_user->id) {
             $L->warn("Permission error: user '@{$current_user->email}' tried to remove step '@{$dp->id}'");
         } else {
+            $dp->delete;
             $dp->step->dependency_group_id(undef);
             $dp->step->update;
-            $dp->delete;
         }
     }
     $self->respond_to( json => { json => { success => 1 } } );
