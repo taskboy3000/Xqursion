@@ -18,14 +18,14 @@
   <%= label_for "start_at" => begin %>
         Start Date:
   <% end %>
-  <%= date_field "start_at" => $journey->start_at, class => "form-control",  placeholder => "YYYY-MM-DD" %>
+  <%= date_field "start_at" => $journey->form_date('start_at'), class => "form-control",  placeholder => "YYYY-MM-DD" %>
   <br>
 
   <%= label_for "end_at" => begin %>
         End Date:
   <% end %>
   
-  <%= date_field "end_at" => $journey->end_at, class => "form-control",  placeholder => "YYYY-MM-DD" %>
+  <%= date_field "end_at" => $journey->form_date('end_at'), class => "form-control",  placeholder => "YYYY-MM-DD" %>
   <br>
 
  

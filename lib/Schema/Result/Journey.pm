@@ -33,15 +33,28 @@ __PACKAGE__->inflate_column("start_at", {
                                          inflate => sub { my $d = shift;
                                                           return unless $d;
                                                           DateTime::Format::MySQL->parse_date($d) },
-                                         deflate => sub { DateTime::Format::MySQL->format_date(shift) },
+                                         deflate => sub { 
+                                                          my $s = DateTime::Format::MySQL->format_date(shift);
+                                                          return $s;
+                                                      },
                                         });
 
 __PACKAGE__->inflate_column("end_at", {
                                          inflate => sub { my $d = shift;
                                                           return unless $d;
-                                                          DateTime::Format::MySQL->parse_date($d) },
-                                         deflate => sub { DateTime::Format::MySQL->format_date(shift) },
+                                                          DateTime::Format::MySQL->parse_date($d) 
+                                                        },
+                                         deflate => sub { my $s = DateTime::Format::MySQL->format_date(shift);
+                                                          return $s;
+                                                      },
                                         });
 __PACKAGE__->subclass;
 __PACKAGE__->init();
+
+sub form_date {
+    my ($self, $field) = @_;
+    if ($self->$field) {
+        return $self->$field->ymd();
+    }
+}
 1;
