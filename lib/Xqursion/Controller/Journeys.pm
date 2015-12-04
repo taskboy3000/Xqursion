@@ -28,10 +28,12 @@ sub New {
 sub create {
     my $self = shift;
     my $L = $self->app->log;
+    my $D = $self->app->db;
+
     my $current_user = $self->current_user;
 
     if ($current_user && $self->param("name")) {
-	my $journey = $self->app->db->resultset("Journey")->new({name => $self->param("name"), user_id => $current_user->id});
+	my $journey = $current_user->new_related('journeys', {name => $self->param("name") });
 
 	$journey->start_at($self->param("start_at")) if $self->param("start_at");
 	$journey->end_at($self->param("end_at")) if $self->param("end_at");
@@ -66,7 +68,7 @@ sub update {
     unless ($journey->update) {
         # redirect to form for validation errors
     }
-    $self->index;
+    return $self->redirect_to("journeys_index");
 }
 
 sub delete {

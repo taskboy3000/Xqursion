@@ -1,7 +1,7 @@
 <% my $form_action = "journey_create";
    my $submit_label = "Create";
    if ($journey->id) {
-        $form_action = "journey_update";
+        $form_action = "journeys_update";
         $submit_label = "Update";
    }
 %>

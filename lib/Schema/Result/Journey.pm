@@ -2,6 +2,7 @@
 package Schema::Result::Journey;
 use Modern::Perl '2012';
 use parent ('ResBase');
+use DateTime::Format::MySQL;
 
 __PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime", "TimeStamp", "Core",);
 __PACKAGE__->table("journeys");
@@ -14,19 +15,33 @@ __PACKAGE__->add_columns(
    "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
    "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
 );
+
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->belongs_to("user" => "Schema::Result::User", "user_id");
 __PACKAGE__->has_many("steps" => "Schema::Result::Step", "journey_id");
 __PACKAGE__->inflate_column("created_at", {
-                                         inflate => sub { DateTime->from_epoch(epoch => shift) }, 
-                                         deflate => sub { shift->epoch }
-                                        });
+                                           inflate => sub { DateTime->from_epoch(epoch => shift) }, 
+                                           deflate => sub { shift->epoch }
+                                          });
 
 __PACKAGE__->inflate_column("updated_at", {
-                                         inflate => sub { DateTime->from_epoch(epoch => shift) }, 
-                                         deflate => sub { shift->epoch }
+                                           inflate => sub { DateTime->from_epoch(epoch => shift) }, 
+                                           deflate => sub { shift->epoch }
+                                          });
+
+__PACKAGE__->inflate_column("start_at", {
+                                         inflate => sub { my $d = shift;
+                                                          return unless $d;
+                                                          DateTime::Format::MySQL->parse_date($d) },
+                                         deflate => sub { DateTime::Format::MySQL->format_date(shift) },
                                         });
 
+__PACKAGE__->inflate_column("end_at", {
+                                         inflate => sub { my $d = shift;
+                                                          return unless $d;
+                                                          DateTime::Format::MySQL->parse_date($d) },
+                                         deflate => sub { DateTime::Format::MySQL->format_date(shift) },
+                                        });
 __PACKAGE__->subclass;
 __PACKAGE__->init();
 1;
