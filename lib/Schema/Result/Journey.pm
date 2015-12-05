@@ -12,6 +12,7 @@ __PACKAGE__->add_columns(
    "user_id" => { data_type => "char", is_nullable => 0, size=>64},
    "start_at" => { data_type => "date", is_nullable => 1 },
    "end_at" => { data_type => "date", is_nullable => 1 },
+    "export_url" => { data_type => "varchar", is_nullable => 1, size => 255 },
    "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
    "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
 );
@@ -57,4 +58,12 @@ sub form_date {
         return $self->$field->ymd();
     }
 }
+
+sub export {
+    my ($self) = @_;
+    # Export this journey
+    # record URL to the journey ZIP file
+    return 1;
+}
+
 1;
