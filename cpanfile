@@ -14,3 +14,5 @@ requires 'FormValidator::Simple';
 requires 'Time::Duration';
 requires 'Modern::Perl';
 requires 'Digest::SHA';
+requires 'Imager::QRCode';
+requires 'URI::Escape';

@@ -3,6 +3,9 @@ package Schema::Result::Journey;
 use Modern::Perl '2012';
 use parent ('ResBase');
 use DateTime::Format::MySQL;
+use Imager::QRCode;
+use Cwd;
+use URI::Escape;
 
 __PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime", "TimeStamp", "Core",);
 __PACKAGE__->table("journeys");
@@ -12,7 +15,7 @@ __PACKAGE__->add_columns(
    "user_id" => { data_type => "char", is_nullable => 0, size=>64},
    "start_at" => { data_type => "date", is_nullable => 1 },
    "end_at" => { data_type => "date", is_nullable => 1 },
-    "export_url" => { data_type => "varchar", is_nullable => 1, size => 255 },
+   "export_file" => { data_type => "varchar", is_nullable => 1, size => 255 },
    "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
    "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
 );
@@ -61,8 +64,66 @@ sub form_date {
 
 sub export {
     my ($self) = @_;
+
     # Export this journey
     # record URL to the journey ZIP file
+    my $old_dir = cwd();
+    my $dir = tempdir(CLEANUP => 1);
+    chdir $dir;
+
+    my $qrcode = Imager::QRCode->new(
+				     size          => 4,
+				     margin        => 3,
+				     version       => 1,
+				     level         => 'M',
+				     casesensitive => 1,
+				     lightcolor    => Imager::Color->new(255, 255, 255),
+				     darkcolor     => Imager::Color->new(0, 0, 0),
+				    );
+
+    my $cnt = 0;
+    my @steps = $self->steps;
+    for my $step (@steps) {
+      # FIXME
+      my $img = $qrcode->plot(qq[http://qr.taskboy.com/l/?id=$step->{id}]);
+      my $title = $step->title;
+      my $file = uri_escape($title) . ".png";
+      
+      $img->write(file => $file);
+      
+      if ($img->{ERRSTR}) {
+	warn("$img->{ERRSTR}");
+      } else {
+	$cnt++;
+      }
+    }
+
+    if ($cnt != @steps) {
+        warn(sprintf("Generated different count of expected QR codes %d/%d\n", $cnt, scalar @steps));
+    }
+
+    my $name = $self->name;
+    my $zipfile = uri_escape($name) . ".zip";
+    $self->export_file($zipfile);
+
+    # FIXME
+
+    #my $zipfile_path = "$FindBin::Bin/download/$zipfile";
+    #my $cmd = qq[zip -q $zipfile_path *.png];
+    # warn($cmd);
+    #system($cmd);
+    
+    #unless (-e $zipfile_path)
+    #{
+    #    warn("Did not create zipfile '$zipfile_path'\n");
+    #    return;
+    #}
+
+    chdir $old_dir;
+    $self->update;
+
+    # return $url;
+
     return 1;
 }
 
