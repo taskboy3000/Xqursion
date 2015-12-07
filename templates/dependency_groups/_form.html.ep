@@ -25,7 +25,7 @@
         "operation" => [
                          ["Require All" => "AND",      ($dependency_group->operation eq "AND" ? ("selected" => "selected") : ())],
                          ["Require One" => "OR",       ($dependency_group->operation eq "OR"  ? ("selected" => "selected") : ())],
-                         ["Require Only One" => "XOR", ($dependency_group->operation eq "XOR" ? ("selected" => "selected") : ())]
+                         ["Forbid These" => "NOT",     ($dependency_group->operation eq "NOT" ? ("selected" => "selected") : ())]
                        ],
         class => "form-control" %>
   <br>

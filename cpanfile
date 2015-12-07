@@ -17,3 +17,5 @@ requires 'Digest::SHA';
 requires 'Imager::QRCode';
 requires 'URI::Escape';
 requires 'Archive::Zip';
+requires 'Perl::Critic';
+requires 'Perl::Metrics::Simple';

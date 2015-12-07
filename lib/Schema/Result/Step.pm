@@ -16,7 +16,7 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->belongs_to("journey", "Schema::Result::Journey", "journey_id");
-__PACKAGE__->has_one("dependency_group", "Schema::Result::DependencyGroup", "step_id");
+__PACKAGE__->might_have("dependency_group", "Schema::Result::DependencyGroup", "step_id");
 __PACKAGE__->might_have("dependency", "Schema::Result::Dependency", "step_id");
 
 __PACKAGE__->inflate_column("created_at", {
@@ -40,6 +40,15 @@ sub belongs_to_dependency_groups {
     # Where is this a dependency?
     my @deps = $db->resultset('Dependency')->find({step_id => $self->id});
     return map { $_->dependency_group } @deps;
+}
+
+sub check_dependencies {
+    my ($self, $session_id) = shift;
+    my $dp = $self->dependency_group;
+    
+    return $dp->statisfied($session_id) if $dp;
+
+    return 1;
 }
 
 1;

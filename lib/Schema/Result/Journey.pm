@@ -65,18 +65,24 @@ sub form_date {
 }
 
 sub export {
-    my ($self, $base_dir) = @_;
+    my ($self) = shift;
+    my %args = ( "base_dir" => undef,
+                 "step_url_cb" => undef,
+                 @_
+               );
 
-    unless ($base_dir && -d $base_dir) {
-        die("Pass in a valid base directory. Cannot find '$base_dir'. Currently in " . cwd());
+    unless ($args{base_dir} && -d $args{base_dir}) {
+        die("Pass in a valid base directory. Cannot find '$args{base_dir}'. Currently in " . cwd());
     }
+    mkdir "$args{base_dir}/" . $self->id unless -d "$args{base_dir}/" . $self->id;
+
+    my $zip_dir = $self->id . "/" . uri_escape($self->name);
+    my $Z = Archive::Zip->new;
+    $Z->addDirectory($zip_dir);
 
     my $old_dir = cwd();
     my $dir = tempdir(CLEANUP => 1);
     chdir $dir;
-    my $Z = Archive::Zip->new;
-    my $zip_dir = uri_escape($self->name);
-    $Z->addDirectory($zip_dir);
 
     my $qrcode = Imager::QRCode->new(
 				     size          => 4,
@@ -91,30 +97,33 @@ sub export {
     my $cnt = 0;
     my @steps = $self->steps;
     for my $step (@steps) {
-      # FIXME
-      my $img = $qrcode->plot(qq[http://qr.taskboy.com/l/?id=] . $step->id);
-      my $name = $step->title;
-      my $file = uri_escape($name) . ".png";
-      
-      $img->write(file => $file);
-      
-      if ($img->{ERRSTR}) {
-	warn("$img->{ERRSTR}");
-      } else {
-        $Z->addFile({filename => $file, zipName => "$zip_dir/$file" });
-	$cnt++;
-      }
+        my $step_url = qq[http://www.xqursion.com/step/] . $step->id;
+        if ($args{step_url_cb}) {
+            $step_url = $args{step_url_cb}->($step->id);
+        }
+        my $img = $qrcode->plot($step_url);
+        my $name = $step->title;
+        my $file = uri_escape($name) . ".png";
+        
+        $img->write(file => $file);
+        
+        if ($img->{ERRSTR}) {
+            warn("$img->{ERRSTR}");
+        } else {
+            $Z->addFile({filename => $file, zipName => "$zip_dir/$file" });
+            $cnt++;
+        }
     }
-
+    
     if ($cnt != @steps) {
         warn(sprintf("Generated different count of expected QR codes %d/%d\n", $cnt, scalar @steps));
     }
 
     my $zip_filename = uri_escape($self->name) . ".zip";
 
-    unlink "$base_dir/$zip_filename" if -e "$base_dir/$zip_filename";
+    unlink "$args{base_dir}/$zip_filename" if -e "$args{base_dir}/$zip_filename";
 
-    unless ((my $rc = $Z->writeToFileNamed("$base_dir/" . $zip_filename)) == AZ_OK) {
+    unless ((my $rc = $Z->writeToFileNamed("$args{base_dir}/" . $zip_filename)) == AZ_OK) {
         die "Write error[$rc]: $!";
     }
 
@@ -124,6 +133,11 @@ sub export {
     chdir $old_dir;
 
     return 1;
+}
+
+sub export_zipfile {
+    my ($self) = @_;
+    return "/downloads/" . $self->id . "/" . $self->export_file;
 }
 
 1;

@@ -1,8 +1,9 @@
 package Xqursion::Controller::Journeys;
 use Modern::Perl '2012';
 use Mojo::Base 'Xqursion::Controller::Application';
+use Mojo::Home;
 
-our $BEFORE_FILTERS = { "require_authentication" => [ 'index', 'show', 'New', 'create', 'edit', 'delete' ] };
+our $BEFORE_FILTERS = { "require_authentication" => [ 'index', 'New', 'create', 'edit', 'delete' ] };
 
 sub index {
     my $self = shift;
@@ -89,12 +90,29 @@ sub delete {
     $self->respond_to( json => { json => { success => 1 } });
 }
 
-sub download {
+sub export {
     my $self = shift;
+
     my $L = $self->app->log;
     my $D = $self->app->db;
+
     my $current_user = $self->current_user;
+    my $journey = $D->resultset("Journey")->find($self->param("id"));
+    return unless $journey;
     
+    if ($journey->user_id ne $current_user->id) {
+        return $self->render(text => "Not authorized", status => 403);
+    }
+
+    my $home = Mojo::Home->new;
+    $home->detect;
+    $journey->export(base_dir => $home->to_string . "/public/downloads",
+                     step_url_cb => sub { 
+                         my $step = shift;
+                         return $self->url_for("public_step_show", {id => $step->id});
+                     });
+
+    return $self->redirect_to($journey->export_zipfile);
 }
 
 1;

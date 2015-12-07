@@ -14,8 +14,11 @@ sub init {
 
 sub create_id {
     my ($self) = @_;
-    $self->id(uuid_to_string(create_uuid(UUID_V4)));
+    $self->id(uuid());
 }
 
+sub uuid {
+    uuid_to_string(create_uuid(UUID_V4));
+}
 
 1;
