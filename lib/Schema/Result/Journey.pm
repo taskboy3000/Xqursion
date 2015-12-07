@@ -71,12 +71,8 @@ sub export {
                  @_
                );
 
-    unless ($args{base_dir} && -d $args{base_dir}) {
-        die("Pass in a valid base directory. Cannot find '$args{base_dir}'. Currently in " . cwd());
-    }
-    mkdir "$args{base_dir}/" . $self->id unless -d "$args{base_dir}/" . $self->id;
-
-    my $zip_dir = $self->id . "/" . uri_escape($self->name);
+    mkdir $args{base_dir};
+    my $zip_dir = uri_escape($self->name);
     my $Z = Archive::Zip->new;
     $Z->addDirectory($zip_dir);
 
@@ -99,7 +95,7 @@ sub export {
     for my $step (@steps) {
         my $step_url = qq[http://www.xqursion.com/step/] . $step->id;
         if ($args{step_url_cb}) {
-            $step_url = $args{step_url_cb}->($step->id);
+            $step_url = $args{step_url_cb}->($step);
         }
         my $img = $qrcode->plot($step_url);
         my $name = $step->title;
@@ -108,11 +104,11 @@ sub export {
         $img->write(file => $file);
         
         if ($img->{ERRSTR}) {
-            warn("$img->{ERRSTR}");
-        } else {
-            $Z->addFile({filename => $file, zipName => "$zip_dir/$file" });
-            $cnt++;
-        }
+            warn($img->{ERRSTR});
+            next;
+        } 
+        $Z->addFile({filename => $file, zipName => "$zip_dir/$file" });
+        $cnt++;
     }
     
     if ($cnt != @steps) {
@@ -122,16 +118,13 @@ sub export {
     my $zip_filename = uri_escape($self->name) . ".zip";
 
     unlink "$args{base_dir}/$zip_filename" if -e "$args{base_dir}/$zip_filename";
-
     unless ((my $rc = $Z->writeToFileNamed("$args{base_dir}/" . $zip_filename)) == AZ_OK) {
         die "Write error[$rc]: $!";
     }
 
     $self->export_file($zip_filename);
     $self->update;
-
     chdir $old_dir;
-
     return 1;
 }
 

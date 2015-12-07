@@ -104,9 +104,9 @@ sub export {
         return $self->render(text => "Not authorized", status => 403);
     }
 
-    my $home = Mojo::Home->new;
-    $home->detect;
-    $journey->export(base_dir => $home->to_string . "/public/downloads",
+    my $base_dir = "$ENV{XQURSION_HOME}/public/downloads/" . $journey->id;
+    $L->debug("Export base directory: $base_dir");
+    $journey->export(base_dir => $base_dir,
                      step_url_cb => sub { 
                          my $step = shift;
                          return $self->url_for("public_step_show", {id => $step->id});

@@ -35,7 +35,7 @@
       <td><%= $j->created_at %></td>
       <td><%= $j->updated_at %></td>
       <td>
-        <%= link_to url_for("journey_download", journey_id => $j->id), class=>"btn btn-default btn-sm", begin %>Download<% end %>
+        <%= link_to url_for("journey_download", id => $j->id), class=>"btn btn-default btn-sm", begin %>Download<% end %>
 
         <%= link_to "#",
                    "class" => "btn btn-danger",
