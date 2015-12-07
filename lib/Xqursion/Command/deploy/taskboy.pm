@@ -1,29 +1,18 @@
-package Mojolicious::Command::deploy::taskboy;
+package Xqursion::Command::deploy::taskboy;
 # TOTALLY not a hacked version of deploy::heroku
-
+use Modern::Perl '2012';
 use Mojo::Base 'Mojolicious::Command';
 
-#use IO::All 'io';
-#use File::Path 'make_path';
-#use File::Slurp qw/ slurp write_file /;
-#use File::Spec;
 use Getopt::Long qw/ GetOptions :config no_auto_abbrev no_ignore_case /;
 use IPC::Cmd 'can_run';
 use Mojo::IOLoop;
 use Mojo::UserAgent;
-#use Mojolicious::Command::generate::heroku;
-#use Mojolicious::Command::generate::makefile;
-#use Net::Heroku;
 
-our $VERSION = 0.01;
-
+our $VERSION = 0.02;
 
 has ua => sub { Mojo::UserAgent->new->ioloop(Mojo::IOLoop->singleton) };
-has description      => "Deploy Mojolicious app to Taskboy.\n";
 has opt              => sub { {} };
-#has tmpdir => sub { $ENV{MOJO_TMPDIR} || File::Spec->tmpdir };
-#has credentials_file => sub {"$ENV{HOME}/.heroku/credentials"};
-#has makefile         => 'Makefile.PL';
+has description      => "Deploy Mojolicious app to Taskboy.\n";
 has usage            => <<"EOF";
 
 usage: $0 deploy taskboy [OPTIONS]
@@ -76,15 +65,14 @@ sub run
   
   for my $stage (@stages)
   {
-      $self->$stage() or last;
+      $self->$stage();
   }
 }
-
 
 sub update_taskboy_sandbox 
 {
     my $self = shift;
-    my $command = "ssh taskboy.com 'cd ~/sites/Xqursion && git pull && cpanm install'";
+    my $command = "ssh taskboy.com 'cd ~/sites/Xqursion && git pull && carton && dbic-migration upgrade'";
     print "$command\n";
     system($command);
 }

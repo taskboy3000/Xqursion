@@ -14,6 +14,7 @@ sub startup {
     my $self = shift;
     
     $self->secrets([$ENV{XQURSION_APP_SECRET} || '0987654321']);
+    push @{$self->commands->namespaces}, 'Xqursion::Command';
 
     $self->app->sessions->cookie_name($self->app->moniker);
     $self->app->sessions->default_expiration(86400);

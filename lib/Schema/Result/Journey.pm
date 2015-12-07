@@ -6,6 +6,8 @@ use DateTime::Format::MySQL;
 use Imager::QRCode;
 use Cwd;
 use URI::Escape;
+use Archive::Zip (':ERROR_CODES', ':CONSTANTS');
+use File::Temp ('tempdir');
 
 __PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime", "TimeStamp", "Core",);
 __PACKAGE__->table("journeys");
@@ -63,13 +65,18 @@ sub form_date {
 }
 
 sub export {
-    my ($self) = @_;
+    my ($self, $base_dir) = @_;
 
-    # Export this journey
-    # record URL to the journey ZIP file
+    unless ($base_dir && -d $base_dir) {
+        die("Pass in a valid base directory. Cannot find '$base_dir'. Currently in " . cwd());
+    }
+
     my $old_dir = cwd();
     my $dir = tempdir(CLEANUP => 1);
     chdir $dir;
+    my $Z = Archive::Zip->new;
+    my $zip_dir = uri_escape($self->name);
+    $Z->addDirectory($zip_dir);
 
     my $qrcode = Imager::QRCode->new(
 				     size          => 4,
@@ -85,15 +92,16 @@ sub export {
     my @steps = $self->steps;
     for my $step (@steps) {
       # FIXME
-      my $img = $qrcode->plot(qq[http://qr.taskboy.com/l/?id=$step->{id}]);
-      my $title = $step->title;
-      my $file = uri_escape($title) . ".png";
+      my $img = $qrcode->plot(qq[http://qr.taskboy.com/l/?id=] . $step->id);
+      my $name = $step->title;
+      my $file = uri_escape($name) . ".png";
       
       $img->write(file => $file);
       
       if ($img->{ERRSTR}) {
 	warn("$img->{ERRSTR}");
       } else {
+        $Z->addFile({filename => $file, zipName => "$zip_dir/$file" });
 	$cnt++;
       }
     }
@@ -102,27 +110,18 @@ sub export {
         warn(sprintf("Generated different count of expected QR codes %d/%d\n", $cnt, scalar @steps));
     }
 
-    my $name = $self->name;
-    my $zipfile = uri_escape($name) . ".zip";
-    $self->export_file($zipfile);
+    my $zip_filename = uri_escape($self->name) . ".zip";
 
-    # FIXME
+    unlink "$base_dir/$zip_filename" if -e "$base_dir/$zip_filename";
 
-    #my $zipfile_path = "$FindBin::Bin/download/$zipfile";
-    #my $cmd = qq[zip -q $zipfile_path *.png];
-    # warn($cmd);
-    #system($cmd);
-    
-    #unless (-e $zipfile_path)
-    #{
-    #    warn("Did not create zipfile '$zipfile_path'\n");
-    #    return;
-    #}
+    unless ((my $rc = $Z->writeToFileNamed("$base_dir/" . $zip_filename)) == AZ_OK) {
+        die "Write error[$rc]: $!";
+    }
 
-    chdir $old_dir;
+    $self->export_file($zip_filename);
     $self->update;
 
-    # return $url;
+    chdir $old_dir;
 
     return 1;
 }

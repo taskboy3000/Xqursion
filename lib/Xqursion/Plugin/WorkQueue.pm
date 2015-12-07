@@ -42,7 +42,9 @@ sub run_task {
 
 sub register {
     my ($self, $app) = @_;
-    $app->helper( "" => sub { $self->make_routes($app) } );
+    for my $method ("wq_run_next", "wq_add", "wq_list") {
+        $app->helper( $method => sub { $self->$method(@_) } );
+    }
 }
 
 1;

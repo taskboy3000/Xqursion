@@ -16,3 +16,4 @@ requires 'Modern::Perl';
 requires 'Digest::SHA';
 requires 'Imager::QRCode';
 requires 'URI::Escape';
+requires 'Archive::Zip';
