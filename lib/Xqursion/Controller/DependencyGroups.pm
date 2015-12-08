@@ -42,7 +42,7 @@ sub create {
 	# XXX ERROR
     }
     
-    return $self->redirect_to("journey_steps_index", { journey_id => $step->journey->id });
+    return $self->redirect_to("step_dependency_group_edit", { step_id => $step->id, id => $dp->id });
 }
 
 # Form to edit existing
