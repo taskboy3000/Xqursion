@@ -115,7 +115,7 @@ sub export {
         warn(sprintf("Generated different count of expected QR codes %d/%d\n", $cnt, scalar @steps));
     }
 
-    my $zip_filename = uri_escape($self->name) . ".zip";
+    my $zip_filename = uri_escape($self->id) . ".zip";
 
     unlink "$args{base_dir}/$zip_filename" if -e "$args{base_dir}/$zip_filename";
     unless ((my $rc = $Z->writeToFileNamed("$args{base_dir}/" . $zip_filename)) == AZ_OK) {
@@ -130,7 +130,7 @@ sub export {
 
 sub export_zipfile {
     my ($self) = @_;
-    return "/downloads/" . $self->id . "/" . $self->export_file;
+    return "/downloads/" . $self->id . "/" . uri_escape($self->export_file);
 }
 
 1;

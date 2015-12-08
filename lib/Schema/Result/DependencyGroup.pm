@@ -1,6 +1,7 @@
 package Schema::Result::DependencyGroup;
 use Modern::Perl '2012';
 use parent ('ResBase');
+use Data::Dumper;
 
 our %OPERATIONS = ("AND" => 1, "OR" => 1, "NOT" => 1);
 
@@ -34,11 +35,13 @@ __PACKAGE__->init();
 # Are all the dependencies satisfied?
 sub satisfied {
     my ($self, $session_id) = @_;
+
+    my @dependencies = $self->dependencies;
     
     my $db = $self->result_source->schema;
-
-    my @dependencies = $db->dependencies;
-    my @logs         = $db->resultset("JourneyLog")->find({session_id => $session_id});
+    # warn("Looking up journey logs for session '$session_id'\n");
+    my @logs = $db->resultset("JourneyLog")->search({session_id => $session_id});
+    # warn(sprintf("Found %d journey logs\n", scalar @logs));
 
     return $self->_and(\@dependencies, \@logs) if $self->operation eq 'AND';
     return !$self->_or(\@dependencies, \@logs) if $self->operation eq 'NOT';
@@ -51,9 +54,16 @@ sub _or {
     my ($self, $dependencies, $logs) = @_;
 
     # Any met dependency means success
+    #warn("Start OR\n");
     for my $d (@$dependencies) {
+        #warn(sprintf("Dependency %s : %s\n", $d->id, $d->step->title));
         for my $l (@$logs) {
-            return 1 if $l->step_id eq $d->step_id;
+            next unless $l;
+            #warn(sprintf("Log %s : %s\n", $l->id, $d->step->title));
+            if ($l->step_id eq $d->step_id) {
+                #warn("MATCH dependency " . $d->step->title);
+                return 1;
+            }
         }
     }
     return;
@@ -66,6 +76,7 @@ sub _and {
     for my $d (@$dependencies) {
         my $missing = 1;
         for my $l (@$logs) {
+            next unless $l;
             $missing = 0 if $l->step_id eq $d->step_id;
         }
         return if $missing; # All dependencies must be met to succeed

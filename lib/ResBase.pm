@@ -15,6 +15,7 @@ sub init {
 sub create_id {
     my ($self) = @_;
     $self->id(uuid());
+    return $self;
 }
 
 sub uuid {
