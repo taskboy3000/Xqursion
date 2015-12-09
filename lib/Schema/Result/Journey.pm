@@ -25,6 +25,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->belongs_to("user" => "Schema::Result::User", "user_id");
 __PACKAGE__->has_many("steps" => "Schema::Result::Step", "journey_id");
+__PACKAGE__->has_many("logs" => "Schema::Result::JourneyLog", "journey_id");
+
 __PACKAGE__->inflate_column("created_at", {
                                            inflate => sub { DateTime->from_epoch(epoch => shift) }, 
                                            deflate => sub { shift->epoch }
@@ -93,7 +95,7 @@ sub export {
     my $cnt = 0;
     my @steps = $self->steps;
     for my $step (@steps) {
-        my $step_url = qq[http://www.xqursion.com/step/] . $step->id;
+        my $step_url = "";
         if ($args{step_url_cb}) {
             $step_url = $args{step_url_cb}->($step);
         }

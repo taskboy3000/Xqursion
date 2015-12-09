@@ -12,6 +12,7 @@
   <thead>
     <th role="sorter">Name</th>
     <th>Steps</th>
+    <th>Travelers</td>
     <th role="sorter">Created</th>
     <th role="sorter">Updated</th>
     <th>Actions</th>
@@ -30,7 +31,9 @@
              title="This journey has no steps. Steps are what make journeys interesting. Add some now.">
           </i>
         <% } %>
-
+      </td>
+      <td>
+        <%= link_to url_for("journey_logs_index", journey_id => $j->id) => begin %><%= scalar($j->logs) %><% end %>
       </td>
       <td><%= $j->created_at %></td>
       <td><%= $j->updated_at %></td>

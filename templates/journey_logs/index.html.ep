@@ -1,0 +1,30 @@
+% layout 'default';
+% title 'Journey Log';
+
+<ol class="breadcrumb">
+  <li><%= link_to "your_dashboard" => begin %>Home<% end %></li>
+  <li><%= link_to "journeys_index" => begin %>Your Journeys<% end %></li>
+  <li class="active">Log</li>
+</ol>
+
+<h1>Journey Logs</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+    <th>Session ID</th>
+    <th>Journey</th>
+    <th>Step</th>
+    <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>     
+    <% for my $l (@$sessions) { %>
+    <tr>
+    <td><%= $l->session_id %></td>
+    <td><%= $l->step_id %></td>
+    <td><%= $l->created_at %></td>
+    </tr>
+    <% } %>
+  <tbody>
+</table>

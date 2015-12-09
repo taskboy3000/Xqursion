@@ -106,10 +106,17 @@ sub export {
 
     my $base_dir = "$ENV{XQURSION_HOME}/public/downloads/" . $journey->id;
     $L->debug("Export base directory: $base_dir");
+    my $host   = $ENV{XQURSION_PUBLIC_HOST} || "www.xqursion.com";
+    my $scheme = $ENV{XQURSION_PUBLIC_SCHEME} || "http";
+    my $port   = $ENV{XQURSION_PUBLIC_PORT} || 80;
     $journey->export(base_dir => $base_dir,
                      step_url_cb => sub { 
                          my $step = shift;
-                         return $self->url_for("public_step_show", {id => $step->id});
+                         return $self->url_for("porter_step_show", {id => $step->id})
+                           ->to_abs
+                           ->port($port)
+                           ->host($host)
+                           ->scheme($scheme);
                      });
 
     return $self->redirect_to($journey->export_zipfile);

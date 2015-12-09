@@ -53,8 +53,12 @@ sub make_routes {
     $r->post("/app/dependency")->name("dependency_create")->to("dependencies#create");
     $r->delete("/app/dependency/:id")->name("dependency_delete")->to("dependencies#delete");
 
+    # Journey logs
+    $r->get("/app/journey/:journey_id/logs")->name("journey_logs_index")->to("journey_logs#index");
+    $r->get("/app/journey/:journey_id/log/:session_id")->name("journey_log_show")->to("journey_logs#show");
+
     # Public steps: where users interact with journeys
-    $r->get("/step/:id")->name("porter_step_show")->to("porter_step#show");
+    $r->get("/step/:id")->name("porter_step_show")->to("porter_steps#show");
 }
 
 sub register {

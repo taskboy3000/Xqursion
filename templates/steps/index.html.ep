@@ -12,8 +12,8 @@
 <table class="table table-striped">
   <thead>
     <th>Title</th>
-    <th>URL</th>
-    <th>Error URL</th>
+    <th style="max-width:200px;">URL</th>
+    <th style="max-width:200px;">Error URL</th>
     <th>Access Control</th>
   </thead>
   <tbody>
@@ -32,8 +32,8 @@
                    begin %>(Delete Step)<% end %>
 
      </td>
-     <td><%= $step->url %></td>
-     <td><%= $step->error_url %></td>
+     <td class="abbr" style="max-width:200px"><%= link_to $step->url => $step->url, target => "_blank" %></td>
+     <td class="abbr" style="max-width:200px"><%= link_to $step->error_url => $step->error_url, target => "_blank" %></td>
      <td>
        <% if ($step->dependency_group_id) { %>
 
