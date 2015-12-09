@@ -19,9 +19,15 @@
 	<%= content %>
       </div>
 
-      <footer>
-	Copyright &copy; <a href="http://taskboy.com/">Joe Johnston</a>
-      </footer>
+      <div class="container">
+        <footer>
+          <ul class="list-inline">
+	    <li>Copyright &copy; <a href="http://taskboy.com/">Joe Johnston</a></li>
+            <li><a href="https://github.com/taskboy3000/Xqursion">Source</a></li>
+          </ul>
+        
+        </footer>
+      </div>
     </div>
 
     <div id="dialog"></div>
