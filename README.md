@@ -28,4 +28,3 @@ By Joe Johnston <jjohn@taskboy.com>
 Artistic License (http://dev.perl.org/licenses/artistic.html)
 
 This software is released under the same terms as Perl.
-
