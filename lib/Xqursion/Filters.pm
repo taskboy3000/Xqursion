@@ -11,14 +11,18 @@ sub require_authentication {
     if (my $uid = $c->session("user_id")) {
         my $user = $c->app->db->resultset("User")->single({id => $uid});
         if ($user) {
+            # has the cookie expired?
+            if (time() - $c->session("started") > 60*8) {
+                $L->debug(__PACKAGE__ . ": Session has expired");
+                return $c->redirect_to("/");
+            }
 	    $L->debug(__PACKAGE__ . ": User authenticated");
             return 1;
         }
     }
 
     $L->debug(__PACKAGE__ . ": User is not authenticated");
-    $c->redirect_to("/");
-    return 1;
+    return $c->redirect_to("/");
 }
 
 1;

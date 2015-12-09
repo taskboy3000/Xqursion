@@ -11,7 +11,7 @@ sub create {
         if ($user) {
             if ($user->is_password_valid($self->param("password"))) {
 		$self->app->log->debug("Credentials verified");
-                $self->session("user_id" => $user->id);
+                $self->session("user_id" => $user->id, "started" => scalar time());
                 return $self->redirect_to("/app/dashboard");    
             }
         }
