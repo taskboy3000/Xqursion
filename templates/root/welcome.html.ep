@@ -16,11 +16,11 @@
           <%= form_for "sessionscreate" => begin %>
             <div>
               <%= label_for 'username' => 'Username:' %><br>
-              <%= text_field 'username'%>
+              <%= text_field 'username' autocaptialize => "none" %>
             </div>
             <div>
               <%= label_for 'passsword' => 'Password:' %><br>
-              <%= password_field 'password', label => "Password:"  %>
+              <%= password_field 'password',  autocaptialize => "none"  %>
             </div>
             <br>
             <%= submit_button 'Login' %>
