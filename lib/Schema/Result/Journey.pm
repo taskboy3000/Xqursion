@@ -135,9 +135,12 @@ sub export_zipfile {
     return "/downloads/" . $self->id . "/" . uri_escape($self->export_file);
 }
 
-sub get_unique_sessions {
+sub get_unique_session_count {
     my ($self) = @_;
-    my $db = $self->result_source->schema;
-    # return $db->resultset("JourneyLog")->count({journey_id => $self->id,});
+    my %sessions;
+    for my $l ($self->logs) {
+        $sessions{$l->session_id} = 1;
+    }
+    return scalar keys %sessions;
 }
 1;

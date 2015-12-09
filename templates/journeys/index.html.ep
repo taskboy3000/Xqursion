@@ -31,7 +31,7 @@
         <% } %>
       </td>
       <td>
-        <%= link_to url_for("journey_logs_index", journey_id => $j->id) => begin %><%= scalar($j->logs) %><% end %>
+        <%= link_to url_for("journey_logs_index", journey_id => $j->id) => begin %><%= scalar($j->get_unique_session_count) %><% end %>
       </td>
       <td>
         <%= link_to url_for("journey_download", id => $j->id), class=>"btn btn-default btn-sm", begin %>Download<% end %>
