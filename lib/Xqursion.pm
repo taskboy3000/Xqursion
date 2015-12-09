@@ -6,14 +6,17 @@ use Schema;
 use List::Util ('any');
 
 has schema => sub {
-    return Schema->connect("dbi:SQLite:" . ($ENV{XQURSION_DB} || "share/schema.db"));
+    return Schema->connect($ENV{XQURSION_DBI_CONNECT} || "dbi:SQLite:share/schema.db",
+                           $ENV{XQURSION_DBI_USERNAME},
+                           $ENV{XQURSION_DBI_PASSWORD}
+                          );
 };
 
 # This method will run once at server start
 sub startup {
     my $self = shift;
     
-    $self->secrets([$ENV{XQURSION_APP_SECRET} || '0987654321']);
+    $self->secrets([$ENV{XQURSION_SECRET} || '0987654321']);
     push @{$self->commands->namespaces}, 'Xqursion::Command';
 
     $self->app->sessions->cookie_name($self->app->moniker);
