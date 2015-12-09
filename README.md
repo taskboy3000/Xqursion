@@ -1,17 +1,27 @@
-# Xcursion
-A tool to create QR codes that backend with branching and looping logic.
+# Xqursion
 
-Built with Mojolicious.
+A tool to create a system QR codes that backend with branching and looping logic.
 
-http://www.xqursion.com/
+Typical usage might be creating a game where a series of web pages are clues
+in a game.
+
+Built with Mojolicious, DBIx, jQuery, Bootstrap.
+
+Canonical site: http://www.xqursion.com/
 
 By Joe Johnston <jjohn@taskboy.com>
 
 # ENVIRONMENT VARIABLES
 
- * PATH +local/bin
- * PERL5LIB +local/lib
- * XQURSION_PW_SECRET
+ * DBIC_MIGRATION_SCHEMA_CLASS (default: Schema)
+ * PATH                        (add `pwd`/local/bin)
+ * PERL5LIB                    (add `pwd`/local/lib)
+ * XQURSION_DBI_CONNECT        (default: dbi:SQLite:share/schema.db)
+ * XQURSION_HOME               (add `pwd`)
+ * XQURSION_PUBLIC_HOST        (e.g. www.xqursion.com)
+ * XQURSION_PUBLIC_PORT        (e.g. 80)
+ * XQURSION_PUBLIC_SCHEME      (e.g  http)
+ * XQURSION_SECRET             (default: 0987654321)
  
 # LICENSE
 
