@@ -54,14 +54,14 @@ sub _or {
     my ($self, $dependencies, $logs) = @_;
 
     # Any met dependency means success
-    #warn("Start OR\n");
+    warn("Start OR\n");
     for my $d (@$dependencies) {
-        #warn(sprintf("Dependency %s : %s\n", $d->id, $d->step->title));
+        warn(sprintf("Dependency %s : %s\n", $d->id, $d->step->title));
         for my $l (@$logs) {
             next unless $l;
-            #warn(sprintf("Log %s : %s\n", $l->id, $d->step->title));
+            warn(sprintf("Log %s : %s\n", $l->id, $d->step->title));
             if ($l->step_id eq $d->step_id) {
-                #warn("MATCH dependency " . $d->step->title);
+                warn("MATCH dependency " . $d->step->title);
                 return 1;
             }
         }

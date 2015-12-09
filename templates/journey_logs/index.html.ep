@@ -13,7 +13,6 @@
   <thead>
     <tr>
     <th>Session ID</th>
-    <th>Journey</th>
     <th>Step</th>
     <th>Created</th>
     </tr>
@@ -22,7 +21,7 @@
     <% for my $l (@$sessions) { %>
     <tr>
     <td><%= $l->session_id %></td>
-    <td><%= $l->step_id %></td>
+    <td><%= link_to $l->step->title => url_for("journey_step_edit", journey_id => $l->step->journey->id, id => $l->step->id) %></td>
     <td><%= $l->created_at %></td>
     </tr>
     <% } %>

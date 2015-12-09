@@ -16,8 +16,9 @@ sub show {
     }
     
     unless ($self->cookie("session_id")) {
-        $L->debug("Creating new journey session");
-        $self->cookie("session_id", ResBase->uuid);
+        my $session_id = ResBase->uuid;
+        $L->debug("Creating new journey session '$session_id'");
+        $self->cookie("session_id", $session_id);
     }
 
     return $self->redirect_to($self->process($step));

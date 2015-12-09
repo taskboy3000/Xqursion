@@ -7,7 +7,7 @@
   <li class="active">Edit Journey</li>
 </ol>
 
-<h1>Edit <%= $journey->title %></h1>
+<h1>Edit <%= $journey->name %></h1>
 
 <p>Created: <%= $journey->created_at %></p>
 <p>Last updated: <%= $journey->updated_at %></p>

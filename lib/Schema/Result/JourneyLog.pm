@@ -15,7 +15,7 @@ __PACKAGE__->add_columns(
 );
 
 __PACKAGE__->set_primary_key("id");
-__PACKAGE__->has_one("step" => 'Schema::Result::Step', 'id');
+__PACKAGE__->has_one("step" => 'Schema::Result::Step', { "foreign.id" => 'self.step_id'});
 __PACKAGE__->has_one("journey" => 'Schema::Result::Journey', 'id');
 __PACKAGE__->inflate_column("created_at", {
                                          inflate => sub { DateTime->from_epoch(epoch => shift) }, 
