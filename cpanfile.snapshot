@@ -103,42 +103,35 @@ DISTRIBUTIONS
       Carp::Clan 5.3
       ExtUtils::MakeMaker 0
       Storable 2.21
-  CPAN-Meta-2.150005
-    pathname: D/DA/DAGOLDEN/CPAN-Meta-2.150005.tar.gz
+  CGI-4.22
+    pathname: L/LE/LEEJO/CGI-4.22.tar.gz
     provides:
-      CPAN::Meta 2.150005
-      CPAN::Meta::Converter 2.150005
-      CPAN::Meta::Feature 2.150005
-      CPAN::Meta::History 2.150005
-      CPAN::Meta::Merge 2.150005
-      CPAN::Meta::Prereqs 2.150005
-      CPAN::Meta::Spec 2.150005
-      CPAN::Meta::Validator 2.150005
+      CGI 4.22
+      CGI::Carp 4.22
+      CGI::Cookie 4.22
+      CGI::File::Temp 4.22
+      CGI::HTML::Functions undef
+      CGI::Pretty 4.22
+      CGI::Push 4.22
+      CGI::Util 4.22
+      Fh 4.22
+      MultipartBuffer 4.22
     requirements:
-      CPAN::Meta::Requirements 2.121
-      CPAN::Meta::YAML 0.008
       Carp 0
-      ExtUtils::MakeMaker 6.17
-      JSON::PP 2.27200
-      Parse::CPAN::Meta 1.4414
-      Scalar::Util 0
-      perl 5.008
-      strict 0
-      version 0.88
-      warnings 0
-  CPAN-Meta-YAML-0.016
-    pathname: D/DA/DAGOLDEN/CPAN-Meta-YAML-0.016.tar.gz
-    provides:
-      CPAN::Meta::YAML 0.016
-    requirements:
-      B 0
-      Carp 0
+      Config 0
+      Encode 0
       Exporter 0
-      ExtUtils::MakeMaker 6.17
-      Fcntl 0
-      Scalar::Util 0
+      ExtUtils::MakeMaker 0
+      File::Spec 0.82
+      File::Temp 0
+      HTML::Entities 3.69
+      base 0
+      if 0
+      overload 0
+      parent 0.225
       perl 5.008001
       strict 0
+      utf8 0
       warnings 0
   Capture-Tiny-0.30
     pathname: D/DA/DAGOLDEN/Capture-Tiny-0.30.tar.gz
@@ -153,20 +146,6 @@ DISTRIBUTIONS
       IO::Handle 0
       Scalar::Util 0
       perl 5.006
-      strict 0
-      warnings 0
-  Carp-1.38
-    pathname: R/RJ/RJBS/Carp-1.38.tar.gz
-    provides:
-      Carp 1.38
-      Carp::Heavy 1.38
-    requirements:
-      Config 0
-      Exporter 0
-      ExtUtils::MakeMaker 0
-      IPC::Open3 1.0103
-      Test::More 0.47
-      overload 0
       strict 0
       warnings 0
   Carp-Clan-6.04
@@ -1027,6 +1006,7 @@ DISTRIBUTIONS
       Class::Accessor::Grouped 0
       DBD::SQLite 1.11
       DBIx::Class 0.07005
+      Data::UUID 0
       ExtUtils::MakeMaker 6.42
       perl 5.008001
   DBIx-Class-Validation-0.02005
@@ -1154,23 +1134,13 @@ DISTRIBUTIONS
       Data::Section::Simple 0.07
     requirements:
       ExtUtils::MakeMaker 6.30
-  Data-Validator-1.07
-    pathname: G/GF/GFUJI/Data-Validator-1.07.tar.gz
+  Data-UUID-1.221
+    pathname: R/RJ/RJBS/Data-UUID-1.221.tar.gz
     provides:
-      Data::Validator 1.07
-      Data::Validator::Role::AllowExtra undef
-      Data::Validator::Role::Croak undef
-      Data::Validator::Role::Method undef
-      Data::Validator::Role::NoRestricted undef
-      Data::Validator::Role::NoThrow undef
-      Data::Validator::Role::Sequenced undef
-      Data::Validator::Role::SmartSequenced undef
-      Data::Validator::Role::StrictSequenced undef
+      Data::UUID 1.221
     requirements:
-      ExtUtils::MakeMaker 6.59
-      Module::Build 0.38
-      Mouse 0.93
-      perl 5.008001
+      Digest::MD5 0
+      ExtUtils::MakeMaker 0
   Data-Visitor-0.30
     pathname: D/DO/DOY/Data-Visitor-0.30.tar.gz
     provides:
@@ -1707,20 +1677,6 @@ DISTRIBUTIONS
       strict 0
       vars 0
       warnings 0
-  Devel-CheckCompiler-0.06
-    pathname: S/SY/SYOHEX/Devel-CheckCompiler-0.06.tar.gz
-    provides:
-      Devel::AssertC99 undef
-      Devel::CheckCompiler 0.06
-    requirements:
-      Exporter 0
-      ExtUtils::CBuilder 0
-      File::Temp 0
-      Module::Build 0.38
-      Test::More 0.98
-      Test::Requires 0
-      parent 0
-      perl 5.008001
   Devel-Confess-0.008000
     pathname: H/HA/HAARG/Devel-Confess-0.008000.tar.gz
     provides:
@@ -1757,12 +1713,6 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
-  Devel-PPPort-3.32
-    pathname: W/WO/WOLFSAGE/Devel-PPPort-3.32.tar.gz
-    provides:
-      Devel::PPPort 3.32
-    requirements:
-      ExtUtils::MakeMaker 0
   Devel-PartialDump-0.18
     pathname: E/ET/ETHER/Devel-PartialDump-0.18.tar.gz
     provides:
@@ -1945,76 +1895,6 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
-  ExtUtils-MakeMaker-7.10
-    pathname: B/BI/BINGOS/ExtUtils-MakeMaker-7.10.tar.gz
-    provides:
-      ExtUtils::Command 7.10
-      ExtUtils::Command::MM 7.10
-      ExtUtils::Liblist 7.10
-      ExtUtils::Liblist::Kid 7.10
-      ExtUtils::MM 7.10
-      ExtUtils::MM_AIX 7.10
-      ExtUtils::MM_Any 7.10
-      ExtUtils::MM_BeOS 7.10
-      ExtUtils::MM_Cygwin 7.10
-      ExtUtils::MM_DOS 7.10
-      ExtUtils::MM_Darwin 7.10
-      ExtUtils::MM_MacOS 7.10
-      ExtUtils::MM_NW5 7.10
-      ExtUtils::MM_OS2 7.10
-      ExtUtils::MM_QNX 7.10
-      ExtUtils::MM_UWIN 7.10
-      ExtUtils::MM_Unix 7.10
-      ExtUtils::MM_VMS 7.10
-      ExtUtils::MM_VOS 7.10
-      ExtUtils::MM_Win32 7.10
-      ExtUtils::MM_Win95 7.10
-      ExtUtils::MY 7.10
-      ExtUtils::MakeMaker 7.10
-      ExtUtils::MakeMaker::Config 7.10
-      ExtUtils::MakeMaker::Locale 7.10
-      ExtUtils::MakeMaker::_version 7.10
-      ExtUtils::MakeMaker::charstar 7.10
-      ExtUtils::MakeMaker::version 7.10
-      ExtUtils::MakeMaker::version::regex 7.10
-      ExtUtils::MakeMaker::version::vpp 7.10
-      ExtUtils::Mkbootstrap 7.10
-      ExtUtils::Mksymlists 7.10
-      ExtUtils::testlib 7.10
-      MM 7.10
-      MY 7.10
-    requirements:
-      Data::Dumper 0
-      DirHandle 0
-      Encode 0
-      File::Basename 0
-      File::Spec 0.8
-      Pod::Man 0
-      perl 5.006
-  ExtUtils-ParseXS-3.30
-    pathname: S/SM/SMUELLER/ExtUtils-ParseXS-3.30.tar.gz
-    provides:
-      ExtUtils::ParseXS 3.30
-      ExtUtils::ParseXS::Constants 3.30
-      ExtUtils::ParseXS::CountLines 3.30
-      ExtUtils::ParseXS::Eval 3.30
-      ExtUtils::ParseXS::Utilities 3.30
-      ExtUtils::Typemaps 3.30
-      ExtUtils::Typemaps::Cmd 3.30
-      ExtUtils::Typemaps::InputMap 3.30
-      ExtUtils::Typemaps::OutputMap 3.30
-      ExtUtils::Typemaps::Type 3.30
-    requirements:
-      Carp 0
-      Cwd 0
-      DynaLoader 0
-      Exporter 5.57
-      ExtUtils::CBuilder 0
-      ExtUtils::MakeMaker 6.46
-      File::Basename 0
-      File::Spec 0
-      Symbol 0
-      Test::More 0.47
   Fennec-Lite-0.004
     pathname: E/EX/EXODIST/Fennec-Lite-0.004.tar.gz
     provides:
@@ -2048,12 +1928,13 @@ DISTRIBUTIONS
       File::HomeDir::Windows 1.00
     requirements:
       Carp 0
-      Cwd 3.12
+      Cwd 3
       ExtUtils::MakeMaker 6.36
       File::Path 2.01
-      File::Spec 3.12
+      File::Spec 3
       File::Temp 0.19
       File::Which 0.05
+      Mac::SystemDirectory 0.04
       Test::More 0.47
       perl 5.00503
   File-MMagic-1.30
@@ -2231,14 +2112,6 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       Scalar::Util 0
       perl 5.008001
-  IO-Socket-IP-0.37
-    pathname: P/PE/PEVANS/IO-Socket-IP-0.37.tar.gz
-    provides:
-      IO::Socket::IP 0.37
-    requirements:
-      IO::Socket 0
-      Socket 1.97
-      Test::More 0.88
   IO-String-1.08
     pathname: G/GA/GAAS/IO-String-1.08.tar.gz
     provides:
@@ -2323,15 +2196,6 @@ DISTRIBUTIONS
       JSON 2.90
       JSON::Backend::PP 2.90
       JSON::Boolean 2.90
-    requirements:
-      ExtUtils::MakeMaker 0
-      Test::More 0
-  JSON-PP-2.27300
-    pathname: M/MA/MAKAMAKA/JSON-PP-2.27300.tar.gz
-    provides:
-      JSON::PP 2.27300
-      JSON::PP::Boolean 2.27300
-      JSON::PP::IncrParser 2.27300
     requirements:
       ExtUtils::MakeMaker 0
       Test::More 0
@@ -2543,6 +2407,14 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 6.59
       Test::More 0.47
       perl 5.006
+  Mac-SystemDirectory-0.06
+    pathname: C/CH/CHANSEN/Mac-SystemDirectory-0.06.tar.gz
+    provides:
+      Mac::SystemDirectory 0.06
+    requirements:
+      ExtUtils::MakeMaker 6.42
+      Test::More 0.86
+      perl 5.006
   MailTools-2.14
     pathname: M/MA/MARKOV/MailTools-2.14.tar.gz
     provides:
@@ -2699,21 +2571,6 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
-  Module-Build-XSUtil-0.16
-    pathname: H/HI/HIDEAKIO/Module-Build-XSUtil-0.16.tar.gz
-    provides:
-      Module::Build::XSUtil 0.16
-    requirements:
-      Devel::CheckCompiler 0
-      Devel::PPPort 0
-      Exporter 0
-      ExtUtils::CBuilder 0
-      File::Basename 0
-      File::Path 0
-      Module::Build 0.4005
-      XSLoader 0
-      parent 0
-      perl 5.008005
   Module-Find-0.13
     pathname: C/CR/CRENZ/Module-Find-0.13.tar.gz
     provides:
@@ -2738,6 +2595,22 @@ DISTRIBUTIONS
       Try::Tiny 0
       strict 0
       warnings 0
+  Module-Pluggable-5.2
+    pathname: S/SI/SIMONW/Module-Pluggable-5.2.tar.gz
+    provides:
+      Devel::InnerPackage 0.4
+      Module::Pluggable 5.2
+      Module::Pluggable::Object 5.2
+    requirements:
+      Exporter 5.57
+      ExtUtils::MakeMaker 0
+      File::Basename 0
+      File::Find 0
+      File::Spec 3.00
+      File::Spec::Functions 0
+      if 0
+      perl 5.00503
+      strict 0
   Module-Runtime-0.014
     pathname: Z/ZE/ZEFRAM/Module-Runtime-0.014.tar.gz
     provides:
@@ -2898,15 +2771,6 @@ DISTRIBUTIONS
       Module::Build 0
       Test::More 0
       Text::Haml 0
-  Mojolicious-Plugin-Authentication-1.29
-    pathname: M/MA/MADCAT/Mojolicious-Plugin-Authentication-1.29.tar.gz
-    provides:
-      Mojolicious::Plugin::Authentication 1.29
-    requirements:
-      ExtUtils::MakeMaker 0
-      Mojo::Base 0
-      strict 0
-      warnings 0
   Moo-2.000002
     pathname: H/HA/HAARG/Moo-2.000002.tar.gz
     provides:
@@ -3440,46 +3304,6 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
-  Mouse-v2.4.5
-    pathname: S/SY/SYOHEX/Mouse-v2.4.5.tar.gz
-    provides:
-      Mouse v2.4.5
-      Mouse::Exporter undef
-      Mouse::Meta::Attribute undef
-      Mouse::Meta::Class undef
-      Mouse::Meta::Method undef
-      Mouse::Meta::Method::Accessor undef
-      Mouse::Meta::Method::Constructor undef
-      Mouse::Meta::Method::Delegation undef
-      Mouse::Meta::Method::Destructor undef
-      Mouse::Meta::Module undef
-      Mouse::Meta::Role undef
-      Mouse::Meta::Role::Application undef
-      Mouse::Meta::Role::Application::RoleSummation undef
-      Mouse::Meta::Role::Composite undef
-      Mouse::Meta::Role::Method undef
-      Mouse::Meta::TypeConstraint undef
-      Mouse::Object undef
-      Mouse::PurePerl undef
-      Mouse::Role v2.4.5
-      Mouse::Spec v2.4.5
-      Mouse::Tiny v2.4.5
-      Mouse::TypeRegistry undef
-      Mouse::Util v2.4.5
-      Mouse::Util::MetaRole undef
-      Mouse::Util::TypeConstraints undef
-      Squirrel undef
-      Squirrel::Role undef
-      Test::Mouse undef
-      ouse undef
-    requirements:
-      Devel::PPPort 3.22
-      ExtUtils::ParseXS 3.22
-      Module::Build 0.4005
-      Module::Build::XSUtil 0
-      Scalar::Util 1.14
-      XSLoader 0.02
-      perl 5.008005
   Number-Format-1.75
     pathname: W/WR/WRW/Number-Format-1.75.tar.gz
     provides:
@@ -3779,20 +3603,6 @@ DISTRIBUTIONS
       strict 0
       vars 0
       warnings 0
-  Parse-CPAN-Meta-1.4417
-    pathname: D/DA/DAGOLDEN/Parse-CPAN-Meta-1.4417.tar.gz
-    provides:
-      Parse::CPAN::Meta 1.4417
-    requirements:
-      CPAN::Meta::YAML 0.011
-      Carp 0
-      Encode 0
-      Exporter 0
-      ExtUtils::MakeMaker 0
-      File::Spec 0.80
-      JSON::PP 2.27200
-      perl 5.008001
-      strict 0
   Parse-RecDescent-1.967013
     pathname: J/JT/JTBRAUN/Parse-RecDescent-1.967013.tar.gz
     provides:
@@ -3928,26 +3738,6 @@ DISTRIBUTIONS
       perl 5.008001
       strict 0
       warnings 0
-  PathTools-3.59
-    pathname: R/RJ/RJBS/PathTools-3.59.tar.gz
-    provides:
-      Cwd 3.59
-      File::Spec 3.59
-      File::Spec::Cygwin 3.59
-      File::Spec::Epoc 3.59
-      File::Spec::Functions 3.59
-      File::Spec::Mac 3.59
-      File::Spec::OS2 3.59
-      File::Spec::Unix 3.59
-      File::Spec::VMS 3.59
-      File::Spec::Win32 3.59
-    requirements:
-      Carp 0
-      ExtUtils::MakeMaker 0
-      File::Basename 0
-      Scalar::Util 0
-      Test 0
-      Test::More 0.88
   Perl-Critic-1.126
     pathname: T/TH/THALJEF/Perl-Critic-1.126.tar.gz
     provides:
@@ -4282,28 +4072,6 @@ DISTRIBUTIONS
       Pod::Find 0.21
       Pod::Parser 1.13
       Test::More 0
-  Pod-Parser-1.63
-    pathname: M/MA/MAREKR/Pod-Parser-1.63.tar.gz
-    provides:
-      Pod::Cache 1.63
-      Pod::Cache::Item 1.63
-      Pod::Find 1.63
-      Pod::Hyperlink 1.63
-      Pod::InputObjects 1.63
-      Pod::InputSource 1.63
-      Pod::InteriorSequence 1.63
-      Pod::List 1.63
-      Pod::Paragraph 1.63
-      Pod::ParseTree 1.63
-      Pod::ParseUtils 1.63
-      Pod::Parser 1.63
-      Pod::PlainText 2.07
-      Pod::Select 1.63
-    requirements:
-      Cwd 0
-      ExtUtils::MakeMaker 0
-      File::Basename 0
-      Test::More 0.6
   Pod-Spell-1.17
     pathname: X/XE/XENO/Pod-Spell-1.17.tar.gz
     provides:
@@ -4532,16 +4300,6 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       Scalar::Util 0
       perl 5.006
-  Scalar-List-Utils-1.42
-    pathname: P/PE/PEVANS/Scalar-List-Utils-1.42.tar.gz
-    provides:
-      List::Util 1.42
-      List::Util::XS 1.42
-      Scalar::Util 1.42
-      Sub::Util 1.42
-    requirements:
-      ExtUtils::MakeMaker 0
-      Test::More 0
   Scope-Guard-0.21
     pathname: C/CH/CHOCOLATE/Scope-Guard-0.21.tar.gz
     provides:
@@ -4562,15 +4320,6 @@ DISTRIBUTIONS
       Lingua::Stem::Snowball::Se 1.2
     requirements:
       Test::More 0.42
-  Socket-2.020
-    pathname: P/PE/PEVANS/Socket-2.020.tar.gz
-    provides:
-      Socket 2.020
-    requirements:
-      ExtUtils::CBuilder 0
-      ExtUtils::Constant 0.23
-      ExtUtils::MakeMaker 0
-      perl 5.006001
   Statistics-Basic-1.6611
     pathname: J/JE/JETTERO/Statistics-Basic-1.6611.tar.gz
     provides:
@@ -4795,60 +4544,6 @@ DISTRIBUTIONS
       perl 5.006001
       strict 0
       warnings 0
-  Test-Harness-3.35
-    pathname: L/LE/LEONT/Test-Harness-3.35.tar.gz
-    provides:
-      App::Prove 3.35
-      App::Prove::State 3.35
-      App::Prove::State::Result 3.35
-      App::Prove::State::Result::Test 3.35
-      Harness::Hook undef
-      TAP::Base 3.35
-      TAP::Formatter::Base 3.35
-      TAP::Formatter::Color 3.35
-      TAP::Formatter::Console 3.35
-      TAP::Formatter::Console::ParallelSession 3.35
-      TAP::Formatter::Console::Session 3.35
-      TAP::Formatter::File 3.35
-      TAP::Formatter::File::Session 3.35
-      TAP::Formatter::Session 3.35
-      TAP::Harness 3.35
-      TAP::Harness::Env 3.35
-      TAP::Object 3.35
-      TAP::Parser 3.35
-      TAP::Parser::Aggregator 3.35
-      TAP::Parser::Grammar 3.35
-      TAP::Parser::Iterator 3.35
-      TAP::Parser::Iterator::Array 3.35
-      TAP::Parser::Iterator::Process 3.35
-      TAP::Parser::Iterator::Stream 3.35
-      TAP::Parser::IteratorFactory 3.35
-      TAP::Parser::Multiplexer 3.35
-      TAP::Parser::Result 3.35
-      TAP::Parser::Result::Bailout 3.35
-      TAP::Parser::Result::Comment 3.35
-      TAP::Parser::Result::Plan 3.35
-      TAP::Parser::Result::Pragma 3.35
-      TAP::Parser::Result::Test 3.35
-      TAP::Parser::Result::Unknown 3.35
-      TAP::Parser::Result::Version 3.35
-      TAP::Parser::Result::YAML 3.35
-      TAP::Parser::ResultFactory 3.35
-      TAP::Parser::Scheduler 3.35
-      TAP::Parser::Scheduler::Job 3.35
-      TAP::Parser::Scheduler::Spinner 3.35
-      TAP::Parser::Source 3.35
-      TAP::Parser::SourceHandler 3.35
-      TAP::Parser::SourceHandler::Executable 3.35
-      TAP::Parser::SourceHandler::File 3.35
-      TAP::Parser::SourceHandler::Handle 3.35
-      TAP::Parser::SourceHandler::Perl 3.35
-      TAP::Parser::SourceHandler::RawTAP 3.35
-      TAP::Parser::YAMLish::Reader 3.35
-      TAP::Parser::YAMLish::Writer 3.35
-      Test::Harness 3.35
-    requirements:
-      ExtUtils::MakeMaker 0
   Test-MockModule-0.11
     pathname: G/GF/GFRANKS/Test-MockModule-0.11.tar.gz
     provides:
@@ -4908,37 +4603,6 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
-  Test-Requires-0.10
-    pathname: T/TO/TOKUHIROM/Test-Requires-0.10.tar.gz
-    provides:
-      Test::Requires 0.10
-    requirements:
-      ExtUtils::MakeMaker 6.64
-      Test::Builder::Module 0
-      Test::More 0.47
-      perl 5.006
-  Test-Simple-1.001014
-    pathname: E/EX/EXODIST/Test-Simple-1.001014.tar.gz
-    provides:
-      Test::Builder 1.001014
-      Test::Builder::IO::Scalar 2.113
-      Test::Builder::Module 1.001014
-      Test::Builder::Tester 1.28
-      Test::Builder::Tester::Color 1.290001
-      Test::Builder::Tester::Tie 1.28
-      Test::More 1.001014
-      Test::Simple 1.001014
-      Test::Tester 0.114
-      Test::Tester::Capture undef
-      Test::Tester::CaptureRunner undef
-      Test::Tester::Delegate undef
-      Test::use::ok 0.16
-      ok 0.16
-    requirements:
-      ExtUtils::MakeMaker 0
-      Scalar::Util 1.13
-      Test::Harness 2.03
-      perl 5.006
   Test-SubCalls-1.09
     pathname: A/AD/ADAMK/Test-SubCalls-1.09.tar.gz
     provides:
@@ -5297,33 +4961,6 @@ DISTRIBUTIONS
       Exporter 0
       Module::Build::Tiny 0.039
       perl 5.006
-      strict 0
-      warnings 0
-  autodie-2.29
-    pathname: P/PJ/PJF/autodie-2.29.tar.gz
-    provides:
-      Fatal 2.29
-      autodie 2.29
-      autodie::Scope::Guard 2.29
-      autodie::Scope::GuardStack 2.29
-      autodie::Util 2.29
-      autodie::exception 2.29
-      autodie::exception::system 2.29
-      autodie::hints 2.29
-      autodie::skip 2.29
-    requirements:
-      B 0
-      Carp 0
-      Exporter 5.57
-      ExtUtils::MakeMaker 0
-      Fcntl 0
-      POSIX 0
-      Scalar::Util 0
-      Tie::RefHash 0
-      constant 0
-      overload 0
-      parent 0
-      perl 5.008004
       strict 0
       warnings 0
   bareword-filehandles-0.003

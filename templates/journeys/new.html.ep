@@ -1,6 +1,12 @@
 % layout 'default';
 % title 'New Journey';
 
+<ol class="breadcrumb">
+  <li><%= link_to "your_dashboard" => begin %>Home<% end %></li>
+  <li><%= link_to "journeys_index" => begin %>Your Journeys<% end %></li>
+  <li class="active">New Journey</li>
+</ol>
+
 <h1>Create a new Journey</h1>
 
 <%= include "journeys/_form", journey => $journey; %>

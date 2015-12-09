@@ -13,8 +13,6 @@
     <th role="sorter">Name</th>
     <th>Steps</th>
     <th>Travelers</td>
-    <th role="sorter">Created</th>
-    <th role="sorter">Updated</th>
     <th>Actions</th>
   </thead>
 
@@ -29,14 +27,12 @@
         <% if ($j->steps < 1) { %>
           <i class="text-info glyphicon glyphicon-flag" data-toggle="tooltip" 
              title="This journey has no steps. Steps are what make journeys interesting. Add some now.">
-          </i>
+         </i>
         <% } %>
       </td>
       <td>
         <%= link_to url_for("journey_logs_index", journey_id => $j->id) => begin %><%= scalar($j->logs) %><% end %>
       </td>
-      <td><%= $j->created_at %></td>
-      <td><%= $j->updated_at %></td>
       <td>
         <%= link_to url_for("journey_download", id => $j->id), class=>"btn btn-default btn-sm", begin %>Download<% end %>
 
