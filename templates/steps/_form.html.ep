@@ -30,6 +30,15 @@
   <%= input_tag "error_url" => $step->error_url, class => "form-control", placeholder => "http://example.com/error" %>
   <br>
 
+  <%= label_for "create_new_session", begin %>
+        End current travel session
+  <% end %>
+  <%= select_field "create_new_session" => [
+                                             [ "No" => 0, ($step->create_new_session == 0 ? "selected" : "") ],
+                                             [ "Yes" => 1, ($step->create_new_session == 1 ? "selected" : "") ],
+                                           ], class => "form-control"  %>
+  <br>
+
  
   <%= submit_button $submit_label, class=> "btn btn-primary" %>
 

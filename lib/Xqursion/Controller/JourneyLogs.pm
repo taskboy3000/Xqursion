@@ -16,8 +16,11 @@ sub index {
 
     my @ids = map { $_->id } $journey->steps;
     $L->debug("OK");
-    my @logs = $D->resultset("JourneyLog")->search({ journey_id => $self->param("journey_id"), },);
-#                                                   [ {"-desc" => 'created_at'}, {"-asc" => 'session_id'} ]);
+    my @logs = $D->resultset("JourneyLog")->search(undef,
+                                                   { where => [ { journey_id => $self->param("journey_id") } ],
+                                                     order_by => [ {"-desc" => 'created_at'}, {"-asc" => 'session_id'} ],
+                                                   }
+                                                  );
 
     $L->debug(sprintf("Found %d journey logs for journey %s", scalar @logs, $journey->name));
 

@@ -44,14 +44,11 @@ sub create {
         my $step = $D->resultset("Step")->new({});
 	$step->create_id;
         $step->journey_id($self->param("journey_id"));
-        $step->title($self->param("title"));
-        $step->url($self->param("url"));
 
-        #$self->param("ordering") = 1 unless $self->param("ordering");
-        #$step->ordering($self->param("ordering"));
-
-        $step->dependency_group_id($self->param("dependency_group_id"));
-        $step->error_url($self->param("error_url"));
+        for my $f ("title", "url", "dependency_group_id", "error_url", "create_new_session") {
+            $L->debug("Setting field '$f'");
+            $step->$f($self->param($f));
+        }
 
 	if ($step->insert) {
 	    $L->debug("Created step: " . $step->id);
@@ -78,7 +75,7 @@ sub update {
     my $D = $self->app->db;
 
     my $step = $D->resultset("Step")->find($self->param("id"));
-    for my $f ("title", "url", "dependency_group_id", "error_url") {
+    for my $f ("title", "url", "dependency_group_id", "error_url", "create_new_session") {
         $L->debug("Setting field '$f'");
         $step->$f($self->param($f));
     }
