@@ -26,5 +26,4 @@ By Joe Johnston <jjohn@taskboy.com>
 # LICENSE
 
 Artistic License (http://dev.perl.org/licenses/artistic.html)
-
 This software is released under the same terms as Perl.
