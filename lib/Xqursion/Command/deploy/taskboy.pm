@@ -72,7 +72,7 @@ sub run
 sub update_taskboy_sandbox 
 {
     my $self = shift;
-    my $command = "ssh taskboy.com 'cd ~/sites/Xqursion && git pull && carton && dbic-migration upgrade'";
+    my $command = "ssh taskboy.com 'cd ~/sites/Xqursion && source env.sh && git pull && carton && dbic-migration upgrade'";
     print "$command\n";
     system($command);
 }
@@ -80,7 +80,7 @@ sub update_taskboy_sandbox
 sub restart_server 
 {
     my $self = shift;
-    my $command = "ssh taskboy.com 'cd ~/sites/Xqursion && hynotoad script/xqursion'";
+    my $command = "ssh taskboy.com 'cd ~/sites/Xqursion && source env.sh && hynotoad script/xqursion'";
     print "$command\n";
     system($command);
 }
