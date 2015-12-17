@@ -13,7 +13,8 @@
     <th role="sorter">Name</th>
     <th>Steps</th>
     <th>Travelers</td>
-    <th>Actions</th>
+    <th>Download</th>
+    <th>Delete</th>
   </thead>
 
   <tbody>
@@ -34,14 +35,20 @@
         <%= link_to url_for("journey_logs_index", journey_id => $j->id) => begin %><%= scalar($j->get_unique_session_count) %><% end %>
       </td>
       <td>
-        <%= link_to url_for("journey_download", id => $j->id), class=>"btn btn-default btn-sm", begin %>Download<% end %>
-
+        <%= link_to url_for("journey_download", id => $j->id), class=>"", begin %>
+          <i class="glyphicon glyphicon-save" data-toggle="tooltip" title="Download zip archive of this journey"></i>
+        <% end %>
+      </td>
+      <td class="">
         <%= link_to "#",
-                   "class" => "btn btn-danger",
-                   "data-toggle" => "confirmation",
-                   "data-on-confirm" => "delete_thing",
-                   "data-url" => url_for("journey_delete", id => $j->id), 
-                   begin %>Delete<% end %>
+            "class" => "",
+        "title" => "Delete this journey",
+        "data-toggle" => "confirmation",
+        "data-on-confirm" => "delete_thing",
+        "data-url" => url_for("journey_delete", id => $j->id), 
+        begin %>
+         <i class="glyphicon glyphicon-remove-sign text-danger"></i>
+        <% end %>
 
       </td>
     </tr>

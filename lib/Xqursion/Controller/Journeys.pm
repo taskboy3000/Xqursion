@@ -41,12 +41,15 @@ sub create {
 	$journey->create_id;
 	if ($journey->insert) {
 	    $L->debug("Created journey: " . $journey->id);
+            $self->flash(info => "Created Journey " . $journey->name);
 	} else {
 	    $L->warn("Failed to create journey");
 	}
+        
     } else {
 	# XXX ERROR
     }
+    
     return $self->redirect_to("journeys_index");
 }
 
@@ -69,6 +72,9 @@ sub update {
     unless ($journey->update) {
         # redirect to form for validation errors
     }
+
+    $self->flash(info => "Updated Journey " . $journey->name);
+
     return $self->redirect_to("journeys_index");
 }
 

@@ -52,6 +52,8 @@ sub create {
 
 	if ($step->insert) {
 	    $L->debug("Created step: " . $step->id);
+            $self->flash(info => "Created step " . $step->title);
+
 	} else {
 	    $L->warn("Failed to create step");
 	}
@@ -84,6 +86,8 @@ sub update {
         # redirect to form for validation errors
         $L->debug("Update failed");
     }
+
+    $self->flash(info => "Updated step " . $step->title);
 
     return $self->redirect_to($self->url_for("journey_steps_index", journey_id => $self->param("journey_id")));
 }

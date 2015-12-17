@@ -10,31 +10,48 @@
 
 <h1>Edit Existing Access Control</h1>
 
+<p>Update this access control.</p>
+
 <%= include "dependency_groups/_form", dependency_group => $dependency_group %>
 
 <hr>
 
 <h3>Dependencies</h3>
 
+<p>Dependencies are steps over which the access control operation works.</p>
+
 <div class="row">
   <div class="col-md-6">
     <h4>Current Dependencies</h4>
-    <ul class="list-unstyled"> 
-      <% for my $d ($dependency_group->dependencies) { %>       
-        <li><%= link_to "#",
-                  class => "badge",
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for my $d ($dependency_group->dependencies) { %>
+        <tr>
+          <td><%= $d->step->title %></td>
+          <td>
+            <%= link_to "#",
                   title => "Remove this dependency",
-                  style => "background-color: #c66;",
                   "data-toggle" => "confirmation",
                   "data-on-confirm" => "delete_thing",
                   "data-url" => url_for("dependency_delete", id => $d->id)         
-                  => begin %>&times;<% end %> 
-                  <%= $d->step->title %>
-        </li>
-      <% } %>
-    </ul>
+            => begin %>
+            <i class="glyphicon glyphicon-remove-sign text-danger"></i>
+            <% end %> 
+          </td>
+        </tr>
+        <% } %>
+
+      </tbody>
+    </table>
   </div>
-  <div class="col-md-6">
+
+  <div class="col-md-5 col-md-offset-1">
     <% if ($step_collection->size) { %>
       <h4>Available Steps</h4>
       <%= form_for "dependency_create" => begin %>

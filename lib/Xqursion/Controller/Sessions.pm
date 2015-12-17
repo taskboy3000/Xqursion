@@ -6,7 +6,7 @@ sub create {
     my ($self) = shift;
 
     return $self->no_auth unless $self->valid_csrf;
-    
+
     if ($self->param("username") && $self->param("password")) {
         my $user = $self->app->db->resultset("User")->single({username => $self->param("username")});
         if ($user) {

@@ -6,7 +6,7 @@ sub create {
     my ($self) = shift;
 
     return $self->no_auth unless $self->valid_csrf;
-      
+
     # Password exists?
     unless ($self->param("password")) {
         warn("No password");
@@ -18,7 +18,7 @@ sub create {
         warn("Password doesn't match");
         return $self->redirect_to("/");
     }
-    
+
     my $db = $self->db;
     die unless $db;
 
@@ -38,7 +38,7 @@ sub create {
     $user->password_hash($user->hash_password($self->param("password")));
 
     $user->insert();
-
+    $self->flash(info => "Your account is created.  Please log in.");
     return $self->redirect_to("/");
 }
 
@@ -93,7 +93,8 @@ sub update {
     unless ($user->update) {
         $L->debug("User's settings did not update");
     }
-   
+
+    $self->flash(info => "Your account changes have been saved.");
     return $self->redirect_to($self->url_for("your_dashboard"));
 }
 

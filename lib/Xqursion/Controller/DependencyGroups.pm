@@ -35,13 +35,15 @@ sub create {
 	    $L->debug("Created dependency group: " . $dp->id);
             $step->dependency_group_id($dp->id);
             $step->update;
+            $self->flash(info => "Created Access Control " . $dp->title . ". Please add dependencies.");
+
 	} else {
 	    $L->warn("Failed to create dependency group");
 	}
     } else {
-	# XXX ERROR
+	$self->flash(error => "Could not save access control!");
     }
-    
+
     return $self->redirect_to("step_dependency_group_edit", { step_id => $step->id, id => $dp->id });
 }
 
@@ -86,6 +88,7 @@ sub update {
         # redirect to form for validation errors
         $L->debug("Update failed");
     }
+    $self->flash(info => "Updated access countrol " . $dp->title);
 
     return $self->redirect_to("journey_steps_index", { journey_id => $dp->step->journey->id });
 }

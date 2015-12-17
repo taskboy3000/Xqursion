@@ -5,7 +5,7 @@ use Mojo::Base 'Mojolicious::Plugin';
 # Put all the routing stuff in one place
 sub make_routes {
     my ($self, $app) = @_;
-    
+
     # Router
     my $r = $app->routes;
 

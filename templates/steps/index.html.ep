@@ -15,6 +15,7 @@
     <th style="max-width:200px;">URL</th>
     <th style="max-width:200px;">Error URL</th>
     <th>Access Control</th>
+    <th>Remove</th>
   </thead>
   <tbody>
    <% for my $step (@$steps) { %>
@@ -23,13 +24,6 @@
        <%= link_to url_for("journey_step_edit", journey_id => $step->journey_id, id => $step->id), 
                    class => "",
                    begin %><%= $step->title %><% end %>
-       <br>
-       <%= link_to "#",
-                   "class" => "text-danger",
-                   "data-toggle" => "confirmation",
-                   "data-on-confirm" => "delete_thing",
-                   "data-url" => url_for("journey_step_delete", journey_id => $step->journey_id, id => $step->id), 
-                   begin %>(Delete Step)<% end %>
 
      </td>
      <td class="abbr" style="max-width:200px"><%= link_to $step->url => $step->url, target => "_blank" %></td>
@@ -45,13 +39,14 @@
 	 <% if (scalar($step->dependency_group->dependencies) < 1) { %>
 	   <i class="text-info glyphicon glyphicon-flag" data-toggle="tooltip" title="No dependencies! Without them, the access control has nothing to operate on"></i>
 	 <% } %>
-         <br>
          <%= link_to "#",
-                   "class" => "text-danger",
+                   title => "Delete this access control",
                    "data-toggle" => "confirmation",
                    "data-on-confirm" => "delete_thing",
                    "data-url" => url_for("step_dependency_group_delete", id => $step->dependency_group_id), 
-                   begin %>(Remove Control)<% end %>
+              begin %>
+                  <i class="glyphicon glyphicon-remove text-danger"></i>
+         <% end %>
 
        <% } else { %>
          <%= link_to url_for("step_dependency_group_new", step_id => $step->id), 
@@ -60,6 +55,16 @@
        <% } %> 
         
 
+     </td>
+     <td>
+       <%= link_to "#",
+                  title => "Remove this step",
+                  "data-toggle" => "confirmation",
+                  "data-on-confirm" => "delete_thing",
+                  "data-url" => url_for("journey_step_delete", id => $step->id, journey_id => $step->journey->id)         
+                  => begin %>  
+         <i class="glyphicon glyphicon-remove-sign text-danger"></i>
+       <% end %>
      </td>
    </tr>
    <% } %>
