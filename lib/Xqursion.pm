@@ -15,13 +15,13 @@ has schema => sub {
 # This method will run once at server start
 sub startup {
     my $self = shift;
-    
+
     $self->secrets([$ENV{XQURSION_SECRET} || '0987654321']);
     push @{$self->commands->namespaces}, 'Xqursion::Command';
 
     $self->app->sessions->cookie_name($self->app->moniker);
     $self->app->sessions->default_expiration(86400);
-    
+
     $self->helper(db => sub { $self->app->schema });
 
     $self->plugin("Config");

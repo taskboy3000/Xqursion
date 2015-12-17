@@ -11,6 +11,22 @@
 
   </head>
   <body>
+    <% my $error = $self->flash("error");
+       my $info = $self->flash("info");
+    %>
+    <% if ($error) { %>
+    <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%= $error %>
+    </div>
+    <% } %>
+    <% if ($info) { %>
+    <div class="alert alert-info" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%= $info %>
+    </div>
+    <% } %>
+    
     <div class="container-fluid page-wrapper">
       <% if ($self->current_user) { %>
       <div class="container">

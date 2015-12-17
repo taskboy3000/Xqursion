@@ -26,6 +26,7 @@ sub destroy {
 
     $self->app->log->debug("Ending web session");
     $self->session("user_id" => "", "started" => 0);
+    $self->session(expires => 0);
     return $self->redirect_to("/");
 }
 
