@@ -14,10 +14,13 @@ sub make_routes {
 
     # Users
     $r->post("/user/create")->to("users#create");
-
+    $r->get("/user/:id/edit")->name("user_edit")->to("users#edit");
+    $r->post("/user/:id")->name("user_update")->to("users#update");
+      
     # Sessesions
     $r->post("/sessions/create")->to("sessions#create");
-
+    $r->delete("/sessions/destroy")->to("sessions#destroy");
+    
     # Dashboard 
     $r->get("/app/dashboard")->name("your_dashboard")->to("dashboards#index");
 

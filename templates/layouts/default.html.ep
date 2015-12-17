@@ -12,10 +12,25 @@
   </head>
   <body>
     <div class="container-fluid page-wrapper">
-      <header>
-      </header>
-
-      <div class="container page-content">
+      <% if ($self->current_user) { %>
+      <div class="container">
+        <header >
+          <ul class="list-inline pull-right">
+            <li>
+              <%= link_to url_for("user_edit", id => $self->current_user->id), title => "Account settings" => begin %>
+                <i class="glyphicon glyphicon-cog"></i>
+              <% end %>
+            </li>
+            <li>
+              <%= form_for "sessionsdestroy" => begin %>
+                <%= submit_button "Logout", class => "btn btn-link", style => "padding:0;border:0;vertical-align:baseline;" %>
+              <% end %>
+            </li>
+          </ul>
+        </header>
+      </div>
+      <% } %>
+      <div class="container page-content <%= join(" ", split("::", ref($self))) %>">
 	<%= content %>
       </div>
 

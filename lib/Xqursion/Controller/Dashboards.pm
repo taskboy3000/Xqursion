@@ -1,6 +1,6 @@
 package Xqursion::Controller::Dashboards;
 use Modern::Perl '2012';
-use Mojo::Base 'Mojolicious::Controller';
+use Mojo::Base 'Xqursion::Controller::Application';
 
 our $BEFORE_FILTERS = { "require_authentication" => [ 'index' ] };
 

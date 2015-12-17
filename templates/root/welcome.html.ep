@@ -14,6 +14,7 @@
         </div>
         <div class="panel-body">
           <%= form_for "sessionscreate" => begin %>
+            <%= csrf_field %>
             <div>
               <%= label_for 'username' => 'Username:' %><br>
               <%= text_field 'username', autocaptialize => "none" %>
@@ -23,7 +24,7 @@
               <%= password_field 'password',  autocaptialize => "none"  %>
             </div>
             <br>
-            <%= submit_button 'Login' %>
+            <%= submit_button 'Login', class => "btn btn-primary" %>
           <% end %>
         
         </div>
@@ -43,6 +44,7 @@
         <div class="panel-body">
           
           <%= form_for usercreate => begin %>
+            <%= csrf_field %>
             <div>
               <%= label_for 'username' => 'Username:' %><br>
               <%= text_field 'username'%>
@@ -60,7 +62,7 @@
               <%= password_field 'confirm_password' %>
             </div>
             <br>
-            <%= submit_button 'Login' %>
+            <%= submit_button 'Login', class => "btn btn-default" %>
           <% end %>
 
         </div>

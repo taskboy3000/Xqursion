@@ -1,0 +1,31 @@
+% layout 'default';
+% title 'Settings';
+
+<h1>Edit your settings</h1>
+
+<p>Update your personal settings below</p>
+
+<%= form_for "user_update" => begin %>
+  <%= csrf_field %>
+
+  <%= label_for "username" => "Username" %>
+  <%= input_tag name => "username", value => $user->username, class => "form-control", required => "required" %> 
+  <br/>
+
+  <%= label_for "email" => "Email" %>
+  <%= input_tag name => "email", value => $user->email, class => "form-control", required => "required" %> 
+  <br/>
+
+  <%= label_for "password" => "Password" %>
+  <%= password_field "password", class => "form-control", placeholder => "Leave blank to retain current password" %> 
+  <br/>
+
+  <%= label_for "confirm_password" => "Confirm password" %>
+  <%= password_field "confirm_password", class => "form-control", placeholder => "Retry new password, if changing" %> 
+  <br/>
+
+  <ul class="list-inline">
+   <li><%= link_to "Cancel" => "javascript:window.history.back();" %></li>
+   <li><%= submit_button "Update", class => "btn btn-primary" %></li>
+  </ul>
+<% end %>
