@@ -80,7 +80,7 @@ sub update_taskboy_sandbox
 sub restart_server 
 {
     my $self = shift;
-    my $command = "ssh taskboy.com 'cd ~/sites/Xqursion && source env.sh && hynotoad script/xqursion'";
+    my $command = "ssh taskboy.com 'cd ~/sites/Xqursion && source env.sh && hypnotoad script/xqursion'";
     print "$command\n";
     system($command);
 }

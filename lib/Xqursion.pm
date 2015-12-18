@@ -18,6 +18,7 @@ sub startup {
 
     $self->secrets([$ENV{XQURSION_SECRET} || '0987654321']);
     push @{$self->commands->namespaces}, 'Xqursion::Command';
+    push @{$self->commands->namespaces}, 'Xqursion::Command::deploy';
 
     $self->app->sessions->cookie_name($self->app->moniker);
     $self->app->sessions->default_expiration(86400);
