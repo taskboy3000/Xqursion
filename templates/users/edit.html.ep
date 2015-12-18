@@ -9,11 +9,11 @@
   <%= csrf_field %>
 
   <%= label_for "username" => "Username" %>
-  <%= input_tag "username", value => $user->username, class => "form-control", required => "required" %> 
+  <%= input_tag "username", value => $user->username, class => "form-control", required => "required", autocapitalize => "off" %> 
   <br/>
 
   <%= label_for "email" => "Email" %>
-  <%= input_tag "email", value => $user->email, class => "form-control", required => "required" %> 
+  <%= input_tag "email", value => $user->email, class => "form-control", required => "required", autocapitalize => "off" %> 
   <br/>
 
   <%= label_for "password" => "Password" %>

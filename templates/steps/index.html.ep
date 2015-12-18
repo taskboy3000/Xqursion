@@ -36,8 +36,9 @@
                    begin %>
                    <%= $step->dependency_group->title %>
          <% end %>
+	 <br>
 	 <% if (scalar($step->dependency_group->dependencies) < 1) { %>
-	   <i class="text-info glyphicon glyphicon-flag" data-toggle="tooltip" title="No dependencies! Without them, the access control has nothing to operate on"></i>
+	   <i class="text-info glyphicon glyphicon-flag text-danger" data-toggle="tooltip" title="No dependencies! Without them, the access control has nothing to operate on"></i>
 	 <% } %>
          <%= link_to "#",
                    title => "Delete this access control",

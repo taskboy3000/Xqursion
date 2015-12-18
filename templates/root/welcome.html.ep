@@ -17,11 +17,11 @@
             <%= csrf_field %>
             <div>
               <%= label_for 'username' => 'Username:' %><br>
-              <%= text_field 'username', autocaptialize => "none" %>
+              <%= text_field 'username', autocapitalize => "off" %>
             </div>
             <div>
               <%= label_for 'passsword' => 'Password:' %><br>
-              <%= password_field 'password',  autocaptialize => "none"  %>
+              <%= password_field 'password',  autocapitalize => "off"  %>
             </div>
             <br>
             <%= submit_button 'Login', class => "btn btn-primary" %>
@@ -51,11 +51,11 @@
             <%= csrf_field %>
             <div>
               <%= label_for 'username' => 'Username:' %><br>
-              <%= text_field 'username'%>
+              <%= text_field 'username', autocapitalize => "off" %>
             </div>
             <div>
               <%= label_for 'email' => 'Email:' %><br>
-              <%= text_field 'email'%>
+              <%= text_field 'email', autocapitalize => "off" %>
             </div>
             
             <br>
