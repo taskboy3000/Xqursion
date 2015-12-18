@@ -59,7 +59,7 @@
             </div>
             
             <br>
-            <%= submit_button 'Login', class => "btn btn-default" %>
+            <%= submit_button 'Sign up', class => "btn btn-default" %>
           <% end %>
 
         </div>

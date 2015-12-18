@@ -14,11 +14,13 @@ sub create {
 		$self->app->log->debug("Starting session");
                 $self->session("user_id" => $user->id, "started" => scalar time());
                 return $self->redirect_to("/app/dashboard");    
+            } else {
+                $self->flash(error => "Bad credentials");
             }
         }
     }
     $self->app->log->debug("Login failed for " . $self->param("username"));
-    return $self->redirect_to("/?login+failed");
+    return $self->redirect_to("/");
 }
 
 sub destroy {

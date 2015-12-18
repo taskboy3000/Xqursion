@@ -12,7 +12,7 @@ sub require_authentication {
         my $user = $c->app->db->resultset("User")->single({id => $uid});
         if ($user) {
             # has the cookie expired (8 hour lease)?
-            if (time() - $c->session("started") > 60*1) {
+            if (time() - $c->session("started") > 60*60*8) {
                 $L->debug(__PACKAGE__ . ": Session has expired");
                 $c->flash(info => "Your session has expired");
                 return $c->redirect_to("/");
