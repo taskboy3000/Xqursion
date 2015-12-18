@@ -1,0 +1,13 @@
+% layout 'default';
+% title 'Privacy';
+
+<h1>Privacy Policy</h1>
+
+<p>Something a lot more official should go here, but until then, please
+  note that I will no resell your personally identifiable information to
+  anyone.</p>
+
+<p>However, your journey information is <b>not</b> encrypted.  Xqursion
+  developers can see it.</p>
+
+<p>Further questions should go to <%= mail_to("support@taskboy.com") %></p>

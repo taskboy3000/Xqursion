@@ -4,42 +4,134 @@ use Mojo::Base 'Xqursion::Controller::Application';
 
 sub create {
     my ($self) = shift;
+    my $db = $self->app->db;
 
     return $self->no_auth unless $self->valid_csrf;
 
-    # Password exists?
-    unless ($self->param("password")) {
-        warn("No password");
-        return $self->redirect_to("/");
-    }
-
-    # Do the passwords match?
-    if ($self->param("password") ne $self->param("confirm_password")) {
-        warn("Password doesn't match");
-        return $self->redirect_to("/");
-    }
-
-    my $db = $self->db;
-    die unless $db;
+    my $validation = $self->validation;
 
     # Does this user exist?
-    my @found = $db->resultset("User")->search({ username => $self->param('username'),
-                                                       email => $self->param('email')
-                                                     });
-    if (@found) {
+    my $userRS = $db->resultset("User");
+    for my $field ('username', 'email') {
+        if ($userRS->count({ $field => $self->param($field) })) {
+            my $error = sprintf ("%s '%s' is taken. Choose another.",
+                                 ucfirst($field),
+                                 $self->param("username"));
+            $validation->error($field => $error);
+        }
+    }
+
+    if ($validation->has_errors) {
+        my $errors = join "; ",  values %{$validation->output};
+        $self->flash(error => "ERROR: $errors");
+        $self->redirect_to("/");
+    }
+
+    my $user = $userRS->new({   
+                             username => $self->param("username"), 
+                             email => $self->param("email"),
+                            });
+    
+    $user->create_id()->create_reset_token();
+
+    if ($user->insert()) {
+        $self->flash(info => "Your account is created.  Please look for an email with login instructions");
+        $self->mail(to => $user->email,
+                    subject => "Welcome to Xqursion",
+                    data => $user->get_welcome_message());
+        return $self->redirect_to($self->url_for("user_creation_thankyou"));
+    }
+
+    $self->flash(error => "A problem occurred while creating your account.");
+    return $self->redirect_to("/");
+}
+
+sub creation_thankyou {
+    return shift->render();
+}
+
+
+sub reset_password_form {
+    my ($self) = @_;
+    my $userRS = $self->app->db->resultset("User");
+
+    my $validation = $self->validation;
+
+    my $user = $userRS->find($self->param("id"));
+    unless ($user) {
+        $validation->error("no_user" => "No account found for the given ID");
+    }
+
+    if ($validation->has_errors) {
+        my $errors = join("; ", values %{$validation->output});
+        $self->flash(error => $errors);
+        return $self->redirect_to("/");
+    }
+    
+    return $self->render(this_user => $user);
+}
+
+sub reset_password_update {
+    my ($self) = @_;
+
+    return $self->no_auth unless $self->valid_csrf;
+
+    my $userRS = $self->app->db->resultset("User");
+    my $validation = $self->validation;
+
+    my $user = $userRS->find($self->param("id"));
+    unless ($user) {
+        $validation->error("no_user" => "No account found for the given ID");
+    }
+
+    unless($validation->has_errors) {
+        if ($user->reset_token ne $self->param("token")) {
+            $validation->error("token" => "Security token does not match expected");
+        }
+    }
+    
+    unless($validation->has_errors) {
+        if ($self->param("password")) {
+            if ($self->param("password") ne $self->param("confirm_password")) {
+                $validation->error("password" => "Passwords does not match");
+            }
+        } else {
+            $validation->error("password" => "Passwords cannot be empty");
+        }
+    }
+
+    if ($validation->has_errors) {
+        my $errors = join("; ", values %{$validation->output});
+        $self->flash(error => $errors);
         return $self->redirect_to("/");
     }
 
-    my $user = $self->db->resultset("User")->new({   
-                                                   username => $self->param("username"), 
-                                                   email => $self->param("email"),
-                                                 });
-    $user->create_id();
-    $user->password_hash($user->hash_password($self->param("password")));
+    $user->password_hash($self->hash_password($self->param("password")));
+    $user->reset_token(undef);
 
-    $user->insert();
-    $self->flash(info => "Your account is created.  Please log in.");
-    return $self->redirect_to("/");
+    if ($user->update) {
+        $self->flash(info => "Your password has been updated.");
+    } else {
+        $self->flash(error => "Your password change could not be recorded");        
+    }
+    
+    return $self->render("/");
+}
+
+sub request_password_reset {
+    my ($self) = @_;
+    
+    my $userRS = $self->app->db->resultset("User");
+    my $user = $userRS->find($self->param("id"));
+
+    $user->create_reset_token;
+    $user->update;
+
+    $self->mail(to => $user->email,
+                subject => "Xqursion password reset",
+                data => $user->get_reset_message());
+    
+    return $self->render();
 }
 
 sub edit {

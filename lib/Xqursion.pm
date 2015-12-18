@@ -25,9 +25,17 @@ sub startup {
     $self->helper(db => sub { $self->app->schema });
 
     $self->plugin("Config");
+    $self->plugin(mail => {
+                           from => "xqursion\@taskboy.com",
+                           #encoding => "base64",
+                           type => "text/text",
+                           how => "sendmail",
+                           howargs => [ '/usr/sbin/sendmail -t' ],
+                          });
+    
     # push @{$plugins->namespaces}, 'Xqursion::Plugin';
     $self->plugin('Xqursion::Plugin::Routes',);
-    $self->plugin('Mojolicious::Plugin::BeforeFilter');
+    $self->plugin('Mojolicious::Plugin::BeforeFilter');    
     $self->add_filter_class('Xqursion::Filters');
     $self->make_routes();
 }

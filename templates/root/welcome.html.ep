@@ -29,7 +29,11 @@
         
         </div>
         <div class="panel-footer">
-          <%= link_to "#" => begin %>
+          <%= tag "button",
+              id => "reset_password",
+              class => "btn btn-link",
+              "data-toggle" => "modal",
+              "data-target" => "#find_account_dialog", begin %>
           Forgot your password?
           <% end %>
         </div>
@@ -53,24 +57,49 @@
               <%= label_for 'email' => 'Email:' %><br>
               <%= text_field 'email'%>
             </div>
-            <div>
-              <%= label_for 'passsword' => 'Password:' %><br>
-              <%= password_field 'password'  %>
-            </div>
-            <div>
-              <%= label_for 'confirm_passsword' => 'Confirm password:' %><br>
-              <%= password_field 'confirm_password' %>
-            </div>
+            
             <br>
             <%= submit_button 'Login', class => "btn btn-default" %>
           <% end %>
 
         </div>
         <div class="panel-footer">
-          <%= link_to "#" => begin %>
+          <%= link_to url_for("privacy") => begin %>
           Privacy
           <%= end %>
         </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" role="dialog" id="find_account_dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Find your account?</h4>
+      </div>
+      <div class="modal-body">
+        <p>To reset your password, we need to know either your email address or username.</p>
+
+        <%= form_for "find_account", name => "find_account" => begin %>
+           <%= csrf_field %>
+
+           <%= label_for "username" => "Username" %>
+           <%= input_tag "username", class => "form-control" %> 
+           <br/>
+           
+           <%= label_for "email" => "Email" %>
+           <%= input_tag "email", class => "form-control" %> 
+           <br/>
+
+        <% end %>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-action="modal" onclick = "$('form[name=find_account]').submit();">Find</button>
+      </div>
+    </div>
+  </div
 </div>

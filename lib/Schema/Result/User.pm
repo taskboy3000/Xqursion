@@ -3,20 +3,22 @@ package Schema::Result::User;
 use strict;
 use parent ('ResBase');
 use Digest::SHA ('sha256_hex');
+use URI;
 
 our %ROLES = (USER => 1, ADMIN => 10);
 
 __PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime", "TimeStamp", "Core");
 __PACKAGE__->table("users");
 __PACKAGE__->add_columns(
-   "id" => { data_type => "char", is_nullable => 0, size=>64},
-   "username" => { data_type => "varchar", is_nullable => 0, size=> 64},
-   "email" => { data_type => "varchar", is_nullable => 0, size=> 128},
-   "password_hash" => { data_type => "varchar", is_nullable => 0, size=> 128},
-   "role" => { data_type => "char", is_nullable => 0, size=> 16, default => "USER" },
-   "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
-   "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
-);
+                         "id" => { data_type => "char", is_nullable => 0, size=>64},
+                         "username" => { data_type => "varchar", is_nullable => 0, size=> 64},
+                         "email" => { data_type => "varchar", is_nullable => 0, size=> 128},
+                         "password_hash" => { data_type => "varchar", is_nullable => 0, size=> 128},
+                         "role" => { data_type => "char", is_nullable => 0, size=> 16, default => "USER" },
+                         "reset_token" => { data_type => "char", is_nullable => 1, size=>64},
+                         "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
+                         "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
+                        );
 
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->has_many("journeys" => 'Schema::Result::Journey', 'user_id');
@@ -48,6 +50,70 @@ sub hash_password {
 sub is_password_valid {
     my ($self, $plain_text) = @_;
     return $self->password_hash eq $self->hash_password($plain_text);
+}
+
+sub create_reset_token {
+    my ($self) = @_;
+    $self->reset_token($self->uuid());
+    return $self;
+}
+
+sub get_welcome_message {
+    my ($self) = @_;
+
+    my $uri = URI->new(sprintf("%s://%s/user/%s/reset_password",
+                               $ENV{XQURSION_PUBLIC_SCHEME},
+                               $ENV{XQURSION_PUBLIC_HOST},
+                               $self->id,
+                              ));
+    
+    $uri->query_form(token => $self->reset_token);
+    
+    my $msg = sprintf(qq[Welcome to Xqursion!
+
+To finish creating your account, please use the following link to create your password:
+
+%s
+
+Thanks again for joining our community.
+
+Happy travels,
+
+--Xqursion
+],
+                      $uri->as_string
+                     );
+    
+    return $msg;
+}
+
+sub get_reset_message {
+    my ($self) = @_;
+
+    my $uri = URI->new(sprintf("%s://%s/user/%s/reset_password",
+                               $ENV{XQURSION_PUBLIC_SCHEME},
+                               $ENV{XQURSION_PUBLIC_HOST},
+                               $self->id,
+                              ));
+    
+    $uri->query_form(token => $self->reset_token);
+    
+    my $msg = sprintf(qq[Dear %s,
+
+Someone, hopefully you, requested to reset your password.  To continue doing so, 
+please go to the link below.
+
+%s
+
+Thanks,
+
+--Xqursion
+],
+                      $self->username,
+                      $uri->as_string
+                     );
+    
+    return $msg;
 }
 
 1;

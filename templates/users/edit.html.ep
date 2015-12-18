@@ -9,11 +9,11 @@
   <%= csrf_field %>
 
   <%= label_for "username" => "Username" %>
-  <%= input_tag name => "username", value => $user->username, class => "form-control", required => "required" %> 
+  <%= input_tag "username", value => $user->username, class => "form-control", required => "required" %> 
   <br/>
 
   <%= label_for "email" => "Email" %>
-  <%= input_tag name => "email", value => $user->email, class => "form-control", required => "required" %> 
+  <%= input_tag "email", value => $user->email, class => "form-control", required => "required" %> 
   <br/>
 
   <%= label_for "password" => "Password" %>
@@ -26,6 +26,8 @@
 
   <ul class="list-inline">
    <li><%= link_to "Cancel" => "javascript:window.history.back();" %></li>
-   <li><%= submit_button "Update", class => "btn btn-primary" %></li>
+   <li><%= submit_button "Update",
+           class => "btn btn-primary",
+     %></li>
   </ul>
 <% end %>
