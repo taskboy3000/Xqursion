@@ -21,7 +21,7 @@ sub create {
         }
     }
 
-    if ($validation->has_errors) {
+    if ($validation->has_error) {
         my $errors = join "; ",  values %{$validation->output};
         $self->flash(error => "ERROR: $errors");
         $self->redirect_to("/");
@@ -38,7 +38,7 @@ sub create {
         $self->flash(info => "Your account is created.  Please look for an email with login instructions");
         $self->mail(to => $user->email,
                     subject => "Welcome to Xqursion",
-                    data => $user->get_welcome_message());
+                    data => $user->get_welcome_message()); # FIXME
         return $self->redirect_to($self->url_for("user_creation_thankyou"));
     }
 
@@ -62,7 +62,7 @@ sub reset_password_form {
         $validation->error("no_user" => "No account found for the given ID");
     }
 
-    if ($validation->has_errors) {
+    if ($validation->has_error) {
         my $errors = join("; ", values %{$validation->output});
         $self->flash(error => $errors);
         return $self->redirect_to("/");
@@ -84,13 +84,13 @@ sub reset_password_update {
         $validation->error("no_user" => "No account found for the given ID");
     }
 
-    unless($validation->has_errors) {
+    unless($validation->has_error) {
         if ($user->reset_token ne $self->param("token")) {
             $validation->error("token" => "Security token does not match expected");
         }
     }
     
-    unless($validation->has_errors) {
+    unless($validation->has_error) {
         if ($self->param("password")) {
             if ($self->param("password") ne $self->param("confirm_password")) {
                 $validation->error("password" => "Passwords does not match");
@@ -100,13 +100,13 @@ sub reset_password_update {
         }
     }
 
-    if ($validation->has_errors) {
+    if ($validation->has_error) {
         my $errors = join("; ", values %{$validation->output});
         $self->flash(error => $errors);
         return $self->redirect_to("/");
     }
 
-    $user->password_hash($self->hash_password($self->param("password")));
+    $user->password_hash($user->hash_password($self->param("password")));
     $user->reset_token(undef);
 
     if ($user->update) {
@@ -114,8 +114,8 @@ sub reset_password_update {
     } else {
         $self->flash(error => "Your password change could not be recorded");        
     }
-    
-    return $self->render("/");
+
+    return $self->redirect_to("/");
 }
 
 sub request_password_reset {
@@ -126,11 +126,13 @@ sub request_password_reset {
 
     $user->create_reset_token;
     $user->update;
-
+    my $msg = $self->render_mail(template => "mail/password_reset", url => $user->get_reset_url);
+    $self->app->log->debug("Mailing:\n$msg\n");
     $self->mail(to => $user->email,
                 subject => "Xqursion password reset",
-                data => $user->get_reset_message());
-    
+                data => $msg
+               );
+
     return $self->render();
 }
 

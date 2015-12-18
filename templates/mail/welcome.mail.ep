@@ -1,0 +1,14 @@
+% layout 'default';
+% title 'Welcome';
+
+<h1>Welcome to Xqursion!</h1>
+
+<p>To finish creating your account, please use the following link to create your password:</p>
+
+<%= $url %>
+
+<p>Thanks again for joining our community.</p>
+
+<p>Happy travels,</p>
+
+<p>--Xqursion</p>

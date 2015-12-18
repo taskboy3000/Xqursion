@@ -58,62 +58,16 @@ sub create_reset_token {
     return $self;
 }
 
-sub get_welcome_message {
+sub get_reset_url {
     my ($self) = @_;
-
     my $uri = URI->new(sprintf("%s://%s/user/%s/reset_password",
                                $ENV{XQURSION_PUBLIC_SCHEME},
                                $ENV{XQURSION_PUBLIC_HOST},
                                $self->id,
                               ));
-    
+
     $uri->query_form(token => $self->reset_token);
-    
-    my $msg = sprintf(qq[Welcome to Xqursion!
-
-To finish creating your account, please use the following link to create your password:
-
-%s
-
-Thanks again for joining our community.
-
-Happy travels,
-
---Xqursion
-],
-                      $uri->as_string
-                     );
-    
-    return $msg;
-}
-
-sub get_reset_message {
-    my ($self) = @_;
-
-    my $uri = URI->new(sprintf("%s://%s/user/%s/reset_password",
-                               $ENV{XQURSION_PUBLIC_SCHEME},
-                               $ENV{XQURSION_PUBLIC_HOST},
-                               $self->id,
-                              ));
-    
-    $uri->query_form(token => $self->reset_token);
-    
-    my $msg = sprintf(qq[Dear %s,
-
-Someone, hopefully you, requested to reset your password.  To continue doing so, 
-please go to the link below.
-
-%s
-
-Thanks,
-
---Xqursion
-],
-                      $self->username,
-                      $uri->as_string
-                     );
-    
-    return $msg;
+    return $uri->as_string;
 }
 
 1;

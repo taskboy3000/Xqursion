@@ -27,8 +27,8 @@ sub startup {
     $self->plugin("Config");
     $self->plugin(mail => {
                            from => "xqursion\@taskboy.com",
-                           #encoding => "base64",
-                           type => "text/text",
+                           encoding => "base64",
+                           type => "text/html",
                            how => "sendmail",
                            howargs => [ '/usr/sbin/sendmail -t' ],
                           });

@@ -12,7 +12,7 @@ sub welcome {
 sub find_account {
     my ($self) = @_;
     my $userRS = $self->app->db->resultset("User");
-    
+
     return $self->no_auth unless $self->valid_csrf;
 
     my $user;

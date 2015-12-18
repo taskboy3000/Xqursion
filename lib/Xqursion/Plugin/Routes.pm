@@ -13,7 +13,7 @@ sub make_routes {
     $r->get('/')->to('root#welcome');
     $r->get("/privacy")->name("privacy")->to("root#privacy");
     $r->post("/find_account")->name("find_account")->to("root#find_account");
-    
+
     # Users
     $r->get("/user/:id/reset_password")->name("user_reset_password_form")->to("users#reset_password_form");
     $r->get("/user/creation_thankyou")->name("user_creation_thankyou")->to("users#creation_thankyou");
