@@ -9,26 +9,27 @@
 
 <h1>Steps for <%= $journey->name %></h1>
 
-<table class="table table-striped">
-  <thead>
-    <th>Title</th>
-    <th style="max-width:200px;">URL</th>
-    <th style="max-width:200px;">Error URL</th>
-    <th>Access Control</th>
-    <th>Remove</th>
-  </thead>
-  <tbody>
-   <% for my $step (@$steps) { %>
-   <tr>
-     <td>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <th>Title</th>
+      <th style="max-width:200px;">URL</th>
+      <th style="max-width:200px;">Error URL</th>
+      <th>Access Control</th>
+      <th>Remove</th>
+    </thead>
+    <tbody>
+     <% for my $step (@$steps) { %>
+     <tr>
+       <td>
        <%= link_to url_for("journey_step_edit", journey_id => $step->journey_id, id => $step->id), 
                    class => "",
                    begin %><%= $step->title %><% end %>
 
-     </td>
-     <td class="abbr" style="max-width:200px"><%= link_to $step->url => $step->url, target => "_blank" %></td>
-     <td class="abbr" style="max-width:200px"><%= link_to $step->error_url => $step->error_url, target => "_blank" %></td>
-     <td>
+       </td>
+       <td class="abbr" style="max-width:200px"><%= link_to $step->url => $step->url, target => "_blank" %></td>
+       <td class="abbr" style="max-width:200px"><%= link_to $step->error_url => $step->error_url, target => "_blank" %></td>
+       <td>
        <% if ($step->dependency_group_id) { %>
 
          <%= link_to url_for("step_dependency_group_edit", step_id => $step->id, id => $step->dependency_group_id), 
@@ -71,6 +72,7 @@
    <% } %>
   </tbody>
 </table>
+</div>
 
 <p><%= link_to url_for("journey_step_new", journey_id => $journey->id), class => "btn btn-primary" => begin %>New Step<% end %></p>
 
