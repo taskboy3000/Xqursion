@@ -28,13 +28,14 @@
     <% } %>
     
     <div class="container-fluid page-wrapper">
+
       <% if ($self->current_user) { %>
       <div class="container">
         <header >
           <ul class="list-inline pull-right">
             <li>
               <%= link_to url_for("user_edit", id => $self->current_user->id), title => "Account settings" => begin %>
-                <i class="glyphicon glyphicon-cog"></i>
+                Settings
               <% end %>
             </li>
             <li>
@@ -46,6 +47,7 @@
         </header>
       </div>
       <% } %>
+      
       <div class="container page-content <%= join(" ", split("::", ref($self))) %>">
 	<%= content %>
       </div>
