@@ -7,7 +7,7 @@
 </ol>
 
 <h1>Your Journeys</h1>
-
+<div class="table-responsive">
 <table class="table table-striped" role="sortable">
   <thead>
     <th role="sorter">Name</th>
@@ -54,6 +54,6 @@
     <% } %> 
   </tbody>
 </table>
-
+</div>
 <p><%= link_to "journey_new", class => "btn btn-primary", begin %>New Journey<% end %></p>
 

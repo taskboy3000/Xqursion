@@ -1,6 +1,7 @@
 package Xqursion::Controller::Root;
 use Mojo::Base 'Xqursion::Controller::Application';
 
+
 # This action will render a template
 sub welcome {
   my $self = shift;
@@ -8,6 +9,10 @@ sub welcome {
   #  $self->flash("info" => "Welcome");
   $self->render();
 }
+
+
+sub privacy { shift->render() }
+
 
 sub find_account {
     my ($self) = @_;

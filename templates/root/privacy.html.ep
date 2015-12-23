@@ -1,6 +1,11 @@
 % layout 'default';
 % title 'Privacy';
 
+<ol class="breadcrumb">
+  <li><%= link_to "Home" => "/" %></li>
+  <li class="active">Privacy</li>
+</ol>
+
 <h1>Privacy Policy</h1>
 
 <p>Something a lot more official should go here, but until then, please
@@ -10,4 +15,4 @@
 <p>However, your journey information is <b>not</b> encrypted.  Xqursion
   developers can see it.</p>
 
-<p>Further questions should go to <%= mail_to("support@taskboy.com") %></p>
+<p>Further questions should go to <%= link_to "Support" => "mailto:support\@taskboy.com" %></p>

@@ -10,7 +10,7 @@ sub make_routes {
     my $r = $app->routes;
 
     # Normal route to controller
-    $r->get('/')->to('root#welcome');
+    $r->get('/')->name("root")->to('root#welcome');
     $r->get("/privacy")->name("privacy")->to("root#privacy");
     $r->post("/find_account")->name("find_account")->to("root#find_account");
 
@@ -22,12 +22,12 @@ sub make_routes {
     $r->get("/user/:id/edit")->name("user_edit")->to("users#edit"); # For authed users
     $r->post("/user/:id/reset_password")->name("user_reset_password_update")->to("users#reset_password_update"); # no auth
     $r->post("/user/:id")->name("user_update")->to("users#update");
-    
+
     # Sessesions
     $r->post("/sessions/create")->to("sessions#create");
     $r->delete("/sessions/destroy")->to("sessions#destroy");
-    
-    # Dashboard 
+
+    # Dashboard
     $r->get("/app/dashboard")->name("your_dashboard")->to("dashboards#index");
 
     # Dialogs
