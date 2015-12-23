@@ -5,7 +5,7 @@
 
 <p>To finish creating your account, please use the following link to create your password:</p>
 
-<%= link_to $url %>
+<%= link_to $url => $url %>
 
 <p>Thanks again for joining our community.</p>
 

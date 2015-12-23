@@ -21,6 +21,8 @@ __PACKAGE__->add_columns(
                         );
 
 __PACKAGE__->set_primary_key("id");
+__PACKAGE__->add_unique_constraint("unique_username" => [ "username" ]); 
+__PACKAGE__->add_unique_constraint("unique_email" => [ "email" ]); 
 __PACKAGE__->has_many("journeys" => 'Schema::Result::Journey', 'user_id');
 __PACKAGE__->inflate_column("created_at", {
                                          inflate => sub { DateTime->from_epoch(epoch => shift) }, 
@@ -68,6 +70,11 @@ sub get_reset_url {
 
     $uri->query_form(token => $self->reset_token);
     return $uri->as_string;
+}
+
+sub is_admin {
+    my ($self) = @_;
+    return $self->role eq 'ADMIN';
 }
 
 1;

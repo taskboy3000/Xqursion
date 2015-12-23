@@ -1,5 +1,5 @@
 package Xqursion::Plugin::Routes;
-use strict;
+use Modern::Perl '2012';
 use Mojo::Base 'Mojolicious::Plugin';
 
 # Put all the routing stuff in one place
@@ -23,7 +23,7 @@ sub make_routes {
     $r->post("/user/:id/reset_password")->name("user_reset_password_update")->to("users#reset_password_update"); # no auth
     $r->post("/user/:id")->name("user_update")->to("users#update");
 
-    # Sessesions
+    # Sessions
     $r->post("/sessions/create")->to("sessions#create");
     $r->delete("/sessions/destroy")->to("sessions#destroy");
 
@@ -57,7 +57,7 @@ sub make_routes {
     $r->post("/app/step/:step_id/dependency_group")->name("step_dependency_group_create")->to("dependency_groups#create");
     $r->post("/app/step/:step_id/dependency_group/:id")->name("step_dependency_group_update")->to("dependency_groups#update");
     $r->delete("/app/dependency_group/:id")->name("step_dependency_group_delete")->to("dependency_groups#delete");
-    
+
     # Dependencies
     $r->post("/app/dependency")->name("dependency_create")->to("dependencies#create");
     $r->delete("/app/dependency/:id")->name("dependency_delete")->to("dependencies#delete");
@@ -68,6 +68,29 @@ sub make_routes {
 
     # Public steps: where users interact with journeys
     $r->get("/step/:id")->name("porter_step_show")->to("porter_steps#show");
+
+    # Administrators
+    my $admin = $r->under("/admin" => sub { my ($c) = @_; $self->is_admin($app, $c) });
+    $admin->get("/dashboard")->name("admin_dashboard")->to("admin_root#index");
+}
+
+
+sub is_admin {
+    my ($self, $app, $controller) = @_;
+    my $L = $app->log;
+    
+    if (my $uid = $controller->session("user_id")) {
+        $L->debug("Looking up user '$uid'");
+        my $user = $app->db->resultset("User")->single({id => $uid});
+        if ($user) { 
+            return $user->is_admin;
+        } else {
+            $L->debug("No user found with ID '$uid'");
+        }       
+    }
+
+    $controller->flash(error => "You are not authorizated for that page");
+    return $controller->redirect_to("your_dashboard");
 }
 
 sub register {

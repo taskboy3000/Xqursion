@@ -95,7 +95,8 @@ sub request_password_reset {
 sub create {
     my ($self) = shift;
     my $db = $self->app->db;
-
+    my $L = $self->app->log;
+    
     return $self->no_auth unless $self->valid_csrf;
 
     my $validation = $self->validation;
@@ -104,17 +105,27 @@ sub create {
     my $userRS = $db->resultset("User");
     for my $field ('username', 'email') {
         if ($userRS->count({ $field => $self->param($field) })) {
-            my $error = sprintf ("%s '%s' is taken. Choose another.",
+            my $error = sprintf ("%s '%s' is taken. Choose another",
                                  ucfirst($field),
                                  $self->param("username"));
             $validation->error($field => $error);
+            
         }
+
+        $validation->required($field)->size(3,64);
     }
 
+    $validation->required("email")->like(qr/^[^@]+@[^@]+$/);
+    
     if ($validation->has_error) {
-        my $errors = join "; ",  values %{$validation->output};
-        $self->flash(error => "ERROR: $errors");
-        $self->redirect_to("/");
+        my @errors;
+        for my $field ('username', 'email') {
+            my @e = ref $validation->error($field) ? @{$validation->error($field)} : $validation->error($field);
+            push @errors, @e;
+        }
+        $L->error(join(",", @errors));
+        $self->flash(error => "Warning: " . join("; ", @errors));
+        return $self->redirect_to("/");
     }
 
     my $user = $userRS->new({   

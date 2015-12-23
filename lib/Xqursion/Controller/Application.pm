@@ -5,7 +5,7 @@ use Mojo::Base 'Mojolicious::Controller';
 sub current_user {
     my ($self) = shift;
     my $L = $self->app->log;
-
+    
     # Check for cookie
     if (my $uid = $self->session("user_id")) {
 	$L->debug("Looking up user '$uid'");
@@ -15,7 +15,7 @@ sub current_user {
             return $user;
         }
     }
-
+    
     $L->debug("User is not authenticated");
     return;
 }

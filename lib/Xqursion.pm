@@ -33,9 +33,9 @@ sub startup {
                            how => "sendmail",
                            howargs => [ '/usr/sbin/sendmail -t' ],
                           });
-    
-    # push @{$plugins->namespaces}, 'Xqursion::Plugin';
-    $self->plugin('Xqursion::Plugin::Routes',);
+
+    $self->plugin('Xqursion::Plugin::Authorization');
+    $self->plugin('Xqursion::Plugin::Routes');
     $self->plugin('Mojolicious::Plugin::BeforeFilter');    
     $self->add_filter_class('Xqursion::Filters');
     $self->make_routes();
