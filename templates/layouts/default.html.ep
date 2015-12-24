@@ -26,13 +26,28 @@
       <%= $info %>
     </div>
     <% } %>
-    
-    <div class="container-fluid page-wrapper">
 
-      <% if ($self->current_user) { %>
-      <div class="container">
-        <header >
-          <ul class="list-inline pull-right">
+
+    <% if ($self->current_user) { %>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to "Xqursion" => "your_dashboard", class => "navbar-brand" %>
+        </div>
+        
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          
+          <ul class="nav navbar-nav navbar-right">
+            <% if ($self->current_user->is_admin) { %>
+            <li><%= link_to "Admin" => "admin_dashboard" %></li>
+            <% } %>
+            
             <li>
               <%= link_to url_for("user_edit", id => $self->current_user->id), title => "Account settings" => begin %>
                 Settings
@@ -40,14 +55,16 @@
             </li>
             <li>
               <%= form_for "sessionsdestroy" => begin %>
-                <%= submit_button "Logout", class => "btn btn-link", style => "padding:0;border:0;vertical-align:baseline;" %>
+                <%= submit_button "Logout", class => "btn btn-link", style => "padding-top:14px" %>
               <% end %>
             </li>
           </ul>
-        </header>
+        </div>
       </div>
-      <% } %>
-      
+    </nav>
+    <% } %>
+    
+    <div class="container-fluid page-wrapper">      
       <div class="container page-content <%= join(" ", split("::", ref($self))) %>">
 	<%= content %>
       </div>

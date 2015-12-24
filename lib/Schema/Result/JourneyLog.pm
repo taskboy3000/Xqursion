@@ -3,7 +3,8 @@ package Schema::Result::JourneyLog;
 use strict;
 use parent ('ResBase');
 
-__PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime", "TimeStamp", "Core");
+__PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime",
+                             "TimeStamp", "Core", "Helper::Row::ToJSON");
 __PACKAGE__->table("journey_log");
 __PACKAGE__->add_columns(
    "id" => { data_type => "char", is_nullable => 0, size=>64},

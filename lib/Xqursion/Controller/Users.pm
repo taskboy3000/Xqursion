@@ -2,10 +2,11 @@ package Xqursion::Controller::Users;
 use Modern::Perl '2012';
 use Mojo::Base 'Xqursion::Controller::Application';
 
+our $BEFORE_FILTERS = { "require_authentication" => [ 'index', 'New', 'create', 'edit', 'delete', 'index' ] };
+
 sub creation_thankyou {
     return shift->render();
 }
-
 
 sub reset_password_form {
     my ($self) = @_;
@@ -23,7 +24,7 @@ sub reset_password_form {
         $self->flash(error => $errors);
         return $self->redirect_to("/");
     }
-    
+
     return $self->render(this_user => $user);
 }
 
@@ -45,7 +46,7 @@ sub reset_password_update {
             $validation->error("token" => "Security token does not match expected");
         }
     }
-    
+
     unless($validation->has_error) {
         if ($self->param("password")) {
             if ($self->param("password") ne $self->param("confirm_password")) {
@@ -76,7 +77,7 @@ sub reset_password_update {
 
 sub request_password_reset {
     my ($self) = @_;
-    
+ 
     my $userRS = $self->app->db->resultset("User");
     my $user = $userRS->find($self->param("id"));
 
@@ -190,7 +191,7 @@ sub update {
     if ($self->param("password")) {
         if ($self->param("password") eq $self->param("confirm_password")) {
             $L->debug("Updating password");
-            
+
             $user->password_hash($user->hash_password($self->param("password")));
 
         } else {
@@ -219,5 +220,31 @@ sub update {
     return $self->redirect_to($self->url_for("your_dashboard"));
 }
 
+sub index {
+    my $self = shift;
+
+    my $users = $self->app->db->resultset('User')->search(
+                                                          undef,
+                                                          { page => $self->param("page") || 1,
+                                                            rows => $self->param("rows") || 2
+                                                          }
+                                                         );
+
+    my $pager = $users->pager;
+    my @inflated_users = map { $_->TO_JSON } $users->all();
+
+    my $page = {
+                first_page => $pager->first_page,
+                last_page  => $pager->last_page,
+                current_page => $pager->current_page,
+                total_entries => $pager->total_entries,
+                entries => \@inflated_users,
+               };
+
+    $self->respond_to(
+                      json => { json => { users => \@inflated_users } },
+                      html => { users => $users->pager },
+                     );
+}
 
 1;

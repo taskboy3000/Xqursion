@@ -5,6 +5,7 @@ requires 'DBIx::Class::Helpers';
 requires 'DBIx::Class::Migration';
 requires 'DBIx::Class::TimeStamp';
 requires 'DBIx::Class::Validation';
+requires 'DBIx::Class::Helpers';
 requires 'DateTime::Format::ISO8601';
 requires 'DateTime::Format::MySQL';
 requires 'Digest::SHA';

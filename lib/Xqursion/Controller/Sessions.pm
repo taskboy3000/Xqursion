@@ -13,7 +13,8 @@ sub create {
             if ($user->is_password_valid($self->param("password"))) {
 		$self->app->log->debug("Starting session");
                 $self->session("user_id" => $user->id, "started" => scalar time());
-                return $self->redirect_to("/app/dashboard");    
+                $user->last_login_at(time());
+                return $self->redirect_to("/app/dashboard");
             } else {
                 $self->flash(error => "Bad credentials");
             }

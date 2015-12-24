@@ -7,7 +7,8 @@ use URI;
 
 our %ROLES = (USER => 1, ADMIN => 10);
 
-__PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime", "TimeStamp", "Core");
+__PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime",
+                             "TimeStamp", "Core", "Helper::Row::ToJSON");
 __PACKAGE__->table("users");
 __PACKAGE__->add_columns(
                          "id" => { data_type => "char", is_nullable => 0, size=>64},
@@ -18,6 +19,7 @@ __PACKAGE__->add_columns(
                          "reset_token" => { data_type => "char", is_nullable => 1, size=>64},
                          "created_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, },
                          "updated_at" => { data_type => "datetime", is_nullable => 0, set_on_create => 1, set_on_update => 1, },
+                         "last_login_at" => { data_type => "datetime", is_nullable => 1 },
                         );
 
 __PACKAGE__->set_primary_key("id");
@@ -30,6 +32,11 @@ __PACKAGE__->inflate_column("created_at", {
                                         });
 
 __PACKAGE__->inflate_column("updated_at", {
+                                         inflate => sub { DateTime->from_epoch(epoch => shift) }, 
+                                         deflate => sub { shift->epoch }
+                                          });
+
+__PACKAGE__->inflate_column("last_login_at", {
                                          inflate => sub { DateTime->from_epoch(epoch => shift) }, 
                                          deflate => sub { shift->epoch }
                                         });

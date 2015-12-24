@@ -9,7 +9,8 @@ use URI::Escape;
 use Archive::Zip (':ERROR_CODES', ':CONSTANTS');
 use File::Temp ('tempdir');
 
-__PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime", "TimeStamp", "Core",);
+__PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime",
+                             "TimeStamp", "Core","Helper::Row::ToJSON");
 __PACKAGE__->table("journeys");
 __PACKAGE__->add_columns(
    "id" => { data_type => "char", is_nullable => 0, size=>64},

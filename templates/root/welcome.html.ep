@@ -6,40 +6,8 @@
 <p class="lead">Want to take a ride? <i class="glyphicon glyphicon-plane" style="font-size:150%;transform:rotate(90deg)"></i></p>
 
 <div class="row">
+
   <div class="col-sm-4 col-sm-offset-2">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Existing Users</h3>
-          <p>Please login in with your credentials.</p>
-        </div>
-        <div class="panel-body">
-          <%= form_for "sessionscreate" => begin %>
-            <%= csrf_field %>
-            <div>
-              <%= label_for 'username' => 'Username:' %><br>
-              <%= text_field 'username', autocapitalize => "off" %>
-            </div>
-            <div>
-              <%= label_for 'passsword' => 'Password:' %><br>
-              <%= password_field 'password',  autocapitalize => "off"  %>
-            </div>
-            <br>
-            <%= submit_button 'Login', class => "btn btn-primary" %>
-          <% end %>
-        
-        </div>
-        <div class="panel-footer">
-          <%= tag "button",
-              id => "reset_password",
-              class => "btn btn-link",
-              "data-toggle" => "modal",
-              "data-target" => "#find_account_dialog", begin %>
-          Forgot your password?
-          <% end %>
-        </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
     <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">New Users</h3>
@@ -70,6 +38,42 @@
         </div>
     </div>
   </div>
+
+  <div class="col-sm-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Existing Users</h3>
+          <p>Please login in with your credentials.</p>
+        </div>
+        <div class="panel-body">
+          <%= form_for "sessionscreate" => begin %>
+            <%= csrf_field %>
+            <div>
+              <%= label_for 'username' => 'Username:' %><br>
+              <%= text_field 'username', autocapitalize => "off" %>
+            </div>
+            <div>
+              <%= label_for 'passsword' => 'Password:' %><br>
+              <%= password_field 'password',  autocapitalize => "off"  %>
+            </div>
+            <br>
+            <%= submit_button 'Login', class => "btn btn-primary" %>
+          <% end %>
+        
+        </div>
+        <div class="panel-footer">
+          <%= tag "button",
+              id => "reset_password",
+              class => "btn btn-link",
+              style => "padding:0;border:0",
+              "data-toggle" => "modal",
+              "data-target" => "#find_account_dialog", begin %>
+          Forgot your password?
+          <% end %>
+        </div>
+    </div>
+  </div>
+  
 </div>
 
 <div class="modal fade" role="dialog" id="find_account_dialog">

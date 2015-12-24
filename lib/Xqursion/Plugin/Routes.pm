@@ -18,6 +18,7 @@ sub make_routes {
     $r->get("/user/:id/reset_password")->name("user_reset_password_form")->to("users#reset_password_form");
     $r->get("/user/creation_thankyou")->name("user_creation_thankyou")->to("users#creation_thankyou");
     $r->get("/user/:id/request_password_reset")->name("user_request_password_reset")->to("users#request_password_reset");
+    $r->get("/users")->name("users")->to("users#index");
     $r->post("/user/create")->to("users#create");
     $r->get("/user/:id/edit")->name("user_edit")->to("users#edit"); # For authed users
     $r->post("/user/:id/reset_password")->name("user_reset_password_update")->to("users#reset_password_update"); # no auth

@@ -1,0 +1,840 @@
+---
+schema:
+  procedures: {}
+  tables:
+    dependencies:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - dependency_group_id
+          match_type: ''
+          name: dependencies_fk_dependency_group_id
+          on_delete: CASCADE
+          on_update: CASCADE
+          options: []
+          reference_fields:
+            - id
+          reference_table: dependency_groups
+          type: FOREIGN KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - step_id
+          match_type: ''
+          name: dependencies_fk_step_id
+          on_delete: CASCADE
+          on_update: ''
+          options: []
+          reference_fields:
+            - id
+          reference_table: steps
+          type: FOREIGN KEY
+      fields:
+        created_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created_at
+          order: 4
+          size:
+            - 0
+        dependency_group_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: dependency_group_id
+          order: 2
+          size:
+            - 64
+        id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 64
+        step_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: step_id
+          order: 3
+          size:
+            - 64
+        updated_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: updated_at
+          order: 5
+          size:
+            - 0
+      indices:
+        - fields:
+            - dependency_group_id
+          name: dependencies_idx_dependency_group_id
+          options: []
+          type: NORMAL
+        - fields:
+            - step_id
+          name: dependencies_idx_step_id
+          options: []
+          type: NORMAL
+      name: dependencies
+      options: []
+      order: 8
+    dependency_groups:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - step_id
+          match_type: ''
+          name: dependency_groups_fk_step_id
+          on_delete: CASCADE
+          on_update: ''
+          options: []
+          reference_fields:
+            - id
+          reference_table: steps
+          type: FOREIGN KEY
+      fields:
+        created_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created_at
+          order: 5
+          size:
+            - 0
+        id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 64
+        operation:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: operation
+          order: 4
+          size:
+            - 3
+        step_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: step_id
+          order: 2
+          size:
+            - 64
+        title:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: title
+          order: 3
+          size:
+            - 255
+        updated_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: updated_at
+          order: 6
+          size:
+            - 0
+      indices:
+        - fields:
+            - step_id
+          name: dependency_groups_idx_step_id
+          options: []
+          type: NORMAL
+      name: dependency_groups
+      options: []
+      order: 6
+    export_jobs:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+      fields:
+        created_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created_at
+          order: 3
+          size:
+            - 0
+        id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 64
+        journey_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: journey_id
+          order: 2
+          size:
+            - 64
+        updated_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: updated_at
+          order: 4
+          size:
+            - 0
+      indices: []
+      name: export_jobs
+      options: []
+      order: 1
+    journey_log:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - step_id
+          match_type: ''
+          name: journey_log_fk_step_id
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields:
+            - id
+          reference_table: steps
+          type: FOREIGN KEY
+      fields:
+        created_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created_at
+          order: 5
+          size:
+            - 0
+        id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 64
+        journey_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: journey_id
+          order: 3
+          size:
+            - 64
+        session_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: session_id
+          order: 2
+          size:
+            - 64
+        step_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: step_id
+          order: 4
+          size:
+            - 64
+        updated_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: updated_at
+          order: 6
+          size:
+            - 0
+      indices:
+        - fields:
+            - step_id
+          name: journey_log_idx_step_id
+          options: []
+          type: NORMAL
+      name: journey_log
+      options: []
+      order: 7
+    journeys:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - user_id
+          match_type: ''
+          name: journeys_fk_user_id
+          on_delete: CASCADE
+          on_update: CASCADE
+          options: []
+          reference_fields:
+            - id
+          reference_table: users
+          type: FOREIGN KEY
+      fields:
+        created_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created_at
+          order: 7
+          size:
+            - 0
+        end_at:
+          data_type: date
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: end_at
+          order: 5
+          size:
+            - 0
+        export_file:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: export_file
+          order: 6
+          size:
+            - 255
+        id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 64
+        name:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: name
+          order: 2
+          size:
+            - 255
+        start_at:
+          data_type: date
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: start_at
+          order: 4
+          size:
+            - 0
+        updated_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: updated_at
+          order: 8
+          size:
+            - 0
+        user_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: user_id
+          order: 3
+          size:
+            - 64
+      indices:
+        - fields:
+            - user_id
+          name: journeys_idx_user_id
+          options: []
+          type: NORMAL
+      name: journeys
+      options: []
+      order: 4
+    steps:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - journey_id
+          match_type: ''
+          name: steps_fk_journey_id
+          on_delete: CASCADE
+          on_update: CASCADE
+          options: []
+          reference_fields:
+            - id
+          reference_table: journeys
+          type: FOREIGN KEY
+      fields:
+        create_new_session:
+          data_type: char
+          default_value: 0
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: create_new_session
+          order: 6
+          size:
+            - 1
+        created_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created_at
+          order: 8
+          size:
+            - 0
+        dependency_group_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: dependency_group_id
+          order: 7
+          size:
+            - 64
+        error_url:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: error_url
+          order: 5
+          size:
+            - 4096
+        id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 64
+        journey_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: journey_id
+          order: 2
+          size:
+            - 64
+        title:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: title
+          order: 3
+          size:
+            - 255
+        updated_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: updated_at
+          order: 9
+          size:
+            - 0
+        url:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: url
+          order: 4
+          size:
+            - 4096
+      indices:
+        - fields:
+            - journey_id
+          name: steps_idx_journey_id
+          options: []
+          type: NORMAL
+      name: steps
+      options: []
+      order: 5
+    users:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - email
+          match_type: ''
+          name: unique_email
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: UNIQUE
+        - deferrable: 1
+          expression: ''
+          fields:
+            - username
+          match_type: ''
+          name: unique_username
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: UNIQUE
+      fields:
+        created_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created_at
+          order: 7
+          size:
+            - 0
+        email:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 1
+          name: email
+          order: 3
+          size:
+            - 128
+        id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 64
+        last_login_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: last_login_at
+          order: 9
+          size:
+            - 0
+        password_hash:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: password_hash
+          order: 4
+          size:
+            - 128
+        reset_token:
+          data_type: char
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: reset_token
+          order: 6
+          size:
+            - 64
+        role:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: role
+          order: 5
+          size:
+            - 16
+        updated_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: updated_at
+          order: 8
+          size:
+            - 0
+        username:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 1
+          name: username
+          order: 2
+          size:
+            - 64
+      indices: []
+      name: users
+      options: []
+      order: 2
+    work_queue:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+      fields:
+        created_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created_at
+          order: 5
+          size:
+            - 0
+        id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 64
+        model:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: model
+          order: 2
+          size:
+            - 128
+        model_id:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: model_id
+          order: 3
+          size:
+            - 64
+        status:
+          data_type: char
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: status
+          order: 4
+          size:
+            - 1
+        updated_at:
+          data_type: datetime
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: updated_at
+          order: 6
+          size:
+            - 0
+      indices: []
+      name: work_queue
+      options: []
+      order: 3
+  triggers: {}
+  views: {}
+translator:
+  add_drop_table: 0
+  filename: ~
+  no_comments: 0
+  parser_args:
+    sources:
+      - Dependency
+      - DependencyGroup
+      - ExportJob
+      - Journey
+      - JourneyLog
+      - Step
+      - User
+      - WorkQueue
+  parser_type: SQL::Translator::Parser::DBIx::Class
+  producer_args: {}
+  producer_type: SQL::Translator::Producer::YAML
+  show_warnings: 0
+  trace: 0
+  version: 0.11021

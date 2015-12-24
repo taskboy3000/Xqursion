@@ -2,3 +2,19 @@
 % title "Admin Dashboard";
 
 <h1>Admin Dashboard</h1>
+
+<div class="table-responsive">
+  <table id="admin-user-list" class="table table-striped">
+    <thead>
+      <th>ID<th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Last Login</th>
+      <th>Created</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+     
