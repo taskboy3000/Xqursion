@@ -3,18 +3,107 @@
 
 <h1>Admin Dashboard</h1>
 
-<div class="table-responsive">
-  <table id="admin-user-list" class="table table-striped">
+<div class="table-responsive" id="admin-user-list">
+  <table class="table table-striped">
     <thead>
-      <th>ID<th>
+      <th>ID</th>
       <th>Username</th>
       <th>Email</th>
       <th>Last Login</th>
       <th>Created</th>
     </thead>
-    <tbody>
-    </tbody>
+    <tbody></tbody>
   </table>
+
+  <nav class="text-center">
+    <ul class="pagination">
+      <li class="nav-fixture prev">
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="nav-fixture next">
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>
 
-     
+<script type="text/template" id="user-list-row-tmpl">
+  <tr>
+    <td>{{ id }}</td>
+    <td>{{ username }}</td>
+    <td>{{ email }}</td>
+    <td>{{ last_login_at || "N/A" }}</td>
+    <td>{{ created_at }}</td>    
+  </tr>
+</script>
+
+<script type="text/javascript">
+var UserList = new function() {
+    this.tableNode = $("#admin-user-list");  
+    this.listNode = $("#admin-user-list tbody");
+    
+    this.clear = function () { this.listNode.empty() };
+    
+    this.fetch = function() {
+        var self = this;
+        $.ajax({
+            url: "/users.json",
+            data: { page: "<%= $self->param("page") || 1 %>", rows: 25 },
+            dataType: "json",
+            success: function(d) {
+                if (d["entries"] != undefined) {
+                    self.render_list(d["entries"]);
+                    self.render_pagination(d); 
+                }
+            }
+        });
+    };
+    
+    this.render_list = function(rows) {
+        this.clear();
+        var tmpl = _.template($("#user-list-row-tmpl").html());
+        for (var i = 0; i < rows.length; i++) {
+            this.listNode.append(tmpl(rows[i]));
+        }
+    };
+
+    this.render_pagination = function(data) {
+        var nav = this.tableNode.find("nav");
+        nav.find("li:not(.nav-fixture)").remove();
+        var base = (window.location.href.split("?"))[0];
+        for (var i = data["first_page"]; i <= data["last_page"]; i++) {
+           var li = document.createElement("li");
+           var a = document.createElement("a");
+           $(a).attr("href", base + "?page=" + i);
+           if (i == data["current_page"]) {
+              $(li).addClass("active");
+           }
+           $(a).text(i);
+           $(li).append(a);
+           nav.find(".next").before(li);
+        }
+
+        if (data["current_page"] == 1) {
+           nav.find(".prev").addClass("disabled");
+        } else {
+           nav.find(".prev a").attr("href", base + "?page=" + (data["current_page"] - 1));
+        }    
+        
+        if (data["current_page"] == data["last_page"]) {
+           nav.find(".next").addClass("disabled");
+        } else {
+           nav.find(".next a").attr("href", base + "?page=" + (data["current_page"] + 1));
+        }
+    };
+
+};
+
+$(document).ready(function(){
+    UserList.fetch();
+});
+
+</script>

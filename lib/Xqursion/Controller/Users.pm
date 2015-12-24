@@ -242,8 +242,8 @@ sub index {
                };
 
     $self->respond_to(
-                      json => { json => { users => \@inflated_users } },
-                      html => { users => $users->pager },
+                      json => { json => $page },
+                      html => { pager => $users->pager },
                      );
 }
 

@@ -1,4 +1,7 @@
 // Xcursion common routines and initialization
+_.templateSettings = {
+    interpolate: /\{\{(.+?)\}\}/g
+};
 
 // FIXME - move to controller/action.js
 function delete_thing (button) {

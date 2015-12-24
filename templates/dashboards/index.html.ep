@@ -1,12 +1,13 @@
 % layout 'default';
 % title 'Dashboard';
 
-<ol class="breadcrumb">
+<!-- ol class="breadcrumb">
   <li class="active">Home</li>
-</ol>
+</ol-->
 
 <div class="hero-unit">
   <h1>Hello, Traveller!</h1>
 </div>
 
-<p><%= link_to "journeys_index", class => "btn btn-default" => begin %>Your Journeys<% end %></p>
+<p>Some interest text should go here explaining the system.</p>
+

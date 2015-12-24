@@ -9,6 +9,11 @@
     <link href='//fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/main.css">
 
+    <script src="/js/jquery-2.1.4.min.js"></script>
+    <script src="/js/underscore-min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+
   </head>
   <body>
     <% my $error = $self->flash("error");
@@ -47,12 +52,17 @@
             <% if ($self->current_user->is_admin) { %>
             <li><%= link_to "Admin" => "admin_dashboard" %></li>
             <% } %>
-            
+
+            <li>
+              <%= link_to "Journeys", url_for("journeys_index"), class=> "" %>
+            </li>
+
             <li>
               <%= link_to url_for("user_edit", id => $self->current_user->id), title => "Account settings" => begin %>
                 Settings
               <% end %>
             </li>
+
             <li>
               <%= form_for "sessionsdestroy" => begin %>
                 <%= submit_button "Logout", class => "btn btn-link", style => "padding-top:14px" %>
@@ -82,10 +92,6 @@
 
     <div id="dialog"></div>
 
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/main.js"></script>
 
   </body>
 </html>
