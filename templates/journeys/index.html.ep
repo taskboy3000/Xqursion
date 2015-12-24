@@ -1,59 +1,57 @@
 % layout 'default';
-% title "Your Journeys";
+% title "All Journeys";
 
-<ol class="breadcrumb">
-  <li><%= link_to "your_dashboard" => begin%>Home<% end %></li>
-  <li class="active">Journeys</li>
-</ol>
+<h1>All Journeys</h1>
+<br>
 
-<h1>Your Journeys</h1>
 <div class="table-responsive">
-<table class="table table-striped" role="sortable">
-  <thead>
-    <th role="sorter">Name</th>
-    <th>Steps</th>
-    <th>Travelers</td>
-    <th>Download</th>
-    <th>Delete</th>
-  </thead>
-
-  <tbody>
-    <% for my $j (@$journeys) { %>
-    <tr>
-      <td>
-        <%= link_to url_for("journey_edit", id => $j->id), begin %><%= $j->name %><% end %>
-      </td>
-      <td>
-        <%= link_to url_for("journey_steps_index", journey_id => $j->id) => begin %><%= scalar($j->steps) %><% end %>
-        <% if ($j->steps < 1) { %>
-          <i class="text-info glyphicon glyphicon-flag text-danger" data-toggle="tooltip" 
-             title="This journey has no steps. Steps are what make journeys interesting. Add some now."></i>
-        <% } %>
-      </td>
-      <td>
-        <%= link_to url_for("journey_logs_index", journey_id => $j->id) => begin %><%= scalar($j->get_unique_session_count) %><% end %>
-      </td>
-      <td>
-        <%= link_to url_for("journey_download", id => $j->id), class=>"", begin %>
+  <table class="table table-striped" role="sortable">
+    <thead>
+      <th role="sorter">Name</th>
+      <th>Steps</th>
+      <th>Travelers</th>
+      <th>Download</th>
+      <th>Delete</th>
+    </thead>
+    
+    <tbody>
+      <% for my $j (@$journeys) { %>
+      <tr>
+        <td>
+          <%= link_to url_for("journey_edit", id => $j->id), begin %><%= $j->name %><% end %>
+        </td>
+        <td>
+          <%= link_to url_for("journey_steps_index", journey_id => $j->id) => begin %><%= scalar($j->steps) %><% end %>
+          <% if ($j->steps < 1) { %>
+            <i class="text-info glyphicon glyphicon-flag text-danger" data-toggle="tooltip" 
+               title="This journey has no steps. Steps are what make journeys interesting. Add some now."></i>
+            <% } %>
+        </td>
+        <td>
+          <%= link_to url_for("journey_logs_index", journey_id => $j->id) => begin %><%= scalar($j->get_unique_session_count) %><% end %>
+        </td>
+        <td>
+          <%= link_to url_for("journey_download", id => $j->id), class=>"", begin %>
           <i class="glyphicon glyphicon-save" data-toggle="tooltip" title="Download a zip archive of this journey"></i>
-        <% end %>
-      </td>
-      <td class="">
-        <%= link_to "#",
-            "class" => "",
-        "title" => "Delete this journey",
-        "data-toggle" => "confirmation",
-        "data-on-confirm" => "delete_thing",
-        "data-url" => url_for("journey_delete", id => $j->id), 
-        begin %>
-         <i class="glyphicon glyphicon-remove-sign text-danger"></i>
-        <% end %>
-
-      </td>
-    </tr>
-    <% } %> 
-  </tbody>
-</table>
+          <% end %>
+        </td>
+        <td class="">
+          <%= link_to "#",
+              "class" => "",
+          "title" => "Delete this journey",
+          "data-toggle" => "confirmation",
+          "data-on-confirm" => "delete_thing",
+          "data-url" => url_for("journey_delete", id => $j->id), 
+          begin %>
+          <i class="glyphicon glyphicon-remove-sign text-danger"></i>
+          <% end %>
+          
+        </td>
+      </tr>
+      <% } %> 
+    </tbody>
+  </table>
 </div>
+
 <p><%= link_to "journey_new", class => "btn btn-primary", begin %>New Journey<% end %></p>
 

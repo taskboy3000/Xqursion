@@ -16,29 +16,19 @@ sub index {
 
     my @ids = map { $_->id } $journey->steps;
     $L->debug("OK");
-    my @logs = $D->resultset("JourneyLog")->search(undef,
-                                                   { where => [ { journey_id => $self->param("journey_id") } ],
-                                                     order_by => [ {"-desc" => 'created_at'}, {"-asc" => 'session_id'} ],
-                                                   }
+    my $rs = $D->resultset("JourneyLog")->search(undef,
+                                               { where => [ { journey_id => $self->param("journey_id") } ],
+                                                 order_by => [ {"-desc" => 'created_at'}, {"-asc" => 'session_id'} ],
+                                                 rows => $self->param("rows") || 10,
+                                                 page => $self->param("page") || 1,
+                                               }
                                                   );
 
-    $L->debug(sprintf("Found %d journey logs for journey %s", scalar @logs, $journey->name));
 
-=pod
-    my @sessions = ();
-    my $current_session = {};
-
-    for my $l (@logs) {
-        if ($current_session->{session_id} ne $l->session_id) {
-            push @sessions, $current_session if keys %$current_session;
-            $current_session = { $l->session_id => [ $l ] };
-        } else {
-            push @{$current_session->{ $l->session_id }}, $l;
-        }
-    }
-=cut
-
-    return $self->render(sessions => \@logs);
+    $self->stash(journey => $journey);
+    $self->stash(sessions => [ $rs->all ]);
+    $self->stash(pager => $rs->pager);
+    return $self->render();
 }
 
 sub show {

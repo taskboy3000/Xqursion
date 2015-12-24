@@ -2,29 +2,54 @@
 % title 'Journey Log';
 
 <ol class="breadcrumb">
-  <li><%= link_to "your_dashboard" => begin %>Home<% end %></li>
-  <li><%= link_to "journeys_index" => begin %>Your Journeys<% end %></li>
+  <li><%= link_to "journeys_index" => begin %>All Journeys<% end %></li>
   <li class="active">Log</li>
 </ol>
 
-<h1>Journey Logs</h1>
+<h1>Journey Logs for <%= $journey->name %></h1>
+<br>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-    <th>Session ID</th>
-    <th>Step</th>
-    <th>Created</th>
-    </tr>
-  </thead>
-  <tbody>     
-    <% my $last_seen = ""; %>
-    <% for my $l (@$sessions) { %>
-    <tr>
-    <td><%= $last_seen ne $l->session_id ? $last_seen = $l->session_id && $l->session_id : "" %></td>
-    <td><%= link_to $l->step->title => url_for("journey_step_edit", journey_id => $l->step->journey->id, id => $l->step->id) %></td>
-    <td><%= $l->created_at %></td>
-    </tr>
-    <% } %>
-  <tbody>
-</table>
+<p>Total sessions: <b><%= $pager->total_entries %></b></p>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Session ID</th>
+        <th>Step</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>     
+      <% my $last_seen = ""; %>
+      <% for my $l (@$sessions) { %>
+      <tr>
+        <td><%= $last_seen ne $l->session_id ? $last_seen = $l->session_id && $l->session_id : "" %></td>
+        <td><%= link_to $l->step->title => url_for("journey_step_edit", journey_id => $l->step->journey->id, id => $l->step->id) %></td>
+        <td><%= $l->created_at %></td>
+      </tr>
+      <% } %>
+    <tbody>
+  </table>
+
+  <nav class="text-center">
+    <ul class="pagination">
+      <li class="nav-fixture prev <%= $pager->current_page == 1 ? "disabled" : "" %>">
+        <%= link_to url_for("journey_logs_index", journey_id => $journey->id)->query(page => $pager->current_page - 1), begin %>
+        <span aria-hidden="true">&laquo;</span>
+        <% end %>
+      </li>
+      <% for (my $i = $pager->first_page; $i <= $pager->last_page; $i++) {%>
+        <li>
+          <%= link_to $i, url_for("journey_logs_index", journey_id => $journey->id)->query(page => $i) %>
+        </li>
+        <% } %>
+        
+      <li class="nav-fixture next <%= $pager->current_page == $pager->last_page ? "disabled" : "" %>">
+        <%= link_to url_for("journey_logs_index", journey_id => $journey->id)->query(page => $pager->current_page + 1), begin %>
+        <span aria-hidden="true">&raquo;</span>
+        <% end %>
+      </li>
+    </ul>
+    </nav>
+</div>

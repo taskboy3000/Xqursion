@@ -8,14 +8,24 @@ our $BEFORE_FILTERS = { "require_authentication" => [ 'index', 'New', 'create', 
 sub index {
     my $self = shift;
     my $L = $self->app->log;
-    my $journeys = [];
+    my $D = $self->app->db;
 
     my $current_user = $self->current_user;
+    my $rs;
     if ($current_user) {
-        $journeys = [ $current_user->journeys() ];
+        my @ids = map { $_->id } $current_user->journeys;
+        $L->debug("Looking for journeys belonging to " . $current_user->username);
+        $rs = $D->resultset("Journey")->search({ user_id => $current_user->id},
+                                                   {
+                                                    rows => $self->param("rows") || 10,
+                                                    page => $self->param("page") || 1
+                                                   }
+                                              );
+        $self->stash(pager => $rs->pager);
+        $self->stash(journeys => [ $rs->all ]);
     }
-
-    $self->render(journeys => $journeys);
+    
+    $self->render();
 }
 
 # Form to create new 

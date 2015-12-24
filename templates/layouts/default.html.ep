@@ -80,6 +80,10 @@
       </div>
 
       <div class="container">
+        <br>
+        
+        <hr/>
+        
         <footer>
           <ul class="list-inline">
 	    <li>Copyright &copy; <a href="http://taskboy.com/">Joe Johnston</a></li>
