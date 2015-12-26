@@ -57,7 +57,7 @@ sub create {
 	}
         
     } else {
-	# XXX ERROR
+	$self->flash(error => "Refusing to create a Journey without a name");
     }
     
     return $self->redirect_to("journeys_index");

@@ -41,7 +41,7 @@ sub create {
 	    $L->warn("Failed to create dependency group");
 	}
     } else {
-	$self->flash(error => "Could not save access control!");
+	$self->flash(error => "Refusing to create an access control without a title");
     }
 
     return $self->redirect_to("step_dependency_group_edit", { step_id => $step->id, id => $dp->id });

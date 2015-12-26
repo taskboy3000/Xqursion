@@ -58,7 +58,7 @@ sub create {
 	    $L->warn("Failed to create step");
 	}
     } else {
-	# XXX ERROR
+	$self->flash(error => "Refusing to create a step without a title");
     }
     return $self->redirect_to("journey_steps_index", { journey_id => $self->param("journey_id") });
 }
