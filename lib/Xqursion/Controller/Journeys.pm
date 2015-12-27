@@ -120,11 +120,16 @@ sub export {
         return $self->render(text => "Not authorized", status => 403);
     }
 
-    my $base_dir = "$ENV{XQURSION_HOME}/public/downloads/" . $journey->id;
+    my $base_dir = join("/", 
+			"$ENV{XQURSION_HOME}/public/downloads",
+			$current_user->id,
+			);
+
     $L->debug("Export base directory: $base_dir");
     my $host   = $ENV{XQURSION_PUBLIC_HOST} || "www.xqursion.com";
     my $scheme = $ENV{XQURSION_PUBLIC_SCHEME} || "http";
     my $port   = $ENV{XQURSION_PUBLIC_PORT} || 80;
+
     $journey->export(base_dir => $base_dir,
                      step_url_cb => sub { 
                          my $step = shift;
@@ -135,7 +140,13 @@ sub export {
                            ->scheme($scheme);
                      });
 
-    return $self->redirect_to($journey->export_zipfile);
+    my $export_path = join("/", 
+			"/downloads",
+			$current_user->id,
+			$journey->export_file
+	);
+    $L->debug("Redirect to $export_path");
+    return $self->redirect_to($export_path);
 }
 
 1;

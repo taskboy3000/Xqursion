@@ -48,6 +48,7 @@ sub make_routes {
     $r->get("/app/journey/:journey_id/steps")->name("journey_steps_index")->to("steps#index");
     $r->get("/app/journey/:journey_id/step/new")->name("journey_step_new")->to("steps#New");
     $r->get("/app/journey/:journey_id/step/:id/edit")->name("journey_step_edit")->to("steps#edit");
+    $r->get("/app/journey/:journey_id/step/:id/show_code")->name("journey_step_show_code")->to("steps#show_code");
     $r->post("/app/journey/:journey_id/step")->name("journey_step_create")->to("steps#create");
     $r->post("/app/journey/:journey_id/step/:id")->name("journey_step_update")->to("steps#update");
     $r->delete("/app/journey/:journey_id/step/:id")->name("journey_step_delete")->to("steps#delete");

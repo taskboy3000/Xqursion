@@ -1,0 +1,45 @@
+{
+   "sets" : [
+      {
+         "class" : "WorkQueue",
+         "quantity" : "all"
+      },
+      {
+         "quantity" : "all",
+         "class" : "DependencyGroup"
+      },
+      {
+         "quantity" : "all",
+         "class" : "Dependency"
+      },
+      {
+         "class" : "JourneyLog",
+         "quantity" : "all"
+      },
+      {
+         "class" : "ExportJob",
+         "quantity" : "all"
+      },
+      {
+         "class" : "Journey",
+         "quantity" : "all"
+      },
+      {
+         "class" : "User",
+         "quantity" : "all"
+      },
+      {
+         "quantity" : "all",
+         "class" : "Step"
+      }
+   ],
+   "belongs_to" : {
+      "fetch" : 0
+   },
+   "might_have" : {
+      "fetch" : 0
+   },
+   "has_many" : {
+      "fetch" : 0
+   }
+}

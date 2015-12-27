@@ -8,6 +8,7 @@ use Cwd;
 use URI::Escape;
 use Archive::Zip (':ERROR_CODES', ':CONSTANTS');
 use File::Temp ('tempdir');
+use File::Copy;
 
 __PACKAGE__->load_components("Helper::Row::SubClass","InflateColumn::DateTime",
                              "TimeStamp", "Core","Helper::Row::ToJSON");
@@ -83,35 +84,16 @@ sub export {
     my $dir = tempdir(CLEANUP => 1);
     chdir $dir;
 
-    my $qrcode = Imager::QRCode->new(
-				     size          => 4,
-				     margin        => 3,
-				     version       => 1,
-				     level         => 'M',
-				     casesensitive => 1,
-				     lightcolor    => Imager::Color->new(255, 255, 255),
-				     darkcolor     => Imager::Color->new(0, 0, 0),
-				    );
-
     my $cnt = 0;
     my @steps = $self->steps;
-    for my $step (@steps) {
-        my $step_url = "";
-        if ($args{step_url_cb}) {
-            $step_url = $args{step_url_cb}->($step);
-        }
-        my $img = $qrcode->plot($step_url);
-        my $name = $step->title;
-        my $file = uri_escape($name) . ".png";
-        
-        $img->write(file => $file);
-        
-        if ($img->{ERRSTR}) {
-            warn($img->{ERRSTR});
-            next;
-        } 
-        $Z->addFile({filename => $file, zipName => "$zip_dir/$file" });
-        $cnt++;
+    for my $step (@steps) {	
+	if (my $file = $step->generate_qrcode(base_dir => $args{base_dir},
+					      step_url_cb => $args{step_url_cb})) {
+	    # File::Copy::copy("$args{base_dir}/$file", "./$file");
+	    warn("Created step image '$args{base_dir}/$file'\n");
+	    $Z->addFile({filename => "$args{base_dir}/$file", zipName => "$zip_dir/$file" });
+	    $cnt++;
+	}
     }
     
     if ($cnt != @steps) {
@@ -124,7 +106,8 @@ sub export {
     unless ((my $rc = $Z->writeToFileNamed("$args{base_dir}/" . $zip_filename)) == AZ_OK) {
         die "Write error[$rc]: $!";
     }
-
+    warn(sprintf("Zip: '$args{base_dir}/$zip_filename' %s\n", (-e "$args{base_dir}/$zip_filename" ? "exists" : "missing")));
+    warn("$zip_filename\n");
     $self->export_file($zip_filename);
     $self->update;
     chdir $old_dir;
@@ -133,6 +116,7 @@ sub export {
 
 sub export_zipfile {
     my ($self) = @_;
+    die "DON'T CALL THIS";
     return "/downloads/" . $self->id . "/" . uri_escape($self->export_file);
 }
 

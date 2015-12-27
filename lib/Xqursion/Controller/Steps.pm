@@ -109,4 +109,52 @@ sub delete {
     $self->respond_to( json => { json => { success => 1 } } );
 }
 
+sub show_code {
+    my $self = shift;
+
+    my $L = $self->app->log;
+    my $D = $self->app->db;
+
+    my $current_user = $self->current_user;
+    my $step = $D->resultset("Step")->find($self->param("id"));
+    return unless $step;
+    
+    if ($step->journey->user_id ne $current_user->id) {
+        return $self->render(text => "Not authorized", status => 403);
+    }
+
+    my $base_dir = join("/", 
+			"$ENV{XQURSION_HOME}/public/downloads",
+			$current_user->id,
+			$step->journey->id);
+
+    $L->debug("Export base directory: $base_dir");
+    my $host   = $ENV{XQURSION_PUBLIC_HOST} || "www.xqursion.com";
+    my $scheme = $ENV{XQURSION_PUBLIC_SCHEME} || "http";
+    my $port   = $ENV{XQURSION_PUBLIC_PORT} || 80;
+    
+    if (my $image = $step->generate_qrcode(base_dir => $base_dir,
+			   step_url_cb => sub { 
+			       my $step = shift;
+			       return $self->url_for("porter_step_show", {id => $step->id})
+				   ->to_abs
+				   ->port($port)
+				   ->host($host)
+				   ->scheme($scheme);
+					   })) {
+	return $image;
+    } else {
+	# Something went very wrong
+	$L->error("Could not generate QRcode");
+    }
+}
+
+
+sub get_qrpath {
+    my ($self, $step) = @_;
+    my $current_user = $self->current_user;
+    my $file = $self->show_code;
+    return join ("/", "/downloads", $current_user->id, $step->journey->id, $file);
+}
+
 1;
