@@ -1,9 +1,87 @@
 % layout 'default';
 % title 'Welcome';
 
-<h1>Xcursion</h1>
+<div class="hero-unit">
+  <h1>Xcursion</h1>
+  <p class="lead">Create interactive content with QR codes now.</p>
+</div>
 
-<p class="lead">Want to take a ride? <i class="glyphicon glyphicon-plane" style="font-size:150%;transform:rotate(90deg)"></i></p>
+<style type="text/css">
+  .carousel-inner .item {
+     height: 400px;
+     background-color: #666;
+  }
+  .viz {
+    position: relative;
+    top: -40px;
+  }
+  .viz i {
+    font-size: 120px;
+    padding: 5px;
+    box-shadow: 10px 10px 5px #333;
+  }
+</style>
+
+<div id="carousel-overview" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-overview" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-overview" data-slide-to="1"></li>
+    <li data-target="#carousel-overview" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">      
+      <div class="carousel-caption">
+	<div class="viz">
+	  <i class="glyphicon glyphicon-link"></i>
+	</div>
+
+        <h3>Collect your links</h3>
+	<p>Do you want to show your users a slide show?  Perhaps you want to walk them through a story or even a game.</p>
+        <p>Whatever the content, if it is accessible through a web browser, Xqursion can use it.</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="carousel-caption">
+	<div class="viz">
+	  <i class="glyphicon glyphicon-qrcode"></i>
+	</div>
+
+        <h3>Start a journey</h3>
+	<p>Journeys are the framework Xqursion uses to hold your collection of links.  Journeys are composed of one or more steps.  Each step can present one URL and is accessed through a unique QR code.</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="carousel-caption">
+	<div class="viz">
+	  <i class="glyphicon glyphicon-eye-open"></i>
+	</div>
+
+        <h3>Add control</h3>
+
+	<p>You can add restrictions to each step.  For example, you may want users to first visit an earlier step before viewing the current one.  You can prevent users from seeing a step if they have already visited a different one.</p>
+        
+      </div>
+    </div>
+   
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-overview" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-overview" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<br/>
 
 <div class="row">
 
@@ -11,9 +89,9 @@
     <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">New Users</h3>
-          <p>Sign-up for a free account.</p>
+          <p>Sign-up for a <a href="#sign-up-body" role="button" data-toggle="collapse">free account.</a></p>
         </div>
-        <div class="panel-body">
+        <div id="sign-up-body" class="panel-body collapse">
           
           <%= form_for usercreate => begin %>
             <%= csrf_field %>
@@ -31,11 +109,6 @@
           <% end %>
 
         </div>
-        <div class="panel-footer">
-          <%= link_to url_for("privacy") => begin %>
-          Privacy
-          <%= end %>
-        </div>
     </div>
   </div>
 
@@ -43,9 +116,9 @@
     <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Existing Users</h3>
-          <p>Please login in with your credentials.</p>
+          <p>Please <a href="#login-body" role="button" data-toggle="collapse">login in</a> with your credentials.</p>
         </div>
-        <div class="panel-body">
+        <div id="login-body" class="panel-body collapse">
           <%= form_for "sessionscreate" => begin %>
             <%= csrf_field %>
             <div>
@@ -56,13 +129,14 @@
               <%= label_for 'passsword' => 'Password:' %><br>
               <%= password_field 'password',  autocapitalize => "off"  %>
             </div>
+
             <br>
+
+	    <div class="pull-left">
             <%= submit_button 'Login', class => "btn btn-primary" %>
-          <% end %>
-        
-        </div>
-        <div class="panel-footer">
-          <%= tag "button",
+	    </div>
+	    <div class="pull-right">
+	      <%= tag "button",
               id => "reset_password",
               class => "btn btn-link",
               style => "padding:0;border:0",
@@ -70,6 +144,9 @@
               "data-target" => "#find_account_dialog", begin %>
           Forgot your password?
           <% end %>
+	    </div>
+          <% end %>
+        
         </div>
     </div>
   </div>

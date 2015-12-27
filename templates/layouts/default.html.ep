@@ -88,6 +88,8 @@
           <ul class="list-inline">
 	    <li>Copyright &copy; <a href="http://taskboy.com/">Joe Johnston</a></li>
             <li><a href="https://github.com/taskboy3000/Xqursion">Source</a></li>
+	    <li><%= link_to url_for("privacy") => begin %>Privacy<%= end %>
+	  </li>
           </ul>
         
         </footer>
