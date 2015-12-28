@@ -208,7 +208,7 @@ sub _unique_field {
 
     for my $field ("username", "email") {
 	next unless $self->param($field);
-	next unless $self->param($field) eq $user->$field();
+	next if $self->param($field) eq $user->$field();
 
 	if ($U->count({$field => $self->param($field)}) > 0) {
 	    $validator->error($field => [ "$field value is already in use" ]);
