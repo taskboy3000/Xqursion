@@ -2,6 +2,7 @@ package Xqursion::Controller::PorterSteps;
 use Modern::Perl '2012';
 use Mojo::Base 'Xqursion::Controller::Application';
 use URI;
+use DateTime;
 
 sub show {
     my ($self) = @_;
@@ -13,6 +14,18 @@ sub show {
 
     unless ($step) {
         $L->warn("No step " . $self->param("id") . " found");
+    }
+
+    if ($step->journey->start_at) {
+	if ($step->journey->start_at < DateTime->now()) {
+	    return $self->render(text => "This journey has not yet begun");
+	}
+    }
+
+    if ($step->journey->end_at) {
+	if ($step->journey->end_at > DateTime->now()) {
+	    return $self->render(text => "This journey has ended");
+	}
     }
 
     my $session_id = $self->cookie("session_id");

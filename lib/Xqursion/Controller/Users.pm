@@ -167,34 +167,17 @@ sub update {
     
     # Usernames and email addresses must be unique
     my $db = $self->app->db;
-    if ($self->param("username")) {
-        if ($self->param("username") ne $user->username) {
-            if ($db->resultset("User")->count({username => $self->param("username")}) > 0) {
-                # error
-                $V->error(username => ["Username name is taken"]);
-            } else {
-                $user->username($self->param("username"));
-            }
-        }
-    }
-
-    if ($self->param("email")) {
-        if ($self->param("email") ne $user->email) {
-            if ($db->resultset("User")->count({email => $self->param("email")}) > 0) {
-                $V->error(email => ["Email name is taken"]);
-            } else {
-                $user->email($self->param("email"));
-            }
-        }
+    for my $field ("username", "email") {
+	if ($self->_unique_field($field, $V)) {
+	    $user->$field($self->param($field));
+	}
     }
 
     if ($self->param("password")) {
-        if ($self->param("password") eq $self->param("confirm_password")) {
-            $L->debug("Updating password");
-
-            $user->password_hash($user->hash_password($self->param("password")));
-
-        } else {
+	if ($self->param("password") eq $self->param("confirm_password")) {
+	    $L->debug("Updating password");
+	    $user->password_hash($user->hash_password($self->param("password")));	    
+	} else {
             $V->error(password => ["Password does not match confirmation"]);
         }
     }
@@ -210,14 +193,30 @@ sub update {
     $L->debug("Updating user settings");
     unless ($user->update) {
         $L->debug("User's settings did not update");
-        my $errors = join("; ", values %{$V->output});
-        $self->app->log->debug($errors);
-        $self->flash(error => $errors);
+        $self->flash(error => "There was a problem saving your changes");
         return $self->redirect_to($self->url_for("user_edit", id => $user->id));
     }
 
     $self->flash(info => "Your account changes have been saved.");
     return $self->redirect_to($self->url_for("your_dashboard"));
+}
+
+sub _unique_field {
+    my ($self, $field, $validator) = @_;
+    my $user = $self->current_user;
+    my $U = $self->app->db->resultset("User");
+
+    for my $field ("username", "email") {
+	next unless $self->param($field);
+	next unless $self->param($field) eq $user->$field();
+
+	if ($U->count({$field => $self->param($field)}) > 0) {
+	    $validator->error($field => [ "$field value is already in use" ]);
+	    return;
+	}
+    }
+
+    return 1;
 }
 
 sub index {
