@@ -54,7 +54,7 @@
             <% } %>
 
             <li>
-              <%= link_to "Journeys", url_for("journeys_index"), class=> "" %>
+                <%= link_to "Journeys", url_for("journeys_index"), class=>"" %>
             </li>
 
             <li>

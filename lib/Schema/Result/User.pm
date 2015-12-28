@@ -4,6 +4,7 @@ use strict;
 use parent ('ResBase');
 use Digest::SHA ('sha256_hex');
 use URI;
+use DateTime;
 
 our %ROLES = (USER => 1, ADMIN => 10);
 
@@ -26,6 +27,26 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("unique_username" => [ "username" ]); 
 __PACKAGE__->add_unique_constraint("unique_email" => [ "email" ]); 
 __PACKAGE__->has_many("journeys" => 'Schema::Result::Journey', 'user_id');
+__PACKAGE__->has_many("active_journeys" => 'Schema::Result::Journey',
+		      'user_id', 
+		      { where => { "start_at" => [ "-or" => { ">=" => \"CURRENT_TIMESTAMP" },
+                                                            [ "-and" => 
+						                       { "!=" => undef },
+						                       { "!=" => "" },
+                                                            ]
+						            
+                                                 ],
+                                   "end_at" => [ "-or" => { "<=" => \"CURRENT_TIMESTAMP" },
+                                                          [ "-and" => { "!=" => undef, },
+                                                                      { "!=" => "" },
+                                                          ],
+                   
+                                               ],
+					         
+				 },
+		      }
+ 		      );
+
 __PACKAGE__->inflate_column("created_at", {
                                          inflate => sub { DateTime->from_epoch(epoch => shift) }, 
                                          deflate => sub { shift->epoch }

@@ -23,7 +23,7 @@
         <td>
           <%= link_to url_for("journey_steps_index", journey_id => $j->id) => begin %><%= scalar($j->steps) %><% end %>
           <% if ($j->steps < 1) { %>
-            <i class="text-info glyphicon glyphicon-flag text-danger" data-toggle="tooltip" 
+            <i class="glyphicon glyphicon-flag text-danger" data-toggle="tooltip" 
                title="This journey has no steps. Steps are what make journeys interesting. Add some now."></i>
             <% } %>
         </td>
