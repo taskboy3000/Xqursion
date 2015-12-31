@@ -79,4 +79,5 @@ sub _trim {
     my ($path) = @_;
     return (split(m!/\.\./!, $path, 2))[1];
 }
+
 1;
