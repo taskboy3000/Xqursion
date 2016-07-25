@@ -109,11 +109,11 @@
             <%= csrf_field %>
             <div>
               <%= label_for 'username' => 'Username:' %><br>
-              <%= text_field 'username', autocapitalize => "off" %>
+              <%= text_field 'username', class => "form-control", autocapitalize => "off" %>
             </div>
             <div>
               <%= label_for 'email' => 'Email:' %><br>
-              <%= text_field 'email', autocapitalize => "off" %>
+              <%= text_field 'email', class => "form-control", autocapitalize => "off" %>
             </div>
             
             <br>
