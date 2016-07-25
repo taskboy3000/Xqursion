@@ -105,7 +105,7 @@
         </div>
         <div id="sign-up-body" class="panel-body collapse">
           
-          <%= form_for usercreate => begin %>
+          <%= form_for usercreate => class => "form" => begin %>
             <%= csrf_field %>
             <div>
               <%= label_for 'username' => 'Username:' %><br>
@@ -131,15 +131,15 @@
           <p>Please <a href="#login-body" role="button" data-toggle="collapse">login in</a> with your credentials.</p>
         </div>
         <div id="login-body" class="panel-body collapse">
-          <%= form_for "sessionscreate" => begin %>
+          <%= form_for "sessionscreate" => (class => "form-control") => begin %>
             <%= csrf_field %>
             <div>
               <%= label_for 'username' => 'Username:' %><br>
-              <%= text_field 'username', autocapitalize => "off" %>
+              <%= text_field 'username', autocapitalize => "off", class => "form-control" %>
             </div>
             <div>
               <%= label_for 'passsword' => 'Password:' %><br>
-              <%= password_field 'password',  autocapitalize => "off"  %>
+              <%= password_field 'password',  autocapitalize => "off", class => "form-control"  %>
             </div>
 
             <br>
@@ -175,7 +175,7 @@
       <div class="modal-body">
         <p>To reset your password, we need to know either your email address or username.</p>
 
-        <%= form_for "find_account", name => "find_account" => begin %>
+        <%= form_for "find_account", name => "find_account" => (class => "form-control") => begin %>
            <%= csrf_field %>
 
            <%= label_for "username" => "Username" %>
