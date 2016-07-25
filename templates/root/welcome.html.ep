@@ -147,18 +147,20 @@
 	    <div class="pull-left">
             <%= submit_button 'Login', class => "btn btn-primary" %>
 	    </div>
-	    <div class="pull-right">
-	      <%= tag "button",
+
+            <div class="clearfix"></div>
+            <% end %>
+
+            <div class="pull-right">
+	    <%= tag "button",
               id => "reset_password",
               class => "btn btn-link",
               style => "padding:0;border:0",
               "data-toggle" => "modal",
-              "data-target" => "#find_account_dialog", begin %>
-          Forgot your password?
-          <% end %>
-	    </div>
-          <% end %>
-        
+              "data-target" => "#find_account_dialog", begin %>Forgot your password?
+            <% end %>
+          </div>
+          
         </div>
     </div>
   </div>
