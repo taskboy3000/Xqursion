@@ -94,7 +94,12 @@ sub generate_qrcode {
     $img->write(file => $final_path);
 
     if ($img->{ERRSTR}) {
-	warn($img->{ERRSTR});
+	warn(sprintf("Generating QRCode for step %s in journey %s: %s",
+		    $self->id,
+		    $self->journey->id,
+		    $img->{ERRSTR}
+	     )
+	    );
 	return;
     }
 

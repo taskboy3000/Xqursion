@@ -115,7 +115,8 @@
               <%= label_for 'email' => 'Email:' %><br>
               <%= text_field 'email', class => "form-control", autocapitalize => "off" %>
             </div>
-            
+
+            <div class="g-recaptcha" data-sitekey="6LcyckMUAAAAADh5OPahROl2PRN0OCgDB5VAsbA3"></div>
             <br>
             <%= submit_button 'Sign up', class => "btn btn-default" %>
           <% end %>

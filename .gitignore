@@ -7,3 +7,4 @@ env.sh
 script/*.pid
 public/downloads/*
 public/614*.txt
+cpanfile.snapshot
