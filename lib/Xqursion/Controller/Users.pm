@@ -246,4 +246,43 @@ sub index {
                      );
 }
 
+
+sub delete {
+    my ($self) = @_;
+    my $user = $self->current_user;
+    if (!$user->is_admin) {
+        return $self->no_auth;
+    }
+
+    $self->respond_to(
+        json => sub { $self->render(json => $self->delete_from_api ) },
+        any => sub { $self->no_auth }
+    );
+}
+
+sub delete_from_api {
+    my ($self) = @_;
+
+    my $db = $self->app->db;
+    my $L = $self->app->log;
+    my $id = $self->param("id");
+
+    my %ret = ( success => 0 );
+    if (!$id) {
+        $ret{error} = "No ID";
+        return \%ret;
+    }
+
+    $L->info("Removing user $id");
+
+    my $userRS = $self->app->db->resultset("User")->search({ id => $id});
+    eval {
+        $ret{success} = $userRS->delete();
+    } or do {
+        $ret{error} = "Could not delete user $id";
+    };
+
+    return \%ret;
+}
+
 1;

@@ -11,58 +11,114 @@
   </div>
 
   <div class="panel-body">
-    <div class="table-responsive" id="admin-user-list">
-      <table class="table table-striped">
-        <thead>
-          <th>ID</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Last Login</th>
-          <th>Created</th>
-        </thead>
-        <tbody></tbody>
-      </table>
+    <form id="frm-users" class="form">
+      <div class="table-responsive" id="admin-user-list">
+        <table class="table table-striped">
+          <thead>
+            <th>
+              <a id="btn-toggle-select" href="#" data-target="#frm-users">
+                <i class="fa fa-check-square-o"></i>
+              </a>
+            </th>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Last Login</th>
+            <th>Created</th>
+          </thead>
+          <tbody></tbody>
+        </table>
 
-      <nav class="text-center">
-        <ul class="pagination">
-          <li class="nav-fixture prev">
-            <a href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="nav-fixture next">
-            <a href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+        <nav class="text-center">
+          <ul class="pagination">
+            <li class="nav-fixture prev">
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="nav-fixture next">
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </form>
   </div>
 
   <div class="panel-footer">
-    
+    <button class="btn btn-danger" data-toggle="modal" data-target="#mdl-delete-users">Delete Users</button>
   </div>
 </div>
+
+<div id="mdl-delete-users" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Delete Users Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <p>Really delete the selected users?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="btn-delete-users" type="button" class="btn btn-danger">Proceed</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <script type="text/template" id="user-list-row-tmpl">
   <tr>
+    <td>
+      <input type="checkbox" name="id" value="{{ id }}">
+    </td>
     <td>{{ id }}</td>
     <td>{{ username }}</td>
     <td>{{ email }}</td>
     <td>{{ last_login_at || "N/A" }}</td>
-    <td>{{ created_at }}</td>    
+    <td>{{ created_at }}</td>
   </tr>
 </script>
 
 <script type="text/javascript">
+function initialize_user_delete_button() {
+  $("#btn-delete-users").click(function(e){
+     e.preventDefault();
+     var requests = [];
+     $("#frm-users input[type=checkbox]:selected").each(function() {
+         requests.push($(this).val());
+     });
+
+     while (requests.length > 0) {
+       var id = requests.pop();
+       var params = {
+          url: "<%= url_for('use_delete', id => -1) %>",
+          dataType: "JSON",
+          method: "DELETE"
+       };
+       params.url.replace(-1, id);
+       $.when(ajax(params)).done(function(data, textStatus, jqXHR){
+          if (requests.length < 1) {
+             $("#mdl-delete-users").modal("hide");
+             console.log("End of delete user list");
+          }
+       });
+     }
+  });
+}
+
 var UserList = new function() {
-    this.tableNode = $("#admin-user-list");  
+    this.tableNode = $("#admin-user-list");
     this.listNode = $("#admin-user-list tbody");
-    
+
     this.clear = function () { this.listNode.empty() };
-    
+
     this.fetch = function() {
         var self = this;
         $.ajax({
@@ -72,12 +128,12 @@ var UserList = new function() {
             success: function(d) {
                 if (d["entries"] != undefined) {
                     self.render_list(d["entries"]);
-                    self.render_pagination(d); 
+                    self.render_pagination(d);
                 }
             }
         });
     };
-    
+
     this.render_list = function(rows) {
         this.clear();
         var tmpl = _.template($("#user-list-row-tmpl").html());
@@ -106,8 +162,8 @@ var UserList = new function() {
            nav.find(".prev").addClass("disabled");
         } else {
            nav.find(".prev a").attr("href", base + "?page=" + (data["current_page"] - 1));
-        }    
-        
+        }
+
         if (data["current_page"] == data["last_page"]) {
            nav.find(".next").addClass("disabled");
         } else {
@@ -119,6 +175,9 @@ var UserList = new function() {
 
 $(document).ready(function(){
     UserList.fetch();
+    $("#mdl-delete-users").on("shown.bs.modal", function() {
+         initialize_user_delete_button();
+    });
 });
 
 </script>

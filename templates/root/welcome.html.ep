@@ -9,18 +9,23 @@
 <style type="text/css">
   .carousel-inner .item {
      height: 400px;
-     background-color: #666;
   }
+
+  .carousel-caption {
+     text-shadow: none;
+     color: #666;
+  }
+
   .viz {
     position: relative;
     top: -40px;
   }
 
-
   .viz i {
+    color: #c93;
     font-size: 120px;
     padding: 5px;
-    box-shadow: 10px 10px 5px #333;
+    box-shadow: 10px 10px 5px #ccc;
   }
 
   @media (max-width: 375px) {
@@ -44,42 +49,42 @@
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
-    <div class="item active">      
+    <div class="item active">
       <div class="carousel-caption">
-	<div class="viz">
-	  <i class="glyphicon glyphicon-link"></i>
-	</div>
+        <div class="viz">
+          <i class="glyphicon glyphicon-link"></i>
+        </div>
 
         <h3>Collect your links</h3>
-	<p>Do you want to show your users a slide show?  Perhaps you want to walk them through a story or even a game.</p>
+        <p>Do you want to show your users a slide show?  Perhaps you want to walk them through a story or even a game.</p>
         <p>Whatever the content, if it is accessible through a web browser, Xqursion can use it.</p>
       </div>
     </div>
 
     <div class="item">
       <div class="carousel-caption">
-	<div class="viz">
-	  <i class="glyphicon glyphicon-qrcode"></i>
-	</div>
+        <div class="viz">
+          <i class="glyphicon glyphicon-qrcode"></i>
+        </div>
 
         <h3>Start a journey</h3>
-	<p>Journeys are the framework Xqursion uses to hold your collection of links.  Journeys are composed of one or more steps.  Each step can present one URL and is accessed through a unique QR code.</p>
+        <p>Journeys are the framework Xqursion uses to hold your collection of links.  Journeys are composed of one or more steps.  Each step can present one URL and is accessed through a unique QR code.</p>
       </div>
     </div>
 
     <div class="item">
       <div class="carousel-caption">
-	<div class="viz">
-	  <i class="glyphicon glyphicon-eye-open"></i>
-	</div>
+        <div class="viz">
+          <i class="glyphicon glyphicon-eye-open"></i>
+        </div>
 
         <h3>Add control</h3>
 
-	<p>You can add restrictions to each step.  For example, you may want users to first visit an earlier step before viewing the current one.  You can prevent users from seeing a step if they have already visited a different one.</p>
-        
+        <p>You can add restrictions to each step.  For example, you may want users to first visit an earlier step before viewing the current one.  You can prevent users from seeing a step if they have already visited a different one.</p>
+
       </div>
     </div>
-   
+
   </div>
 
   <!-- Controls -->
@@ -94,6 +99,7 @@
 </div>
 
 <br/>
+<br/>
 
 <div class="row">
 
@@ -104,7 +110,7 @@
           <p>Sign-up for a <a href="#sign-up-body" role="button" data-toggle="collapse">free account.</a></p>
         </div>
         <div id="sign-up-body" class="panel-body collapse">
-          
+
           <%= form_for usercreate => class => "form" => begin %>
             <%= csrf_field %>
             <div>
@@ -129,7 +135,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Existing Users</h3>
-          <p>Please <a href="#login-body" role="button" data-toggle="collapse">login in</a> with your credentials.</p>
+          <p>Please <a href="#login-body" role="button" data-toggle="collapse">log in</a> with your credentials.</p>
         </div>
         <div id="login-body" class="panel-body collapse">
           <%= form_for "sessionscreate" => (class => "form") => begin %>
@@ -145,15 +151,15 @@
 
             <br>
 
-	    <div class="pull-left">
+            <div class="pull-left">
             <%= submit_button 'Login', class => "btn btn-primary" %>
-	    </div>
+            </div>
 
             <div class="clearfix"></div>
             <% end %>
 
             <div class="pull-right">
-	    <%= tag "button",
+            <%= tag "button",
               id => "reset_password",
               class => "btn btn-link",
               style => "padding:0;border:0",
@@ -161,11 +167,11 @@
               "data-target" => "#find_account_dialog", begin %>Forgot your password?
             <% end %>
           </div>
-          
+
         </div>
     </div>
   </div>
-  
+
 </div>
 
 <div class="modal fade" role="dialog" id="find_account_dialog">
@@ -182,16 +188,16 @@
            <%= csrf_field %>
 
            <%= label_for "username" => "Username" %>
-           <%= input_tag "username", class => "form-control" %> 
+           <%= input_tag "username", class => "form-control" %>
            <br/>
-           
+
            <%= label_for "email" => "Email" %>
-           <%= input_tag "email", class => "form-control" %> 
+           <%= input_tag "email", class => "form-control" %>
            <br/>
 
         <% end %>
       </div>
-      
+
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary" data-action="modal" onclick = "$('form[name=find_account]').submit();">Find</button>

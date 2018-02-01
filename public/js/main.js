@@ -130,6 +130,23 @@ function sort_table (this_table, sort_column_index, sort_order)
     $(this_table).find("tbody").empty().append(rows);
 }
 
+function initialize_toggle_select() {
+    $("#btn-toggle-select").click(function(e){
+        e.preventDefault();
+        console.log("Hello");
+        var target_form = $(this).attr("data-target");
+        if ($(this).hasClass("selected")) {
+            $(this).removeClass("selected");
+            $(this).addClass("unselected");
+            $(target_form).find("input[type=checkbox]").prop("checked", false);
+        } else {
+            $(this).removeClass("unselected");
+            $(this).addClass("selected");
+            $(target_form).find("input[type=checkbox]").prop("checked", true);
+        }
+    });
+}
+
 $(document).ready(function() {
 /*
   $("[data-provide=datepicker]").datepicker({
@@ -137,7 +154,8 @@ $(document).ready(function() {
   });
 */
 
-  $("table[role=sortable]").each(function(){ initialize_sortable_table(this); });
-  $("[data-toggle=tooltip]").tooltip({html:true});
-  initialize_dialogs();
+    $("table[role=sortable]").each(function(){ initialize_sortable_table(this); });
+    $("[data-toggle=tooltip]").tooltip({html:true});
+    initialize_dialogs();
+    initialize_toggle_select();
 });

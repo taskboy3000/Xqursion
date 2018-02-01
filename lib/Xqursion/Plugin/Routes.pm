@@ -23,6 +23,7 @@ sub make_routes {
     $r->get("/user/:id/edit")->name("user_edit")->to("users#edit"); # For authed users
     $r->post("/user/:id/reset_password")->name("user_reset_password_update")->to("users#reset_password_update"); # no auth
     $r->post("/user/:id")->name("user_update")->to("users#update");
+    $r->delete("/user/:id")->name("user_delete")->to("users#delete");
 
     # Sessions
     $r->post("/sessions/create")->to("sessions#create");
@@ -73,7 +74,7 @@ sub make_routes {
 
     # Administrators
     my $admin = $r->under("/admin" => sub { my ($c) = @_; $self->is_admin($app, $c) });
-    $admin->get("/dashboard")->name("admin_dashboard")->to("admin_root#index");
+    $admin->get("/dashboard/users")->name("admin_dashboard")->to("admin_root#index");
 }
 
 
